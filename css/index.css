@@ -1,0 +1,46 @@
+#title {
+	font-weight:bold;
+	font-size:30px;
+}
+
+body {
+	font-family: sans-serif;
+}
+
+#inventory, h1 {
+	text-align: center;
+}
+
+.modal-title {
+	text-align: right;
+}
+
+td {
+	padding: 5px;
+}
+
+textarea {
+	width: 100%;
+	resize: none;
+}
+
+select {
+	align-self: left;
+}
+
+#modal-error {
+	color: red;
+	text-align: center;
+}
+
+.modal-header {
+	font-weight: bolder;
+}
+
+.main-header {
+	height:100px;
+}
+
+.error-message {
+	color:red;
+}
