@@ -26,3 +26,7 @@
   ```
   firebase serve
   ```
+* Deploy!
+  ```
+  firebase deploy
+  ```
