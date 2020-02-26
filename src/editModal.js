@@ -1,6 +1,6 @@
 $('#edit-name-btn').on('click', function() {
   const showName = $('#es-modal-title').val();
-  console.log(showName);
+  console.debug(showName);
 });
 
 $('#confirm-btn').on('click', function() {
@@ -52,7 +52,7 @@ $('#delete-btn').on('click', function() {
           .doc(showName)
           .delete()
           .then(function() {
-            console.log('Show successfully deleted!');
+            console.debug('Show successfully deleted!');
           })
           .catch(function(error) {
             console.error('Error removing show: ', error);
@@ -84,11 +84,11 @@ function addUsersToEditModal() {
         querySnapshot.forEach(function(user) {
           if (i % 2 == 0) {
             row = table.insertRow();
-            var switchCell = row.insertCell(0);
-            var nameCell = row.insertCell(1);
+            const switchCell = row.insertCell(0);
+            const nameCell = row.insertCell(1);
           } else {
-            var switchCell = row.insertCell(2);
-            var nameCell = row.insertCell(3);
+            const switchCell = row.insertCell(2);
+            const nameCell = row.insertCell(3);
           }
 
           // Create label

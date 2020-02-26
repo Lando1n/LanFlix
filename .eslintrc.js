@@ -17,5 +17,6 @@ module.exports = {
   'rules': {
     'new-cap': 'off',
     'require-jsdoc': 'off',
+    'guard-for-in': 'off'
   },
 };

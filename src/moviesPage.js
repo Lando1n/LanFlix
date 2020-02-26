@@ -32,3 +32,8 @@ function destroyMoviesTable() {
   table.clear().draw();
   table.destroy();
 }
+
+module.exports = {
+  initializeMoviesTable,
+  destroyMoviesTable,
+};

@@ -1,3 +1,4 @@
 .vscode
+.firebase
 .firebaserc
 node_modules
