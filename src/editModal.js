@@ -81,14 +81,17 @@ function addUsersToEditModal() {
       .then(function(querySnapshot) {
         let i = 0;
         let row = null;
+        let switchCell;
+        let nameCell;
+
         querySnapshot.forEach(function(user) {
           if (i % 2 == 0) {
             row = table.insertRow();
-            const switchCell = row.insertCell(0);
-            const nameCell = row.insertCell(1);
+            switchCell = row.insertCell(0);
+            nameCell = row.insertCell(1);
           } else {
-            const switchCell = row.insertCell(2);
-            const nameCell = row.insertCell(3);
+            switchCell = row.insertCell(2);
+            nameCell = row.insertCell(3);
           }
 
           // Create label
@@ -126,3 +129,8 @@ function addUsersToEditModal() {
 function clearEditModal() {
   $('#es-modal-body div').empty();
 }
+
+module.exports = {
+  addUsersToEditModal,
+  clearEditModal,
+};
