@@ -4,8 +4,7 @@
   "description": "The Browser Client for LanFlix",
   "main": "src/index.js",
   "dependencies": {
-    "firebase": "^6.4.2",
-    "sweetalert2": "^8.17.1"
+    "firebase": "^6.4.2"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
