@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 function initializeUsersTable() {
   // Initaliaze the table parameters
   const table = $('#users-tbl').DataTable({iDisplayLength: 15,
@@ -23,13 +24,9 @@ function initializeUsersTable() {
   });
 }
 
+// eslint-disable-next-line no-unused-vars
 function destroyUsersTable() {
   const table = $('#users-tbl').DataTable();
   table.clear().draw();
   table.destroy();
 }
-
-module.exports = {
-  initializeUsersTable,
-  destroyUsersTable,
-};
