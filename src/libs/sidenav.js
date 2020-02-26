@@ -2,6 +2,7 @@
  * Set the width of the side navigation to 250px and
    the left margin of the page content to 250px.
 */
+// eslint-disable-next-line no-unused-vars
 function openNav() {
   document.getElementById('sideNav').style.width = '250px';
   document.getElementById('main').style.marginLeft = '250px';
@@ -22,8 +23,3 @@ function selectPage(pageToSelect) {
     }
   }
 }
-
-module.exports = {
-  openNav,
-  selectPage,
-};

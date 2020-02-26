@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 function addUsersToEditModal() {
   const modalBody = document.getElementById('es-modal-body');
 
@@ -55,11 +56,7 @@ function addUsersToEditModal() {
       });
 }
 
+// eslint-disable-next-line no-unused-vars
 function clearEditModal() {
   $('#es-modal-body div').empty();
 }
-
-module.exports = {
-  addUsersToEditModal,
-  clearEditModal,
-};

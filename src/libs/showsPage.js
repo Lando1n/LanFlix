@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 function runEditModal() {
   const showData = $('#subs-tbl')
       .DataTable()
@@ -37,6 +38,7 @@ function runEditModal() {
       });
 }
 
+// eslint-disable-next-line no-unused-vars
 function initializeSubsTable() {
   // Initaliaze the table parameters
   const tableHeader = document.getElementById('headers');
@@ -100,6 +102,7 @@ function populateSubsTable(table) {
       });
 }
 
+// eslint-disable-next-line no-unused-vars
 function insertShow(showName) {
   console.debug('Show to add: ' + showName);
 
@@ -123,6 +126,7 @@ function insertShow(showName) {
       });
 }
 
+// eslint-disable-next-line no-unused-vars
 function doesShowExist(showName) {
   let showExists = false;
   const rowData = $('#subs-tbl')
@@ -139,6 +143,7 @@ function doesShowExist(showName) {
   return showExists;
 }
 
+// eslint-disable-next-line no-unused-vars
 function destroySubsTable() {
   const table = $('#subs-tbl').DataTable();
   table.clear().draw();
@@ -148,12 +153,3 @@ function destroySubsTable() {
       .find('th:gt(0)')
       .remove();
 }
-
-module.exports = {
-  runEditModal,
-  initializeSubsTable,
-  populateSubsTable,
-  destroySubsTable,
-  insertShow,
-  doesShowExist,
-};
