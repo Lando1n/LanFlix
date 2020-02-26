@@ -1,59 +1,10 @@
-/* JQUERY */
-$('#subs-tbl').on('click', 'tr', function() {
-  $('#subs-tbl')
-      .DataTable()
-      .rows()
-      .every(function() {
-        this.nodes()
-            .to$()
-            .removeClass('selected');
-      });
-  $(this).addClass('selected');
-});
-
-$('#insert-button').on('click', function() {
-  Swal.fire({
-    title: 'Which show would you like to add?',
-    width: '400px',
-    input: 'text',
-    showCancelButton: true,
-    inputValidator: (showName) => {
-      if (!showName) {
-        return 'You need to write something!';
-      }
-
-      if (doesShowExist(showName)) {
-        return 'Show already exists on database!';
-      } else {
-        insertShow(showName);
-      }
-    },
-  }).then((result) => {
-    if (result.value) {
-      Swal.fire('Added', 'The show has been added!', 'success');
-    } else {
-      Swal.fire('Failed to add', 'The show has not been added!', 'error');
-    }
-  });
-});
-
-$('#subs-tbl').on('tap', 'tr', function() {
-  runEditModal();
-});
-
-$('#subs-tbl').on('dblclick', 'tr', function() {
-  runEditModal();
-});
-
-/* FUNCTIONS */
-
 function runEditModal() {
   const showData = $('#subs-tbl')
       .DataTable()
       .row('.selected')
       .data();
   const showName = showData.showName;
-  console.log('Editing: ' + showName);
+  console.debug('Editing: ' + showName);
   db.collection('shows')
       .doc(showName)
       .get()
@@ -96,7 +47,7 @@ function initializeSubsTable() {
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(user) {
         // doc.data() is never undefined for query doc snapshots
-          console.log('Adding ' + user.id + ' column');
+          console.debug('Adding ' + user.id + ' column');
 
           // Add the DOM element column for the user
           column = document.createElement('th');
@@ -128,14 +79,14 @@ function initializeSubsTable() {
 }
 
 function populateSubsTable(table) {
-  console.log('Populating Table');
+  console.debug('Populating Table');
 
   db.collection('shows')
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(showDoc) {
           const showName = showDoc.id;
-          console.log('Adding show to table: ' + showName);
+          console.debug('Adding show to table: ' + showName);
           const show = showDoc.data();
           const row = {showName: showDoc.id};
 
@@ -150,7 +101,7 @@ function populateSubsTable(table) {
 }
 
 function insertShow(showName) {
-  console.log('Show to add: ' + showName);
+  console.debug('Show to add: ' + showName);
 
   const table = $('#subs-tbl').DataTable();
   const data = {};
@@ -197,3 +148,12 @@ function destroySubsTable() {
       .find('th:gt(0)')
       .remove();
 }
+
+module.exports = {
+  runEditModal,
+  initializeSubsTable,
+  populateSubsTable,
+  destroySubsTable,
+  insertShow,
+  doesShowExist,
+};
