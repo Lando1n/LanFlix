@@ -24,13 +24,13 @@
 		<script defer type="text/javascript" src="node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
 		<!-- Local Scripts -->
-		<script defer type='text/javascript' charset='utf8' src='js/login.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='js/editModal.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='js/sidenav.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='js/moviesPage.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='js/userPage.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='js/showsPage.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='js/index.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/login.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/editModal.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/sidenav.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/moviesPage.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/userPage.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/showsPage.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/index.js'></script>
 
 		<!-- Third Party CSS-->
 		<link rel="stylesheet" type="text/css" href="3rdParty/bootstrap-4.3.1-dist/css/bootstrap.css">
@@ -41,7 +41,6 @@
 		<!-- Local CSS -->
 		<link rel='stylesheet' type='text/css' href='css/login.css'>
 		<link rel='stylesheet' type='text/css' href='css/switches.css'>
-		<link rel='stylesheet' type='text/css' href='css/modal.css'>
 		<link rel='stylesheet' type='text/css' href='css/sidenav.css'>
 		<link rel='stylesheet' type='text/css' href='css/index.css'>
 
@@ -148,6 +147,7 @@
 				
 						<!-- Modal footer -->
 						<div class="modal-footer">
+							<button id='edit-name-btn' type="button" class="btn btn-primary"><i class="far fa-edit"></i> Edit Name</button>
 							<button id='confirm-btn' type="button" class="btn btn-success" data-dismiss="modal"><i class="far fa-check-circle"></i> Submit</button>
 							<button id='delete-btn' type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-trash-alt"></i> Delete</button>
 						</div>
