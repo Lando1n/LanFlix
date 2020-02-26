@@ -47,7 +47,7 @@ function initializeSubsTable() {
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(user) {
         // doc.data() is never undefined for query doc snapshots
-          console.debug('Adding ' + user.id + ' column');
+          console.debug(`Adding ${user.id} column`);
 
           // Add the DOM element column for the user
           column = document.createElement('th');

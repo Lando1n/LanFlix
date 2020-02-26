@@ -61,7 +61,6 @@ $(document).ready(function() {
 });
 
 /** EDIT MODAL */
-
 $('#edit-name-btn').on('click', function() {
   const showName = $('#es-modal-title').val();
   console.debug(showName);
