@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 function initializeMoviesTable() {
   const table = $('#movies-tbl').DataTable({
     iDisplayLength: 15,
@@ -27,13 +28,9 @@ function initializeMoviesTable() {
       });
 }
 
+// eslint-disable-next-line no-unused-vars
 function destroyMoviesTable() {
   const table = $('#movies-tbl').DataTable();
   table.clear().draw();
   table.destroy();
 }
-
-module.exports = {
-  initializeMoviesTable,
-  destroyMoviesTable,
-};

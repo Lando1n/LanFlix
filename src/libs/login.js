@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 function logout() {
   firebase
       .auth()
@@ -9,7 +10,3 @@ function logout() {
         console.error('Failed to sign out: ' + error);
       });
 }
-
-module.exports = {
-  logout,
-};
