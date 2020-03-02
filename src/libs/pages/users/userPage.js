@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 function initializeUsersTable() {
+  const db = firebase.firestore();
   // Initaliaze the table parameters
   const table = $('#users-tbl').DataTable({iDisplayLength: 15,
     order: [[0, 'asc']],

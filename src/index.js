@@ -1,9 +1,6 @@
-const db = firebase.firestore();
-
-/*
 getAllUsers().then((users) => {
   console.log(`Users: ${users}`);
-});*/
+});
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {

@@ -86,11 +86,9 @@ function changeSubOnFirebase(showName, isSubbed) {
         const index = subs.indexOf(user);
         subs.splice(index, index);
       }
-      
-      
+
       db.collection("shows")
         .doc(showName)
         .update({ subs: subs });
     });
-  
 }

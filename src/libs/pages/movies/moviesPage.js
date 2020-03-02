@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 function initializeMoviesTable() {
+  const db = firebase.firestore();
   const table = $('#movies-tbl').DataTable({
     iDisplayLength: 15,
     order: [[0, 'asc']],
