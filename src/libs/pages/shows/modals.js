@@ -1,5 +1,7 @@
 function runEditShowModal(showName, isSubbed) {
   console.debug("Editing: " + showName);
+  const db = firebase.firestore();
+
   db.collection("shows")
     .doc(showName)
     .get()
