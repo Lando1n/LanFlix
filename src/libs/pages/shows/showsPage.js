@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 function insertShow(showName) {
   console.debug('Show to add: ' + showName);
+  const db = firebase.firestore();
 
   db.collection('users')
       .get()
