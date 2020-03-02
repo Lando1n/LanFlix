@@ -1,20 +1,19 @@
-function initializeSubsTable() {
-  return $("#shows-tbl").DataTable({
-    iDisplayLength: 15,
-    order: [[0, "asc"]],
-    columns: [{ 
-      data: "name",
-      title: 'Show Name'
-    }, {
-      data: 'subbed',
-      title: 'Subbed'
-    }],
-    lengthChange: false
-  });
-}
+$(showTableSelector).DataTable({
+  iDisplayLength: 15,
+  order: [[0, "asc"]],
+  columns: [{ 
+    data: "name",
+    title: 'Show Name'
+  }, {
+    data: 'subbed',
+    title: 'Subbed'
+  }],
+  lengthChange: false
+});
 
-function populateShowsTable(table, user) {
+function populateShowsTable(user) {
   console.debug("Populating Shows into Table");
+  const table = $(showTableSelector).DataTable();
 
   getAllShowDocuments().then(shows => {
     shows.forEach(show => {
@@ -45,4 +44,9 @@ function addShowToTable(showName) {
 function removeShowFromTable() {
   const table = $(showTableSelector).DataTable();
   table.row('.selected').remove().draw();
+}
+
+function setSubbedForShow(show, isSubbed) {
+  const table = $(showTableSelector).DataTable();
+  
 }

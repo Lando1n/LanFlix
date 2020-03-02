@@ -23,10 +23,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
     openNav();
 
-    addUsersToEditModal();
-
-    const showTable = initializeSubsTable();
-    populateShowsTable(showTable, user.email);
+    populateShowsTable(user.email);
     initializeUsersTable();
     initializeMoviesTable();
   } else {
@@ -37,6 +34,5 @@ firebase.auth().onAuthStateChanged((user) => {
     destroySubsTable();
     destroyUsersTable();
     destroyMoviesTable();
-    clearEditModal();
   }
 });

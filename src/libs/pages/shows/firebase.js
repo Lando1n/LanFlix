@@ -63,3 +63,7 @@ async function isUserSubscribedToShow(showName, user) {
     })
   return subbed;
 }
+
+function changeSubOnFirebase(user, isSubbed) {
+  
+}
