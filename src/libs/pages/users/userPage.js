@@ -19,7 +19,6 @@ function initializeUsersTable() {
     .get()
     .then((info) => {
       const data = info.data();
-      console.log(data);
       Object.keys(data).forEach((key) => {
         // doc.data() is never undefined for query doc snapshots
         const row = {
