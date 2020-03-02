@@ -53,5 +53,6 @@ function setSubbedForShow(isSubbed) {
     name: row.data().name,
     subbed: isSubbed ? 'yes' : 'no'
   }
+  console.log(rowData);
   row.data(rowData).draw();
 }

@@ -62,7 +62,7 @@ $("#confirm-btn").on("click", function() {
   const row = $(showTableSelector)
     .DataTable()
     .row(".selected");
-  const isSubbed = $('#show-subbed-toggle').checked;
+  const isSubbed = $('#show-subbed-toggle').prop('checked');
   const showName = row.data().name;
   // Update Firebase
   // changeSubOnFirebase(showName);
