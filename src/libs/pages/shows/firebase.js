@@ -58,7 +58,6 @@ async function isUserSubscribedToShow(showName, user) {
     .get()
     .then(querySnapshot => {
       const showData = querySnapshot.data();
-      console.log(showData);
       if (showData.subs.includes(user)) {
         subbed = true;
       }
@@ -66,10 +65,32 @@ async function isUserSubscribedToShow(showName, user) {
   return subbed;
 }
 
-/*
-function changeSubOnFirebase(user, isSubbed) {
-  const subsList = [];
+function changeSubOnFirebase(showName, isSubbed) {
+  const db = firebase.firestore();
+  const user = firebase.auth().currentUser.email;
+
   db.collection("shows")
-  .doc(showName)
-  .update({ subs: subsList });
-}*/
+    .doc(showName)
+    .get()
+    .then(querySnapshot => {
+      const subs = querySnapshot.data().subs;
+      if (isSubbed) {
+        if (subs.includes(user)) {
+          return;
+        }
+        subs.push(user);
+      } else {
+        if (!subs.includes(user)) {
+          return;
+        }
+        const index = subs.indexOf(user);
+        subs.splice(index, index);
+      }
+      
+      
+      db.collection("shows")
+        .doc(showName)
+        .update({ subs: subs });
+    });
+  
+}

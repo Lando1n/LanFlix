@@ -65,7 +65,7 @@ $("#confirm-btn").on("click", function() {
   const isSubbed = $('#show-subbed-toggle').prop('checked');
   const showName = row.data().name;
   // Update Firebase
-  // changeSubOnFirebase(showName);
+  changeSubOnFirebase(showName, isSubbed);
   // Update the datatable
   setSubbedForShow(isSubbed)
 });
