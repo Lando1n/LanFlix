@@ -26,7 +26,7 @@ function initializeMoviesTable() {
         querySnapshot.forEach(function(movieType) {
           const row = {
             type: movieType.id,
-            subs: movieType.data().subs.includes(user) ? 'yes' : 'no'
+            subs: movieType.data().subs.includes(user) ? 'yes' : 'no',
           };
           table.row.add(row);
         });

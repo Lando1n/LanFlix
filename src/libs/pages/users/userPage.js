@@ -15,20 +15,20 @@ function initializeUsersTable() {
   const user = firebase.auth().currentUser.email;
 
   db.collection('users')
-    .doc(user)
-    .get()
-    .then((info) => {
-      const data = info.data();
-      Object.keys(data).forEach((key) => {
+      .doc(user)
+      .get()
+      .then((info) => {
+        const data = info.data();
+        Object.keys(data).forEach((key) => {
         // doc.data() is never undefined for query doc snapshots
-        const row = {
-          name: key,
-          value: data[key],
-        };
-        table.row.add(row);
+          const row = {
+            name: key,
+            value: data[key],
+          };
+          table.row.add(row);
+        });
+        table.draw();
       });
-      table.draw();
-    });
 }
 
 // eslint-disable-next-line no-unused-vars

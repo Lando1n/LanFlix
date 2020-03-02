@@ -9,8 +9,8 @@ firebase.auth().onAuthStateChanged((user) => {
     const uid = user.uid;
     const providerData = user.providerData;
     */
-    
-    $('#logged-in-username').text(user.email)
+
+    $('#logged-in-username').text(user.email);
     $('#login-modal').hide();
     $('#site').show();
 
@@ -19,11 +19,11 @@ firebase.auth().onAuthStateChanged((user) => {
     // Check if the user exists yet, add it to list if not.
     getAllUsers().then((users) => {
       if (!users.includes(user.email)) {
-        console.log('New user found, adding to database...')
+        console.log('New user found, adding to database...');
         const db = firebase.firestore();
         db.collection('users').doc(user.email).set({
-          email: user.email
-        })
+          email: user.email,
+        });
       }
       console.log(`Successfully loggged in as ${JSON.stringify(user.email)}`);
     });
