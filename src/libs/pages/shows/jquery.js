@@ -1,4 +1,4 @@
-const showTableSelector = '#subs-tbl';
+const showTableSelector = '#shows-tbl';
 
 $(showTableSelector).on('click', 'tr', function() {
     $(showTableSelector)
@@ -37,11 +37,7 @@ $(showTableSelector).on('click', 'tr', function() {
       }
     });
   });
-  
-  $(showTableSelector).on('tap', 'tr', function() {
-    runEditModal();
-  });
-  
+
   $(showTableSelector).on('dblclick', 'tr', function() {
     runEditModal();
   });

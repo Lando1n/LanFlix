@@ -1,34 +1,24 @@
 // eslint-disable-next-line no-unused-vars
 function insertShow(showName) {
-  console.debug('Show to add: ' + showName);
+  console.debug("Show to add: " + showName);
 
-  const table = $(showTableSelector).DataTable();
-  const data = {};
-
-  db.collection('users')
-      .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(user) {
-          data[user.id.toLowerCase()] = 'no';
-        });
-
-        // Add the show to firebase
-        db.collection('shows')
-            .doc(showName)
-            .set({subs: []});
-        // Add the show to the table
-        data['showName'] = showName;
-        table.row.add(data).draw();
-      });
+  db.collection("users")
+    .get()
+    .then(() => {
+      // Add the show to firebase
+      addShowToFirebase(showName)
+      // Add the show to the table
+      addShowToTable(showName);
+    });
 }
 
 // eslint-disable-next-line no-unused-vars
 function doesShowExist(showName) {
   let showExists = false;
   const rowData = $(showTableSelector)
-      .DataTable()
-      .rows()
-      .data();
+    .DataTable()
+    .rows()
+    .data();
 
   for (i in rowData) {
     const row = rowData[i];
@@ -38,7 +28,7 @@ function doesShowExist(showName) {
   }
   return showExists;
 }
-
+/*
 // eslint-disable-next-line no-unused-vars
 function destroySubsTable() {
   const table = $(showTableSelector).DataTable();
@@ -48,4 +38,4 @@ function destroySubsTable() {
   $(showTableSelector)
       .find('th:gt(0)')
       .remove();
-}
+}*/

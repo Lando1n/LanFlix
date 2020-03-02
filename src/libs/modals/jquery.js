@@ -32,9 +32,6 @@ $('#confirm-btn').on('click', function() {
 });
 
 $('#delete-btn').on('click', function() {
-  const row = $(showTableSelector)
-      .DataTable()
-      .row('.selected');
   const showName = row.data().showName;
 
   Swal.fire({
@@ -47,16 +44,8 @@ $('#delete-btn').on('click', function() {
     confirmButtonText: 'Yes, delete it!',
   }).then((result) => {
     if (result.value) {
-      row.remove().draw();
-      db.collection('shows')
-          .doc(showName)
-          .delete()
-          .then(function() {
-            console.debug('Show successfully deleted!');
-          })
-          .catch(function(error) {
-            console.error('Error removing show: ', error);
-          });
+      removeShowFromTable();
+      deleteShowFromFirebase(showName);
 
       Swal.fire(
           'Deleted!',

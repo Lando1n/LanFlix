@@ -1,18 +1,32 @@
 function initializeSubsTable() {
-  return $("#subs-tbl").DataTable({
+  return $("#shows-tbl").DataTable({
     iDisplayLength: 15,
     order: [[0, "asc"]],
-    columns: [{ data: "showName", title: "Show Name" }],
+    columns: [{ 
+      data: "name",
+      title: 'Show Name'
+    }, {
+      data: 'subbed',
+      title: 'Subbed'
+    }],
     lengthChange: false
   });
 }
 
-function populateShowsTable(table) {
+function populateShowsTable(table, user) {
   console.debug("Populating Shows into Table");
 
-  getAllShows().then(shows => {
+  getAllShowDocuments().then(shows => {
     shows.forEach(show => {
-      const row = { showName: show };
+      const showData = show.data();
+      let subbed = 'no';
+      if (showData.subs && showData.subs.includes(user)) {
+        subbed = 'yes';
+      }
+      const row = {
+        name: show.id,
+        subbed
+      };
       table.row.add(row);
     });
     table.draw();
@@ -20,5 +34,15 @@ function populateShowsTable(table) {
 }
 
 function addShowToTable(showName) {
+  const table = $(showTableSelector).DataTable();
+  const data = {
+    name: showName,
+    subbed: 'no'
+  };
+  table.row.add(data).draw();
+}
 
+function removeShowFromTable() {
+  const table = $(showTableSelector).DataTable();
+  table.row('.selected').remove().draw();
 }

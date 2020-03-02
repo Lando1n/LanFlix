@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 function addUsersToEditModal() {
+  /*
   const modalBody = document.getElementById('es-modal-body');
 
   const table = document.createElement('table');
@@ -54,6 +55,7 @@ function addUsersToEditModal() {
         // Append the elements to the modal body
         modalBody.appendChild(table);
       });
+      */
 }
 
 // eslint-disable-next-line no-unused-vars

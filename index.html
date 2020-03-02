@@ -88,7 +88,8 @@
 					-->
 				</table>
 				<hr>
-				<button id='logout-btn' class='btn btn-danger login-btn'>Logout</button>
+				<h6 class="logged-in-user-text" id='logged-in-username'></h6>
+				<button id='logout-btn' class='btn btn-danger login-btn'>Log Out</button>
 			</div>
 			<!-- MAIN PAGES -->
 			<div id='main' class='main'>
@@ -101,10 +102,11 @@
 						<button type='button' class='btn btn-primary' id='insert-button'><i class="fas fa-plus"></i> Add Show</button>
 					</div>
 					<br>
-					<table id='subs-tbl' class='display'>
+					<table id='shows-tbl' class='display'>
 						<thead>
 							<tr id='headers'>
-								<th></th>
+								<th>Show Name</th>
+								<th>Subbed</th>
 							</tr>
 						</thead>
 					</table>
@@ -159,6 +161,7 @@
 				
 						<!-- Modal body -->
 						<div id='es-modal-body' class="modal-body">
+							<label class='switch'></label>
 						</div>
 				
 						<!-- Modal footer -->

@@ -1,7 +1,16 @@
 .login-btn {
     position:absolute;
     bottom: 0;
+    height: 40px;
     width:100%;
+}
+
+.logged-in-user-text {
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  text-align: center; 
+  color: #f1f1f1;
 }
 
   /* Full-width inputs */
@@ -24,4 +33,3 @@ input[type=text], input[type=password] {
     padding-bottom: 20px;
     border-radius: 50%;
   }
-  
