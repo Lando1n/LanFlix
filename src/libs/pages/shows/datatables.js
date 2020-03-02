@@ -57,5 +57,5 @@ function setSubbedForShow(isSubbed) {
     name: row.data().name,
     subbed: isSubbed ? 'yes' : 'no',
   };
-  row.data(rowData).draw();
+  row.data(rowData).invalidate();
 }
