@@ -6,23 +6,30 @@ function initializeUsersTable() {
     order: [[0, 'asc']],
     columns: [{
       data: 'name',
-      title: 'Name',
     }, {
-      data: 'email',
-      title: 'Email',
-      default: 'none',
+      data: 'value',
     }],
     lengthChange: false,
   });
 
-  db.collection('users').get().then(function(querySnapshot) {
-    querySnapshot.forEach(function(user) {
-      // doc.data() is never undefined for query doc snapshots
-      const row = {name: user.id, email: user.data().email};
-      table.row.add(row);
+  const user = firebase.auth().currentUser.email;
+
+  db.collection('users')
+    .doc(user)
+    .get()
+    .then((info) => {
+      const data = info.data();
+      console.log(data);
+      Object.keys(data).forEach((key) => {
+        // doc.data() is never undefined for query doc snapshots
+        const row = {
+          name: key,
+          value: data[key],
+        };
+        table.row.add(row);
+      });
+      table.draw();
     });
-    table.draw();
-  });
 }
 
 // eslint-disable-next-line no-unused-vars
