@@ -1,22 +1,17 @@
-function runEditModal() {
-  const showData = $(showTableSelector)
-    .DataTable()
-    .row(".selected")
-    .data();
-  const showName = showData.name;
-  
+function runEditShowModal(showName, isSubbed) {
   console.debug("Editing: " + showName);
   db.collection("shows")
     .doc(showName)
     .get()
-    .then(function(doc) {
+    .then((doc) => {
       if (doc.exists) {
         // Set the modal header to the show name
+        $('#show-subbed-toggle').prop('checked', isSubbed);
         $("#es-modal-title").text(showName);
         // Show the modal
         $("#edit-show-modal").modal("toggle");
       } else {
-        console.warn("No such document: " + showName);
+        console.warn("No such document on firebase: " + showName);
       }
     });
 }

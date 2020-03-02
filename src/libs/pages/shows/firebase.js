@@ -49,14 +49,16 @@ function deleteShowFromFirebase(showName) {
     });
 }
 
-
 async function isUserSubscribedToShow(showName, user) {
   let subbed = false;
   const db = firebase.firestore();
   
   await db.collection("shows")
-    .doc(showName).then(querySnapshot => {
-      const showData = querySnapshot.data()
+    .doc(showName)
+    .get()
+    .then(querySnapshot => {
+      const showData = querySnapshot.data();
+      console.log(showData);
       if (showData.subs.includes(user)) {
         subbed = true;
       }
@@ -64,6 +66,10 @@ async function isUserSubscribedToShow(showName, user) {
   return subbed;
 }
 
+/*
 function changeSubOnFirebase(user, isSubbed) {
-  
-}
+  const subsList = [];
+  db.collection("shows")
+  .doc(showName)
+  .update({ subs: subsList });
+}*/

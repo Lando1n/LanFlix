@@ -15,6 +15,7 @@ function populateShowsTable(user) {
   console.debug("Populating Shows into Table");
   const table = $(showTableSelector).DataTable();
 
+  // For each show, check if the user logged in is subscribed
   getAllShowDocuments().then(shows => {
     shows.forEach(show => {
       const showData = show.data();
@@ -36,7 +37,7 @@ function addShowToTable(showName) {
   const table = $(showTableSelector).DataTable();
   const data = {
     name: showName,
-    subbed: 'no'
+    subbed: 'yes'
   };
   table.row.add(data).draw();
 }
@@ -46,7 +47,11 @@ function removeShowFromTable() {
   table.row('.selected').remove().draw();
 }
 
-function setSubbedForShow(show, isSubbed) {
-  const table = $(showTableSelector).DataTable();
-  
+function setSubbedForShow(isSubbed) {
+  const row = $(showTableSelector).DataTable().row(".selected");
+  const rowData = {
+    name: row.data().name,
+    subbed: isSubbed ? 'yes' : 'no'
+  }
+  row.data(rowData).draw();
 }
