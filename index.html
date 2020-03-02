@@ -24,12 +24,23 @@
 		<script defer type="text/javascript" src="3rdParty/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
 		<!-- Local Scripts -->
-		<script defer type='text/javascript' charset='utf8' src='src/libs/login.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/editModal.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/sidenav.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/moviesPage.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/userPage.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/showsPage.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/jquery.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/login.js'></script>
+
+		<script defer type='text/javascript' charset='utf8' src='src/libs/nav/jquery.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/nav/sidenav.js'></script>
+
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/movies/moviesPage.js'></script>
+
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/jquery.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/firebase.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/datatables.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/modals.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/showsPage.js'></script>
+
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/users/firebase.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/users/userPage.js'></script>
+
 		<script defer type='text/javascript' charset='utf8' src='src/index.js'></script>
 
 		<!-- Third Party CSS-->
@@ -62,7 +73,7 @@
 					</tr>
 					<tr>
 						<td><i class="fas fa-users-cog fa-sm"></i></td>
-						<td><label id='users-select-btn' class='nav-btn' onclick="selectPage('users-page')"></i> Users</label></td>
+						<td><label id='users-select-btn' class='nav-btn' onclick="selectPage('users-page')"></i> User</label></td>
 					</tr>
 					<!--
 					<tr>
@@ -72,7 +83,8 @@
 					-->
 				</table>
 				<hr>
-				<button id='logout-btn' class='btn btn-danger login-btn'>Logout</button>
+				<h6 class="logged-in-user-text" id='logged-in-username'></h6>
+				<button id='logout-btn' class='btn btn-danger login-btn'>Log Out</button>
 			</div>
 			<!-- MAIN PAGES -->
 			<div id='main' class='main'>
@@ -85,10 +97,11 @@
 						<button type='button' class='btn btn-primary' id='insert-button'><i class="fas fa-plus"></i> Add Show</button>
 					</div>
 					<br>
-					<table id='subs-tbl' class='display'>
+					<table id='shows-tbl' class='display'>
 						<thead>
 							<tr id='headers'>
-								<th></th>
+								<th>Show Name</th>
+								<th>Subbed</th>
 							</tr>
 						</thead>
 					</table>
@@ -97,7 +110,6 @@
 					<div class='main-header'>
 						<h2>Movie Subscriptions</h2>
 					</div>
-					<h6>Under Construction</h6>
 					<table id='movies-tbl' class='display'>
 						<thead>
 							<tr id='movie-headers'>
@@ -110,24 +122,17 @@
 				<!-- USERS PAGE -->
 				<div id='users-page' class='main-page' style='display:none'>
 					<div class='main-header'>
-						<h2>Manage Users</h2>
+						<h2>User Information</h2>
 					</div>
-					<button type='button' class='btn btn-primary' id='add-user-button' disabled><i class="fas fa-plus"></i> Add User</button>
+					<!-- <button type='button' class='btn btn-primary' id='add-user-button' disabled><i class="fas fa-plus"></i> Add User</button> -->
 					<table id='users-tbl' class='display'>
 						<thead>
 							<tr id='users-tbl-header'>
-								<th>Name</th>
-								<th>Email</th>
+								<th>Key</th>
+								<th>Value</th>
 							</tr>
 						</thead>
 					</table>
-				</div>
-				<!-- ADMIN PAGE -->
-				<div id='admin-page' class='main-page' style='display:none'>
-					<div class='main-header'>
-						<h2>Administrative Settings</h2>
-					</div>
-					<h6>Under Construction</h6>
 				</div>
 			</div>
 			<!-- The Edit Show Modal -->
@@ -143,6 +148,17 @@
 				
 						<!-- Modal body -->
 						<div id='es-modal-body' class="modal-body">
+							<table align="center">
+								<tbody>
+									<td><h5>Subscribed</h5></td>
+									<td>
+										<label class="switch" >
+											<input type="checkbox" id='show-subbed-toggle'>
+											<span class="slider round"></span>
+										</label>
+									</td>
+								</tbody>
+							</table>
 						</div>
 				
 						<!-- Modal footer -->
