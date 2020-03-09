@@ -29,14 +29,9 @@ function doesShowExist(showName) {
   }
   return showExists;
 }
-/*
+
 // eslint-disable-next-line no-unused-vars
 function destroySubsTable() {
   const table = $(showTableSelector).DataTable();
   table.clear().draw();
-  table.destroy();
-
-  $(showTableSelector)
-      .find('th:gt(0)')
-      .remove();
-}*/
+}

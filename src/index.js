@@ -1,6 +1,5 @@
 firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    /* User is signed in.
+  /* User is signed in.
     const displayName = user.displayName;
     const email = user.email;
     const emailVerified = user.emailVerified;
@@ -8,8 +7,8 @@ firebase.auth().onAuthStateChanged((user) => {
     const isAnonymous = user.isAnonymous;
     const uid = user.uid;
     const providerData = user.providerData;
-    */
-
+  */
+  if (user && user.emailVerified) {
     $('#logged-in-username').text(user.email);
     $('#login-modal').hide();
     $('#site').show();
@@ -31,6 +30,13 @@ firebase.auth().onAuthStateChanged((user) => {
     populateShowsTable(user.email);
     initializeUsersTable();
     initializeMoviesTable();
+  } else if (user) {
+    // User has not verified their email yet
+    $('#login-modal').show();
+    $('#site').hide();
+    $('#login-error').text('Email not verified. Verify and try again.');
+    sendEmailVerification(user);
+    firebase.auth().signOut();
   } else {
     // User is signed out.
     $('#login-modal').show();
