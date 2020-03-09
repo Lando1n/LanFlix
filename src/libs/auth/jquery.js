@@ -32,3 +32,10 @@ $('#login-submit-btn').on('click', function() {
             });
       });
 });
+
+$('#register-btn').on('click', () => {
+  $('#login-error').text('');
+  const email = $('#username').val();
+  const password = $('#password').val();
+  registerAccount(email, password);
+});
