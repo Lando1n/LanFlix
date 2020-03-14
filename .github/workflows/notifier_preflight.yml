@@ -1,16 +1,13 @@
 name: Notifier Preflight
 
-on: 
-  pull_request:
-    paths: [notifier/**/*]
+on: [pull_request]
 
 jobs:
-  precommit:
-    runs-on: ubuntu-latest
+  notifier_precommit:
+    runs-on: ubuntu-18.04
     strategy:
-      max-parallel: 2
       matrix:
-        python-version: [2.7, 3.6]
+        python-version: [3.6]
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -19,10 +16,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Pip dependencies
       run: |
-        cd notifier
-        python -m pip install --upgrade pip
-        pip install -r dependencies/pip_requirements.txt
-        pip install -r dependencies/pip_dev_requirements.txt
+        cd notifier/setup
+        ./dev-setup.sh
     - name: Lint with flake8
       run: |
         cd notifier
