@@ -1,5 +1,7 @@
 # LanFlix Browser Client
 
+Note: To be used in tandem with the notifier
+
 ## Setup 
 * Create a firebase project, or use an existing one.  
   https://console.firebase.google.com/
