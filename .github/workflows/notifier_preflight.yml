@@ -1,11 +1,9 @@
 name: Notifier Preflight
 
-on: 
-  pull_request:
-    paths: [notifier/**]
+on: [pull_request]
 
 jobs:
-  precommit:
+  notifier_precommit:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
