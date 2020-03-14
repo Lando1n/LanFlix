@@ -23,6 +23,9 @@ cd setup
 ```
 
 ## Installation instructions
+
+Note: To be used in tandem with the browser-client
+
 ### Configure the Firebase project
 * Setup a new Firebase project  
   https://console.firebase.google.com/

@@ -1,11 +1,9 @@
 name: Browser Client Lint Check
 
-on:
-  pull_request:
-    paths: [browser-client/**/*]
+on: [pull_request]
 
 jobs:
-  lint:
+  browser_client_lint:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
