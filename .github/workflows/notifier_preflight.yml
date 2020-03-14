@@ -2,7 +2,7 @@ name: Notifier Preflight
 
 on: 
   pull_request:
-    paths: [notifier/**]
+    paths: [notifier/**/*]
 
 jobs:
   precommit:
