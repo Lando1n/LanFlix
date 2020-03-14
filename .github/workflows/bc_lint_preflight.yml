@@ -17,6 +17,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Npm Install
-      run: npm install
+      run: |
+        cd browser-client
+        npm install
     - name: Run Lint
-      run: npm run lint
+      run: |
+        cd browser-client
+        npm run lint
