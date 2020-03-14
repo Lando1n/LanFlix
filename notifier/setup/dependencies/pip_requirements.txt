@@ -1,0 +1,2 @@
+configparser
+firebase_admin
