@@ -1,4 +1,4 @@
-/config
+config
 *.pyc
 last_run.txt
 .cache
