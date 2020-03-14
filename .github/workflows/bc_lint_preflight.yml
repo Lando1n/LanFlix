@@ -2,7 +2,7 @@ name: Browser Client Lint Check
 
 on:
   pull_request:
-    paths: [browser-client/**/*]
+    paths: [browser-client/**]
 
 jobs:
   lint:
