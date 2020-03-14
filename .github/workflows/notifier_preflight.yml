@@ -1,0 +1,34 @@
+name: Notifier Preflight
+
+on: 
+  pull_request:
+    paths: [notifier/**/*]
+
+jobs:
+  precommit:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 2
+      matrix:
+        python-version: [2.7, 3.6]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Pip dependencies
+      run: |
+        cd notifier
+        python -m pip install --upgrade pip
+        pip install -r dependencies/pip_requirements.txt
+        pip install -r dependencies/pip_dev_requirements.txt
+    - name: Lint with flake8
+      run: |
+        cd notifier
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --show-source --statistics
+    - name: Test with pytest
+      run: |
+        cd notifier
+        ./run_tests.sh

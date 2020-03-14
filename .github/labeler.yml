@@ -1,0 +1,8 @@
+NOTIFIER:
+  - notifier/*
+
+BROWSER_CLIENT:
+  - browser-client/*
+
+WORKFLOWS:
+  - .github/workflows/*

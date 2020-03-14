@@ -1,4 +1,4 @@
-name: Deploy
+name: Firbease Deploy
 
 on:
   push:
@@ -6,23 +6,23 @@ on:
 
 jobs:
   deploy:
-
     runs-on: ubuntu-18.04
-
     strategy:
       matrix:
         node-version: [12.x]
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install
+    - run: |
+        cd browser-client
+        npm install
     - name: Install Firebase tools
       run: |
         sudo npm install -g firebase-tools
     - name: Deploy
       run: |
+        cd browser-client
         sudo firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive

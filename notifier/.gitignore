@@ -1,0 +1,6 @@
+/config
+*.pyc
+last_run.txt
+.cache
+__pycache__
+.pytest_cache
