@@ -46,7 +46,8 @@ $('#request-show-button').on('click', function() {
     if (result.value) {
       Swal.fire('Requested', 'The show has been requested!', 'success');
     } else {
-      Swal.fire('Failed to request', 'The show has not been requested!', 'error');
+      Swal.fire('Failed to request',
+          'The show has not been requested!', 'error');
     }
   });
 });
