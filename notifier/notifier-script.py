@@ -52,10 +52,9 @@ logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
 if __name__ == "__main__":
     logging.info('Running Notifier Script')
-    # Get the email sending info from the config file
+    # Get the email sender configuration location
     config_location = os.path.join(*[dir_path, "config", "config.ini"])
-
-    # Determine who should receive the email for this media
+    # Get the firebase cert location
     cert_file = os.path.join(*[dir_path,
                                'config',
                                'lanflix-firebase-cert.json'])
