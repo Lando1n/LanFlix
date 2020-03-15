@@ -1,10 +1,8 @@
 import os
 import logging
 import argparse
-import time
 
 from src.Notify import Notify
-from src.firebase.FirestoreHelper import FirestoreHelper
 
 # Setup the commandline arguments
 parser = argparse.ArgumentParser()
