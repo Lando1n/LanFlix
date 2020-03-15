@@ -23,8 +23,10 @@ logging.basicConfig(format=log_format,
 
 
 def on_snapshot(doc_snapshot, changes, read_time):
-    for change in doc_snapshot:
-        logging.debug(change.id)
+    for change in changes:
+        if change.type.name == 'MODIFIED':
+            logging.debug('New {0} requested: {1}'.format(
+                change.document.id[:-1], change.document.to_dict()))
 
 
 if __name__ == "__main__":
@@ -46,9 +48,9 @@ if __name__ == "__main__":
 
     while(True):
         if movie_query_watch._closed:
-            logging.debug('Snapshot query closed, restarting.')
+            logging.debug('Movie snapshot query closed, restarting.')
             movie_query_watch = movie_query.on_snapshot(on_snapshot)
 
         if show_query_watch._closed:
-            logging.debug('Snapshot query closed, restarting.')
+            logging.debug('Show snapshot query closed, restarting.')
             show_watch = show_query.on_snapshot(on_snapshot)
