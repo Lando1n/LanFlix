@@ -32,6 +32,7 @@
 		<script defer type='text/javascript' charset='utf8' src='src/libs/nav/sidenav.js'></script>
 
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/movies/moviesPage.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/movies/jquery.js'></script>
 
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/jquery.js'></script>
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/firebase.js'></script>
@@ -95,7 +96,8 @@
 						<h2>Show Subscriptions</h2>
 					</div>
 					<div class="btn-group">
-						<button type='button' class='btn btn-primary' id='insert-button'><i class="fas fa-plus"></i> Add Show</button>
+						<button type='button' class='btn btn-primary' id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
+						<!--<button type='button' class='btn btn-primary' id='add-show-button'><i class="fas fa-plus"></i> Add Show</button>-->
 					</div>
 					<br>
 					<table id='shows-tbl' class='display'>
@@ -110,6 +112,9 @@
 				<div id='movies-page' class='main-page' style='display:none'>
 					<div class='main-header'>
 						<h2>Movie Subscriptions</h2>
+					</div>
+					<div class="btn-group">
+						<button type='button' class='btn btn-primary' id='request-movie-button'><i class="fas fa-plus"></i> Request Movie</button>
 					</div>
 					<table id='movies-tbl' class='display'>
 						<thead>
@@ -166,7 +171,7 @@
 						<div class="modal-footer">
 							<!--<button id='edit-name-btn' type="button" class="btn btn-primary"><i class="far fa-edit"></i> Edit Name</button>-->
 							<button id='confirm-btn' type="button" class="btn btn-success" data-dismiss="modal"><i class="far fa-check-circle"></i> Submit</button>
-							<button id='delete-btn' type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-trash-alt"></i> Delete</button>
+							<!--<button id='delete-btn' type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-trash-alt"></i> Delete</button>-->
 						</div>
 					</div>
 				</div>

@@ -17,7 +17,7 @@ jobs:
     - name: Install Pip dependencies
       run: |
         cd notifier/setup
-        ./dev-setup.sh
+        ./setup.sh
     - name: Lint with flake8
       run: |
         cd notifier
