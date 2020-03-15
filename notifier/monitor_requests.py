@@ -2,6 +2,7 @@ import os
 import logging
 import argparse
 
+from src.Notify import Notify
 from src.firebase.FirestoreHelper import FirestoreHelper
 
 # Setup the commandline arguments
@@ -22,35 +23,42 @@ logging.basicConfig(format=log_format,
                     level=logging_level)
 
 
+# Get the firebase cert location
+dir_path = os.path.dirname(os.path.realpath(__file__))
+cert_file = os.path.join(*[dir_path, 'config', 'lanflix-firebase-cert.json'])
+config_location = os.path.join(*[dir_path, "config", "config.ini"])
+
+notify = Notify(config_location, cert_file)
+
+
 def on_snapshot(doc_snapshot, changes, read_time):
     for change in changes:
-        if change.type.name == 'MODIFIED':
-            logging.debug('New {0} requested: {1}'.format(
-                change.document.id[:-1], change.document.to_dict()))
+        if change.type.name == 'ADDED':
+            request_name = change.document.id
+            request_type = change.document.to_dict()['type']
+
+            logging.debug('{0} requested: {1}'.format(request_type,
+                                                      request_name))
+            if request_type == 'movie':
+                # Send sender email for movie request
+                sender = notify.request_movie(request_name)
+            elif request_type == 'shows':
+                # Create sender email for show request
+                sender = notify.request_show(request_name)
+            sender.send_notification()
+            # Remove request when fulfilled
+            notify.firestore_helper.db.collection(
+                u'requests').document(request_name).delete()
 
 
 if __name__ == "__main__":
-    # Get the firebase cert location
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    cert_file = os.path.join(*[dir_path,
-                               'config',
-                               'lanflix-firebase-cert.json'])
-
-    firestore_helper = FirestoreHelper(cert_file)
 
     logging.debug('Monitoring snapshot...')
-    movie_query = firestore_helper.db.collection(
-        u'requests').document(u'movies')
-    movie_query_watch = movie_query.on_snapshot(on_snapshot)
 
-    show_query = firestore_helper.db.collection(u'requests').document(u'shows')
-    show_query_watch = show_query.on_snapshot(on_snapshot)
+    query = notify.firestore_helper.db.collection(u'requests')
+    query_watch = query.on_snapshot(on_snapshot)
 
     while(True):
-        if movie_query_watch._closed:
+        if query_watch._closed:
             logging.debug('Movie snapshot query closed, restarting.')
-            movie_query_watch = movie_query.on_snapshot(on_snapshot)
-
-        if show_query_watch._closed:
-            logging.debug('Show snapshot query closed, restarting.')
-            show_watch = show_query.on_snapshot(on_snapshot)
+            query_watch = query.on_snapshot(on_snapshot)

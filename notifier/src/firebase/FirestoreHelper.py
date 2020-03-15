@@ -21,7 +21,7 @@ class FirestoreHelper:
 
         for doc in docs:
             if doc.id.lower() == show_name.lower():
-                print('Found show document')
+                logging.debug('Found show document')
                 doc_dict = doc.to_dict()
                 break
         if doc_dict is None:
@@ -49,7 +49,7 @@ class FirestoreHelper:
 
         for doc in docs:
             if doc.id.lower() == movie_type.lower():
-                print('Found movie document')
+                logging.debug('Found movie document')
                 doc_dict = doc.to_dict()
                 break
         try:
@@ -66,7 +66,7 @@ class FirestoreHelper:
 
         for doc in docs:
             if doc.id.lower() == username.lower():
-                print('Found user document')
+                logging.debug('Found user document')
                 doc_dict = doc.to_dict()
                 break
 
