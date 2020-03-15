@@ -14,14 +14,6 @@ cd setup
 ./setup.sh
 ```
 
-## Dev Dependencies
-### Run Dev setup
-Execute the dev setup script:  
-```
-cd setup
-./dev-setup.sh
-```
-
 ## Installation instructions
 
 Note: To be used in tandem with the browser-client
