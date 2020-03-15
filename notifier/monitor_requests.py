@@ -1,6 +1,7 @@
 import os
 import logging
 import argparse
+import time
 
 from src.Notify import Notify
 from src.firebase.FirestoreHelper import FirestoreHelper
@@ -22,7 +23,6 @@ else:
 logging.basicConfig(format=log_format,
                     level=logging_level)
 
-
 # Get the firebase cert location
 dir_path = os.path.dirname(os.path.realpath(__file__))
 cert_file = os.path.join(*[dir_path, 'config', 'lanflix-firebase-cert.json'])
@@ -36,19 +36,26 @@ def on_snapshot(doc_snapshot, changes, read_time):
         if change.type.name == 'ADDED':
             request_name = change.document.id
             request_type = change.document.to_dict()['type']
+            user = change.document.to_dict()['user']
 
-            logging.debug('{0} requested: {1}'.format(request_type,
-                                                      request_name))
+            logging.debug('{0} requested by {1}: {2}'.format(request_type,
+                                                             user,
+                                                             request_name))
+            sender = None
             if request_type == 'movie':
                 # Send sender email for movie request
-                sender = notify.request_movie(request_name)
-            elif request_type == 'shows':
+                sender = notify.request_movie(request_name, user)
+            elif request_type == 'show':
                 # Create sender email for show request
-                sender = notify.request_show(request_name)
-            sender.send_notification()
-            # Remove request when fulfilled
-            notify.firestore_helper.db.collection(
-                u'requests').document(request_name).delete()
+                sender = notify.request_show(request_name, user)
+            else:
+                logging.error('Other type found: ' + request_type)
+
+            if sender:
+                sender.send_notification()
+                # Remove request when fulfilled
+                notify.firestore_helper.db.collection(
+                    u'requests').document(request_name).delete()
 
 
 if __name__ == "__main__":

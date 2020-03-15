@@ -31,20 +31,26 @@ class Notify():
                       .format(sender_details['email']))
         return sender_details
 
-    def request_show(self, show_name):
+    def request_show(self, show_name, user):
         logging.debug('Creating requested show email content')
         emails_to_send_to = self.firestore_helper.get_request_email('shows')
         sender = EmailSender(self.sender_info, emails_to_send_to)
         sender.subject = "Show Requested: {0}".format(show_name)
-        sender.body = ("")
+        sender.body = (
+            "Media Type: Show\n"
+            "Show Name: {0}\n"
+            "Requested by: {1}".format(show_name, user)).strip()
         return sender
 
-    def request_movie(self, movie_name):
+    def request_movie(self, movie_name, user):
         logging.debug('Creating requested movie email content')
         emails_to_send_to = self.firestore_helper.get_request_email('movies')
         sender = EmailSender(self.sender_info, emails_to_send_to)
         sender.subject = "Movie Requested: {0}".format(movie_name)
-        sender.body = ("")
+        sender.body = (
+            "Media Type: Movie\n"
+            "Movie Name: {0}\n"
+            "Requested by: {1}".format(movie_name, user)).strip()
         return sender
 
     def media_notify(self, name):

@@ -29,8 +29,10 @@ class EmailSender:
 
         logging.info(
             "Attempting to send notification to: {0}".format(self._recipients))
-        msg_content = 'From: {0}\r\nSubject: {1}\n{2}'\
-            .format(self._sender_name, self.subject, self.body)
+        msg_content = """From: {0}
+Subject: {1}
+
+{2}""".format(self._sender_name, self.subject, self.body)
 
         server = None
         try:
