@@ -92,3 +92,20 @@ class FirestoreHelper:
             emails_to_send.append(self.get_user_email(user))
 
         return emails_to_send
+
+    def get_request_email(self, media_type):
+        if media_type not in ['shows', 'movies']:
+            raise Exception(
+                'Requests email can only be of type shows or movies')
+        emails_to_send = []
+        doc_ref = self.db.collection(u'admin').document('Requests')
+        try:
+            subbed_users = doc_ref.get().to_dict()[media_type]
+        except Exception as e:
+            logging.info(e)
+
+        # Find the email of each user
+        for user in subbed_users:
+            emails_to_send.append(self.get_user_email(user))
+
+        return emails_to_send

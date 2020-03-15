@@ -20,6 +20,10 @@ option.add_argument('-l', '--location',
                     help='The path of the media file or directory')
 option.add_argument('-n', '--name',
                     help='The name of a show')
+option.add_argument('--request_show',
+                    help='Send an email to the admin about a show request')
+option.add_argument('--request_movie',
+                    help='Send an email to the admin about a movie request')
 option.add_argument('--vpn_notify', action='store_true',
                     help='Send an error email to the admin, usually used for '
                     'vpn disconnection')
@@ -107,6 +111,16 @@ if __name__ == "__main__":
         sender.body = (
             "This is a notification to state that your VPN has been"
             " disconnected on your server.")
+    elif args.request_show:
+        emails_to_send_to = firestore_helper.get_request_email('shows')
+        sender = EmailSender(sender_info, emails_to_send_to)
+        sender.subject = "Show Requested: {0}".format(args.request_show)
+        sender.body = ("")
+    elif args.request_movie:
+        emails_to_send_to = firestore_helper.get_request_email('movies')
+        sender = EmailSender(sender_info, emails_to_send_to)
+        sender.subject = "Movie Requested: {0}".format(args.request_movie)
+        sender.body = ("")
 
     # Check if it's a dry run
     if not args.dry_run:
