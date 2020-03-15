@@ -9,7 +9,8 @@ from .media.Media import Media, MediaType
 
 class Notify():
     def __init__(self, config_location, cert_location):
-        self.firestore_helper = FirestoreHelper(cert_location)
+        if cert_location:
+            self.firestore_helper = FirestoreHelper(cert_location)
         self.sender_info = self.get_sender_info(config_location)
 
     def get_sender_info(self, config_location):
