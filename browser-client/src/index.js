@@ -23,9 +23,26 @@ firebase.auth().onAuthStateChanged((user) => {
         db.collection('users').doc(user.email).set({
           email: user.email,
         });
+        // Add user to users list
+        db.collection('movies')
+            .doc('all')
+            .get()
+            .then((querySnapshot) => {
+              const subs = querySnapshot.data().subs;
+              console.log(subs);
+              if (subs.includes(user.email)) {
+                return;
+              }
+              subs.push(user.email);
+
+              db.collection('movies')
+                  .doc('all')
+                  .update({subs: subs});
+            });
       }
       console.log(`Successfully loggged in as ${JSON.stringify(user.email)}`);
     });
+
 
     populateShowsTable(user.email);
     initializeUsersTable();
