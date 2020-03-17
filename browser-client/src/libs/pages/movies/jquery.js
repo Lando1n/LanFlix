@@ -9,8 +9,8 @@ $('#request-movie-button').on('click', function() {
       if (!showName) {
         return 'You need to write something!';
       }
-
-      if (doesShowExist(showName)) {
+      const showExists = doesShowExist(showName);
+      if (showExists) {
         return 'movie already exists on database!';
       } else {
         makeRequest(showName, 'movie');

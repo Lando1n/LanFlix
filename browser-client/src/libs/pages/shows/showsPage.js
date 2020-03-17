@@ -15,18 +15,20 @@ function insertShow(showName) {
 
 // eslint-disable-next-line no-unused-vars
 function doesShowExist(showName) {
+  console.log('Looking for show: ', showName);
   let showExists = false;
-  const rowData = $(showTableSelector)
+  $(showTableSelector)
       .DataTable()
-      .rows()
-      .data();
-
-  for (i in rowData) {
-    const row = rowData[i];
-    if (row.showName == showName) {
-      showExists = true;
-    }
-  }
+      .rows().every(function() {
+        try {
+          const show = this.data();
+          if (show.name.toLowerCase() === showName.toLowerCase()) {
+            showExists = true;
+          }
+        } catch (e) {
+          console.error(`Failed to get row name:\n${e}`);
+        }
+      });
   return showExists;
 }
 
