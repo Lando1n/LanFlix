@@ -76,8 +76,9 @@ if __name__ == "__main__":
     elif args.request_movie:
         sender = notify.request_movie(args.request_movie)
 
-    logging.debug('Email subject contents: {0}'.format(sender.subject))
-    logging.debug('Email body contents:\n{0}'.format(sender.body))
+    if sender:
+        logging.debug('Email subject contents: {0}'.format(sender.subject))
+        logging.debug('Email body contents:\n{0}'.format(sender.body))
 
     # Check if it's a dry run
     if not args.dry_run:
