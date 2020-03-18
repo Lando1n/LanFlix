@@ -18,6 +18,7 @@ class FirestoreHelper:
     def get_show_subs(self, show_name):
         subs = []
         docs = self.db.collection(u'shows').stream()
+        doc_dict = None
 
         for doc in docs:
             if doc.id.lower() == show_name.lower():
@@ -25,7 +26,7 @@ class FirestoreHelper:
                 doc_dict = doc.to_dict()
                 break
         if doc_dict is None:
-            logging.debug('No subs found for {0}'.format(show_name))
+            raise Exception('Show not found in database')
         try:
             subs = doc_dict['subs']
         except Exception as e:
@@ -109,3 +110,17 @@ class FirestoreHelper:
             emails_to_send.append(self.get_user_email(user))
 
         return emails_to_send
+
+    def get_all_user_emails(self):
+        all_emails = ['landon-martin@hotmail.com']
+
+        docs = self.db.collection(u'users').stream()
+
+        for doc in docs:
+            try:
+                email = doc.to_dict()['email']
+                all_emails += [email]
+                logging.debug('Found email => {0}'.format(email))
+            except Exception:
+                logging.error('Failed to get email for ' + doc.id)
+        return all_emails
