@@ -54,6 +54,7 @@ class Notify():
         return sender
 
     def media_notify(self, name):
+        sender = None
         subbed_users = None
         new_show = False
 
