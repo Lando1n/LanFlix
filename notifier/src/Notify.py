@@ -80,7 +80,7 @@ class Notify():
             sender.subject = "New Show: '{0}'".format(media.name).strip()
             sender.body = ("'{0}' appears to be a new show on the server,"
                            " would you like to subscribe?\n\n"
-                           "If so, continune to "
+                           "If so, continue to "
                            "LanFlix (lanflix.firebaseapp.com)"
                            " and toggle the subscription!\n"
                            ).format(media.name).strip()
