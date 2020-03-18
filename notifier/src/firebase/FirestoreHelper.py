@@ -15,21 +15,32 @@ class FirestoreHelper:
         self.db = firestore.client()
         logging.debug('Firestore is initiliazed')
 
+    def does_show_exist(self, show_name):
+        docs = self.db.collection(u'shows').stream()
+        show_exists = False
+
+        for doc in docs:
+            if doc.id.lower() == show_name.lower():
+                show_exists = True
+                break
+        return show_exists
+
     def get_show_subs(self, show_name):
         subs = []
         docs = self.db.collection(u'shows').stream()
+        doc_dict = None
 
         for doc in docs:
             if doc.id.lower() == show_name.lower():
                 logging.debug('Found show document')
                 doc_dict = doc.to_dict()
                 break
-        if doc_dict is None:
-            logging.debug('No subs found for {0}'.format(show_name))
+
         try:
             subs = doc_dict['subs']
         except Exception as e:
             logging.warn(e)
+            raise Exception("No subs found for '{0}'".format(show_name))
 
         logging.debug('Found show subscribers: {0}'.format(subs))
         return subs
@@ -109,3 +120,23 @@ class FirestoreHelper:
             emails_to_send.append(self.get_user_email(user))
 
         return emails_to_send
+
+    def get_all_user_emails(self):
+        all_emails = []
+
+        docs = self.db.collection(u'users').stream()
+
+        for doc in docs:
+            try:
+                email = doc.to_dict()['email']
+                all_emails += [email]
+                logging.debug('Found email => {0}'.format(email))
+            except Exception:
+                logging.error('Failed to get email for ' + doc.id)
+        return all_emails
+
+    def add_show(self, name):
+        logging.debug('Adding show to shows on firebase')
+        return self.db.collection('shows') \
+                   .document(name) \
+                   .set({'subs': []})
