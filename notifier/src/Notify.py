@@ -69,11 +69,10 @@ class Notify():
             try:
                 subbed_users = self.firestore_helper.get_show_subs(media.name)
             except Exception as e:
-                if 'Show not found in database' in str(e):
+                if ('No subs found' in str(e)):
                     new_show = True
 
-        if media.type == MediaType.EPISODE and new_show:
-            # Add to shows list
+        if new_show:
             # Send new email to all users
             emails_to_send = self.firestore_helper.get_all_user_emails()
             sender = EmailSender(self.sender_info, emails_to_send)
@@ -85,6 +84,8 @@ class Notify():
                            "LanFlix (lanflix.firebaseapp.com)"
                            " and toggle the subscription!\n"
                            ).format(media.name).strip()
+            # Add show to shows list
+            self.firestore_helper.add_show(media.name)
         # Check if any are subbed
         elif subbed_users:
             # Find the email of each user
