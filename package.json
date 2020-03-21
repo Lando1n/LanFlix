@@ -14,8 +14,9 @@
     "jest": "^25.1.0"
   },
   "scripts": {
-    "test": "jest .",
-    "lint": "eslint src/ --quiet"
+    "test": "jest src/ --silent",
+    "lint": "eslint src/ --quiet",
+    "coverage": "npm run test -- --coverage"
   },
   "repository": {
     "type": "git",
