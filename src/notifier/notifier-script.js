@@ -1,6 +1,7 @@
 const FirebaseHelper = require('./libs/FirebaseHelper');
 const Media = require('./libs/Media');
 const Email = require('./libs/Email');
+const {createShowEmailBody, createMovieEmailBody, createNewShowEmailBody} = require('./libs/createEmailBody');
 
 
 async function notify(mediaName, firebaseCert) {
@@ -13,6 +14,8 @@ async function notify(mediaName, firebaseCert) {
     const recipients = await firebase.getMovieSubs('all');
     email.setRecipients(recipients);
     email.setSubject(`Movie Alert: ${media.name}`);
+    const emailBody = createMovieEmailBody(media.name);
+    email.setBody(emailBody);
   
   } else if (media.type === 'show' || media.type === 'season') {
     const showExists = await firebase.doesShowExist(media.name);
@@ -20,11 +23,15 @@ async function notify(mediaName, firebaseCert) {
       const recipients = await firebase.getShowSubs(media.name);
       email.setRecipients(recipients);
       email.setSubject(`Show Alert: ${media.name}`);
+      const emailBody = createShowEmailBody(media.name);
+      email.setBody(emailBody);
     } else {
       // Send special email
       const recipients = await firebase.getAllUsers();
       email.setRecipients(recipients);
       email.setSubject(`New Show Alert: ${media.name}`);
+      const emailBody = createNewShowEmailBody(media.name);
+      email.setBody(emailBody);
       firebase.addShowToList(media.name);
     }
     

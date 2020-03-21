@@ -4,8 +4,9 @@ module.exports = {
     'commonjs': true,
     'es6': true,
   },
+  "plugins": ["prettier"],
   'extends': [
-    'prettier',
+    'plugin:prettier/recommended',
   ],
   'globals': {
     'Atomics': 'readonly',
@@ -18,6 +19,7 @@ module.exports = {
     'ecmaVersion': 2018,
   },
   'rules': {
+    "prettier/prettier": "error",
     'new-cap': 'off',
     'require-jsdoc': 'off',
     'guard-for-in': 'off'
