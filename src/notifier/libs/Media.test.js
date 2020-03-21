@@ -1,5 +1,13 @@
 const Media = require('./Media');
 
+test('Throws when contructing with undefined', () => {
+  expect(() => new Media(undefined)).toThrow();
+});
+
+test('Throws when contructing with number', () => {
+  expect(() => new Media(1)).toThrow();
+});
+
 describe('Typing', () => {
   test('Properly type movie', () => {
     const name = 'Die.Hard.2012.1080p';

@@ -84,14 +84,21 @@ class FirebaseHelper {
     return users;
   }
 
-  /*
-  addShowToList(name) {
+
+  async addShowToList(name) {
     console.debug(`Adding show to shows list: ${name}`);
     let added = false;
 
+    await this.db.collection('shows').doc(name).set({subs: []});
+    const exists = await this.doesShowExist(name);
+    if (exists){
+      added = true;
+    } else {
+      console.error('Failed to add show to list');
+    }
     return added;
   }
-
+  /*
   requestShow(name) {
     console.debug(`Requesting show: ${name}`);
     let requested = false;

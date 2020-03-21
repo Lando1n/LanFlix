@@ -21,7 +21,11 @@ async function notify(mediaName, firebaseCert) {
       email.setRecipients(recipients);
       email.setSubject(`Show Alert: ${media.name}`);
     } else {
-      console.log('show does not exist on db')
+      // Send special email
+      const recipients = await firebase.getAllUsers();
+      email.setRecipients(recipients);
+      email.setSubject(`New Show Alert: ${media.name}`);
+      firebase.addShowToList(media.name);
     }
     
   } else {
