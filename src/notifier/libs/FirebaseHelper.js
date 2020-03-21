@@ -98,19 +98,16 @@ class FirebaseHelper {
     }
     return added;
   }
-  /*
+
   requestShow(name) {
     console.debug(`Requesting show: ${name}`);
-    let requested = false;
-    return requested;
+    this.db.collection('requests').doc(name).set({type: 'show'});
   }
 
   requestMovie(name) {
     console.debug(`Requesting movie: ${name}`);
-    let requested = false;
-    return requested;
+    this.db.collection('requests').doc(name).set({type: 'movie'});
   }
-  */
 }
 
 module.exports = FirebaseHelper;
