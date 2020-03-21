@@ -1,9 +1,9 @@
-name: Browser Client Lint Check
+name: Jest Check
 
 on: [pull_request]
 
 jobs:
-  browser_client_lint:
+  jest_check:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
@@ -16,9 +16,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Npm Install
       run: |
-        cd browser-client
         npm install
-    - name: Run Lint
-      run: |
-        cd browser-client
-        npm run lint
+    - name: Run Jest Tests
+      uses: landon-martin/code-coverage-commenter@v0.0.8
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        coverage-command: "npm run coverage"
+        comment-title: "Source Unit Test Coverage Report"
