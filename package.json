@@ -17,7 +17,9 @@
   "scripts": {
     "test": "jest src/ --silent",
     "lint": "eslint src/ --quiet",
-    "coverage": "npm run test -- --coverage"
+    "coverage": "npm run test -- --coverage",
+    "request_monitor": "./scripts/request_monitor.sh",
+    "vpn_monitor": "./scripts/vpn_monitor.sh"
   },
   "repository": {
     "type": "git",
