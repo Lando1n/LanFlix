@@ -6,7 +6,7 @@ From my understanding, you asked to be notified about this.</br>
 <p>
 It should be ready any moment to be streamed!
 <p>
-Don't want this notification? Toggle your subscription on Lanflix.`;
+Don't want this notification? Toggle your subscription on LanFlix.`;
 }
 
 function createMovieEmailBody(name) {
