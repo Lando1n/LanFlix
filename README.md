@@ -64,3 +64,16 @@ The database needs to be setup with the following schema:
 #### Add Email Credentials
 
 Using the template under `config/template_sender.json`, create a in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.
+
+## Development
+### Run linting
+```
+npm install
+npm run lint
+```
+
+### Run Unit Tests
+```
+npm install
+npm run test
+```
