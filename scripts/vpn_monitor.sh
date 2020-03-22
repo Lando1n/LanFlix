@@ -17,7 +17,7 @@ do
     else
         if [[ $email_count -le $max_emails ]]; then
             echo $(date): ERROR: VPN not connected! Sending email warning $email_count/$max_emails
-            python3 $parent_path/../notifier/notifier-script.py --vpn_notify 2>&1 >/dev/null
+            node $parent_path/../src/notifier/vpn-notify.js
             email_count=$(($email_count+1))
         fi
     fi
