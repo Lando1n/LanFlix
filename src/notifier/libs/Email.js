@@ -22,6 +22,7 @@ class Email {
   }
 
   sendEmail(senderName, emailProvider, auth = {}) {
+    console.debug(`Sending email to: ${this.to}`);
     var transporter = nodemailer.createTransport({
       service: emailProvider,
       auth

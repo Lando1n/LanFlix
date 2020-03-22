@@ -99,14 +99,24 @@ class FirebaseHelper {
     return added;
   }
 
-  requestShow(name) {
-    console.debug(`Requesting show: ${name}`);
-    this.db.collection('requests').doc(name).set({type: 'show'});
+  removeFromRequests(name) {
+    console.debug(`Deleting show from request list: ${name}`);
+    this.db.collection('requests').doc(name).delete();
   }
 
-  requestMovie(name) {
-    console.debug(`Requesting movie: ${name}`);
-    this.db.collection('requests').doc(name).set({type: 'movie'});
+  async getAdminEmail(type) {
+    console.debug(`Getting admin email for type ${type}`);
+    let subs = [];
+    const docRef = this.db.collection('admin').doc(type)
+    await docRef.get().then(function(doc) {
+      if (doc.exists) {
+        subs = doc.data().subs;
+      } else {
+        throw new Error(`Couldn't find admin doc for type ${type}`);
+      }
+    });
+    console.debug(`Found admin emails: ${subs}`);
+    return subs;
   }
 }
 
