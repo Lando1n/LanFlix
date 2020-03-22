@@ -59,8 +59,8 @@ The database needs to be setup with the following schema:
   ```
 #### Place the Certificate
 * Get a certificate from `Firebase Settings > Project Settings > Service Accounts > Firebase Admin SDK`
-* Place cert in `src/notifier/config/lanflix-firebase-cert.json`
+* Place cert in `config/lanflix-firebase-cert.json`
 
 #### Add Email Credentials
 
-Using the template under `src/notifier/config/template_sender.json`, create a in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.
+Using the template under `config/template_sender.json`, create a in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.

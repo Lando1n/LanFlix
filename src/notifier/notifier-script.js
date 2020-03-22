@@ -39,7 +39,7 @@ async function notify(mediaName, firebaseCert) {
     throw new Error(`Unrecognized media type '${media.type}'`);
   }
   
-  const dryRun = true;
+  const dryRun = process.argv[3];
   // Send email if not dry-run
   if (!dryRun) {
     email.sendEmail(sender.name, 'gmail', {user: sender.email, pass: sender.password});
@@ -56,9 +56,9 @@ if (mediaName === undefined) {
 }
 
 // Get config location
-const sender = require('./config/sender.json')
+const sender = require('../../config/sender.json')
 
 // Get firebase cert location
-const firebaseCert = require('./config/lanflix-firebase-cert.json');
+const firebaseCert = require('../../config/lanflix-firebase-cert.json');
 
 notify(mediaName, firebaseCert);

@@ -3,10 +3,10 @@ const Email = require('./libs/Email');
 const {createRequestEmailBody} = require('./libs/createEmailBody');
 
 // Get config location
-const sender = require('./config/sender.json')
+const sender = require('../../config/sender.json');
 
 // Get firebase cert location
-const firebaseCert = require('./config/lanflix-firebase-cert.json');
+const firebaseCert = require('../../config/lanflix-firebase-cert.json');
 const firebase = new FirebaseHelper(firebaseCert);
 
 function waitForRequests() {
