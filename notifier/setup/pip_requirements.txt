@@ -1,4 +1,0 @@
-configparser
-firebase_admin
-flake8
-pytest
