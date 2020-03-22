@@ -5,8 +5,7 @@ class Email {
     this.to = '';
     this.from = '';
     this.subject = 'Email Notification';
-    this.bodyContent;
-    this.sender = {};
+    this.bodyContent = '';
   }
 
   setSubject(subject) {
@@ -23,6 +22,10 @@ class Email {
 
   sendEmail(senderName, emailProvider, auth = {}) {
     console.debug(`Sending email to: ${this.to}`);
+    if (!this.to) {
+      throw new Error('Reciepients not set');
+    }
+
     var transporter = nodemailer.createTransport({
       service: emailProvider,
       auth
