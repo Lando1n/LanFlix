@@ -1,1 +1,1 @@
-node src/notifier/monitor-requests.js
+node ../src/notifier/monitor-requests.js

@@ -16,7 +16,7 @@ function waitForRequests() {
       const email = new Email();
       const recipients = await firebase.getAdminEmail('Requests');
       email.setRecipients(recipients);
-      if (doc.data().type) {
+      if (doc.data().type !== 'placeholder') {
         const name = doc.id;
         const type = doc.data().type;
         const requester = doc.data().user;
