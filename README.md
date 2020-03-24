@@ -53,6 +53,13 @@ The database needs to be setup with the following schema:
 ### Notifier
 
 #### Install Dependencies
+* Install nodejs/npm
+  ```
+  sudo apt update
+  sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+  curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+  sudo apt -y install nodejs
+  ```
 * Install all of the npm packages required for the script with: 
   ```
   npm install
