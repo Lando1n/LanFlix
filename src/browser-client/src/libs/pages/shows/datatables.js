@@ -1,3 +1,6 @@
+const subbedLogo = '<i class="fas fa-check-circle" style="color:green"></i>';
+const unsubbedLogo = '<i class="fas fa-times-circle" style="color:red"></i>';
+
 $(showTableSelector).DataTable({
   iDisplayLength: 15,
   order: [[0, 'asc']],
@@ -5,8 +8,14 @@ $(showTableSelector).DataTable({
     data: 'name',
     title: 'Show Name',
   }, {
+    data: 'logo',
+    title: 'Subbed',
+    className: "dt-right",
+    searchable: false,
+  }, {
     data: 'subbed',
     title: 'Subbed',
+    visible: false,
   }],
   lengthChange: false,
 });
@@ -24,8 +33,10 @@ function populateShowsTable(user) {
       if (showData.subs && showData.subs.includes(user)) {
         subbed = 'yes';
       }
+
       const row = {
         name: show.id,
+        logo: subbed === 'yes' ? subbedLogo : unsubbedLogo,
         subbed,
       };
       table.row.add(row);
@@ -55,6 +66,7 @@ function setSubbedForShow(isSubbed) {
   const row = $(showTableSelector).DataTable().row('.selected');
   const rowData = {
     name: row.data().name,
+    logo: isSubbed ? subbedLogo : unsubbedLogo,
     subbed: isSubbed ? 'yes' : 'no',
   };
   row.data(rowData).invalidate();

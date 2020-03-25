@@ -76,12 +76,6 @@
 						<td><i class="fas fa-users-cog fa-sm"></i></td>
 						<td><label id='users-select-btn' class='nav-btn' onclick="selectPage('users-page')"></i> User</label></td>
 					</tr>
-					<!--
-					<tr>
-						<td><i class="fas fa-tools fa-sm"></i></td>
-						<td><label id='admin-select-btn' class='nav-btn' onclick="selectPage('admin-page')">Admin</label></td>
-					</tr>
-					-->
 				</table>
 				<hr>
 				<h6 class="logged-in-user-text" id='logged-in-username'></h6>
@@ -96,10 +90,9 @@
 					</div>
 					<div class="btn-group">
 						<button type='button' class='btn btn-primary' id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
-						<!--<button type='button' class='btn btn-primary' id='add-show-button'><i class="fas fa-plus"></i> Add Show</button>-->
 					</div>
 					<br>
-					<table id='shows-tbl' class='display'>
+					<table id='shows-tbl' class='display' style='width: 100%'>
 						<thead>
 							<tr id='headers'>
 								<th>Show Name</th>
@@ -129,7 +122,6 @@
 					<div class='main-header'>
 						<h2>User Information</h2>
 					</div>
-					<!-- <button type='button' class='btn btn-primary' id='add-user-button' disabled><i class="fas fa-plus"></i> Add User</button> -->
 					<table id='users-tbl' class='display'>
 						<thead>
 							<tr id='users-tbl-header'>
