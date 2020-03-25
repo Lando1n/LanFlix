@@ -79,18 +79,24 @@ function changeSubOnFirebase(showName, isSubbed) {
       .doc(showName)
       .get()
       .then((querySnapshot) => {
-        const subs = querySnapshot.data().subs;
+        let subs = querySnapshot.data().subs;
         if (isSubbed) {
-          if (subs.includes(user)) {
-            return;
-          }
-          subs.push(user);
-        } else {
+          // Unsubscribe
           if (!subs.includes(user)) {
             return;
           }
           const index = subs.indexOf(user);
-          subs.splice(index, index);
+          if (subs.length === 1) {
+            subs = [];
+          } else {
+            subs.splice(index, index);
+          }
+        } else {
+          //Subscribe
+          if (subs.includes(user)) {
+            return;
+          }
+          subs.push(user);
         }
 
         db.collection('shows')

@@ -21,7 +21,7 @@
 		<script defer type="text/javascript" src="3rdParty/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 		<script defer type="text/javascript" src="3rdParty/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
 		<script defer type="text/javascript" src="3rdParty/DataTables/datatables.min.js"></script>
-		<script defer type="text/javascript" src="3rdParty/sweetalert2/dist/sweetalert2.all.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 		<!-- Local Scripts -->
 		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/jquery.js'></script>
@@ -37,7 +37,6 @@
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/jquery.js'></script>
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/firebase.js'></script>
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/datatables.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/modals.js'></script>
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/showsPage.js'></script>
 
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/users/firebase.js'></script>
@@ -139,41 +138,6 @@
 							</tr>
 						</thead>
 					</table>
-				</div>
-			</div>
-			<!-- The Edit Show Modal -->
-			<div class="modal" id="edit-show-modal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-				
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<h3 id='es-modal-title' class="modal-title">Modal Heading</h3>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-				
-						<!-- Modal body -->
-						<div id='es-modal-body' class="modal-body">
-							<table align="center">
-								<tbody>
-									<td><h5>Subscribed</h5></td>
-									<td>
-										<label class="switch" >
-											<input type="checkbox" id='show-subbed-toggle'>
-											<span class="slider round"></span>
-										</label>
-									</td>
-								</tbody>
-							</table>
-						</div>
-				
-						<!-- Modal footer -->
-						<div class="modal-footer">
-							<!--<button id='edit-name-btn' type="button" class="btn btn-primary"><i class="far fa-edit"></i> Edit Name</button>-->
-							<button id='confirm-btn' type="button" class="btn btn-success" data-dismiss="modal"><i class="far fa-check-circle"></i> Submit</button>
-							<!--<button id='delete-btn' type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-trash-alt"></i> Delete</button>-->
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>

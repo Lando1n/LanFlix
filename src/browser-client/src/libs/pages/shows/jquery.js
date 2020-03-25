@@ -6,9 +6,35 @@ $(showTableSelector).on('dblclick', 'tr', function() {
       .DataTable()
       .row('.selected')
       .data();
-  const showName = showData.name;
   const isSubbed = showData.subbed === 'yes';
-  runEditShowModal(showName, isSubbed);
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2000,
+    onOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
+  if (!isSubbed) {
+    Toast.fire({
+      icon: 'success',
+      title: `Subscribed to ${showData.name}!`
+    });
+    changeSubOnFirebase(showData.name, false);
+    setSubbedForShow(true);
+  } else {
+    Toast.fire({
+      icon: 'error',
+      title: `Unsubscribed from ${showData.name}`
+    });
+    changeSubOnFirebase(showData.name, true);
+    setSubbedForShow(false);
+  }
+  
 });
 
 // Highlight row when clicked so that it's selected
@@ -78,13 +104,6 @@ $('#add-show-button').on('click', function() {
     }
   });
 });
-
-/*
-$("#edit-name-btn").on("click", function() {
-  const showName = $("#es-modal-title").val();
-  console.debug(showName);
-});
-*/
 
 $('#confirm-btn').on('click', function() {
   const row = $(showTableSelector)
