@@ -16,6 +16,7 @@ function initializeMoviesTable() {
       },
     ],
     lengthChange: false,
+    bFilter: false,
   });
 
   const user = firebase.auth().currentUser.email;
