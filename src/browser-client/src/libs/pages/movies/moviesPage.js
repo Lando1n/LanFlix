@@ -8,13 +8,16 @@ function initializeMoviesTable() {
       {
         data: 'type',
         title: 'Type',
-      },
-      {
-        data: 'subs',
+      }, {
+        data: 'logo',
         title: 'Subbed',
-        default: 'none',
-      },
-    ],
+        className: "dt-right",
+        searchable: false,
+      }, {
+        data: 'subbed',
+        title: 'Subbed',
+        visible: false,
+    }],
     lengthChange: false,
     bFilter: false,
   });
@@ -25,9 +28,11 @@ function initializeMoviesTable() {
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(movieType) {
+          const subbed = movieType.data().subs.includes(user);
           const row = {
             type: movieType.id,
-            subs: movieType.data().subs.includes(user) ? 'yes' : 'no',
+            logo: subbed ? subbedLogo : unsubbedLogo,
+            subbed: subbed ? 'yes' : 'no',
           };
           table.row.add(row);
         });
