@@ -27,8 +27,7 @@
 		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/login.js'></script>
 		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/register.js'></script>
 
-		<script defer type='text/javascript' charset='utf8' src='src/libs/nav/jquery.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/nav/sidenav.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/nav/topbar.js'></script>
 
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/movies/moviesPage.js'></script>
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/movies/jquery.js'></script>
@@ -50,112 +49,90 @@
 		<link rel='stylesheet' type="text/css" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
 
 		<!-- Local CSS -->
+		<link rel='stylesheet' type='text/css' href='css/heroImage.css'>
 		<link rel='stylesheet' type='text/css' href='css/login.css'>
-		<link rel='stylesheet' type='text/css' href='css/switches.css'>
-		<link rel='stylesheet' type='text/css' href='css/sidenav.css'>
+		<link rel='stylesheet' type='text/css' href='css/topbar.css'>
 		<link rel='stylesheet' type='text/css' href='css/index.css'>
 
 	</head>
 	<body>
-		<div id='site'>
-			<!-- SIDE NAVIGATION -->
-			<div id='sideNav' class='sidenav'>
-				<img class='logo' src='images/logo.png'>
-				<hr>
-				<table>
-					<tr>
-						<td><i class="fas fa-tv fa-sm"></i></td>
-						<td><label id='shows-select-btn' class='nav-btn selected' onclick="selectPage('shows-page')"> Shows</label></td>
-					</tr>
-					<tr>
-						<td><i class="fas fa-film fa-sm"></i></td>
-						<td><label id='movies-select-btn' class='nav-btn' onclick="selectPage('movies-page')"></i> Movies</label></td>
-					</tr>
-					<tr>
-						<td><i class="fas fa-users-cog fa-sm"></i></td>
-						<td><label id='users-select-btn' class='nav-btn' onclick="selectPage('users-page')"></i> User</label></td>
-					</tr>
-				</table>
-				<hr>
-				<h6 class="logged-in-user-text" id='logged-in-username'></h6>
-				<button id='logout-btn' class='btn btn-danger login-btn'>Log Out</button>
-			</div>
-			<!-- MAIN PAGES -->
-			<div id='main' class='main'>
-				<!-- SHOW PAGE -->
-				<div id='shows-page' class='main-page' style='display:none'>
-					<div class='main-header'>
-						<h2>Show Subscriptions</h2>
-					</div>
-					<div class="btn-group">
-						<button type='button' class='btn btn-primary' id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
-					</div>
-					<br>
-					<table id='shows-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
-						<thead>
-							<tr id='headers'>
-								<th>Show Name</th>
-								<th>Subbed</th>
-							</tr>
-						</thead>
-					</table>
+		<div id='banner' class="hero-image">
+			<div class="hero-text">
+				<img src='images/logo.png'>
 				</div>
-				<div id='movies-page' class='main-page' style='display:none'>
-					<div class='main-header'>
-						<h2>Movie Subscriptions</h2>
-					</div>
-					<div class="btn-group">
-						<button type='button' class='btn btn-primary' id='request-movie-button'><i class="fas fa-plus"></i> Request Movie</button>
-					</div>
-					<table id='movies-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
-						<thead>
-							<tr id='movie-headers'>
-								<th></th>
-								<th></th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-				<!-- USERS PAGE -->
-				<div id='users-page' class='main-page' style='display:none'>
-					<div class='main-header'>
-						<h2>User Information</h2>
-					</div>
-					<table id='users-tbl' class='table table-dark table-striped table-bordered'>
-						<thead>
-							<tr id='users-tbl-header'>
-								<th>Key</th>
-								<th>Value</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
+		</div> 
+		<div id='topbar' class='tab'>
+			<button class='tablinks' id='show-select-btn' onclick="selectPage(event, 'shows-page')"><i class="fas fa-tv fa-sm"></i> Shows</button>
+			<button class='tablinks' id='movie-select-btn' onclick="selectPage(event, 'movies-page')"><i class="fas fa-film fa-sm"></i> Movies</button>
+			<button class='tablinks' id='users-select-btn' onclick="selectPage(event, 'users-page')"><i class="fas fa-users-cog fa-sm"></i> User Info</button>
+			<div class='right-top-bar'>
+				<button id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
+				<button id='request-movie-button'><i class="fas fa-plus"></i> Request Movie</button>
+				<button class='logout' id='logout-btn'><i class="fas fa-sign-out-alt"></i> Log Out</button>
 			</div>
 		</div>
-		<!-- The Login Modal -->
-		<div id="login-modal" class="modal">
-			<form id='login-form' class="modal-dialog" >
-				<!-- Modal Content -->
-				<div class="modal-content">
-					<div class='modal-header'>
-						<img src='images/logo.png' style='filter: invert(100%);'>
-					</div>
-
-					<div class='modal-body'>
-						<div class="imgcontainer">
-							<img src="images/avatar_img.png" alt="Avatar" class="avatar">
-						</div>
-						<label id='login-error' class='error-message'></label>
-						<input id='username' type="text" placeholder="Enter Username" required>
-						<input id='password' type="password" placeholder="Enter Password" required>
-					</div>
-			
-					<div class="modal-footer">
-						<button type='button' id='login-submit-btn' class='btn btn-primary'>Login</button>
-						<button type='button' id='register-btn' class='btn btn-success'>Register</button>
-					</div>
+		<!-- MAIN PAGES -->
+		<div id='main' class='main' style='width:100%'>
+			<!-- SHOW PAGE -->
+			<div id='shows-page' class='tab-content' style='display:none'>
+				<br>
+				<table id='shows-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
+					<thead>
+						<tr id='headers'>
+							<th>Show Name</th>
+							<th>Subbed</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div id='movies-page' class='tab-content' style='display:none'>
+				<br>
+				<table id='movies-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
+					<thead>
+						<tr id='movie-headers'>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<!-- USERS PAGE -->
+			<div id='users-page' class='tab-content' style='display:none'>
+				<br>
+				<table id='users-tbl' class='table table-dark table-striped table-bordered'>
+					<thead>
+						<tr id='users-tbl-header'>
+							<th>Key</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- The Login Modal -->
+	<div id="login-modal" class="modal">
+		<form id='login-form' class="modal-dialog" >
+			<!-- Modal Content -->
+			<div class="modal-content">
+				<div class='modal-header'>
+					<img src='images/logo.png' style='filter: invert(100%);'>
 				</div>
-			</form>
-		</div>  
+
+				<div class='modal-body'>
+					<div class="imgcontainer">
+						<img src="images/avatar_img.png" alt="Avatar" class="avatar">
+					</div>
+					<label id='login-error' class='error-message'></label>
+					<input id='username' type="text" placeholder="Enter Username" required>
+					<input id='password' type="password" placeholder="Enter Password" required>
+				</div>
+		
+				<div class="modal-footer">
+					<button type='button' id='login-submit-btn' class='btn btn-primary'>Login</button>
+					<button type='button' id='register-btn' class='btn btn-success'>Register</button>
+				</div>
+			</div>
+		</form>
 	</body>
 </html>
