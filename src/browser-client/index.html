@@ -19,9 +19,8 @@
 
 		<!-- Third Party Scripts -->
 		<script defer type="text/javascript" src="3rdParty/jquery-3.4.1/jquery-3.4.1.min.js"></script>
-		<script defer type="text/javascript" src="3rdParty/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
-		<script defer type="text/javascript" src="3rdParty/DataTables/datatables.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+		<script defer type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+		<script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 		<!-- Local Scripts -->
 		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/jquery.js'></script>
@@ -46,8 +45,8 @@
 
 		<!-- Third Party CSS-->
 		<link rel="stylesheet" type="text/css" href="3rdParty/bootstrap-4.3.1-dist/css/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="3rdParty/DataTables/datatables.css"/>
 		<link rel="stylesheet" type="text/css" href="3rdParty/fontawesome-free-5.10.2-web/css/all.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
 		<link rel='stylesheet' type="text/css" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
 
 		<!-- Local CSS -->
@@ -92,7 +91,7 @@
 						<button type='button' class='btn btn-primary' id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
 					</div>
 					<br>
-					<table id='shows-tbl' class='display' style='width: 100%'>
+					<table id='shows-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
 						<thead>
 							<tr id='headers'>
 								<th>Show Name</th>
@@ -108,7 +107,7 @@
 					<div class="btn-group">
 						<button type='button' class='btn btn-primary' id='request-movie-button'><i class="fas fa-plus"></i> Request Movie</button>
 					</div>
-					<table id='movies-tbl' class='display' style='width: 100%'>
+					<table id='movies-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
 						<thead>
 							<tr id='movie-headers'>
 								<th></th>
@@ -122,7 +121,7 @@
 					<div class='main-header'>
 						<h2>User Information</h2>
 					</div>
-					<table id='users-tbl' class='display'>
+					<table id='users-tbl' class='table table-dark table-striped table-bordered'>
 						<thead>
 							<tr id='users-tbl-header'>
 								<th>Key</th>

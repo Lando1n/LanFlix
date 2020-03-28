@@ -1,5 +1,5 @@
-const subbedLogo = '<i class="fas fa-check-circle" style="color:green"></i>';
-const unsubbedLogo = '<i class="fas fa-times-circle" style="color:red"></i>';
+const subbedLogo = '<i class="fas fa-check-circle fa-lg" style="color:#32CD32"></i>';
+const unsubbedLogo = '<i class="fas fa-times-circle fa-lg" style="color:red"></i>';
 
 $(showTableSelector).DataTable({
   iDisplayLength: 15,
