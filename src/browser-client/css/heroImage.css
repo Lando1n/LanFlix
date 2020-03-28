@@ -1,6 +1,8 @@
 body, html {
   height: 100%;
   margin: 0;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* The hero image */
