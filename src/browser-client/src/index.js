@@ -11,10 +11,11 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user && user.emailVerified) {
     $('#logged-in-username').text(user.email);
     $('#login-modal').hide();
-    $('#site').show();
+    $('#banner').show();
+    $('#topbar').show();
+    $('#main').show();
 
-    openNav();
-
+    selectPage(null, 'shows-page');
     // Check if the user exists yet, add it to list if not.
     getAllUsers().then((users) => {
       if (!users.includes(user.email)) {
@@ -46,18 +47,23 @@ firebase.auth().onAuthStateChanged((user) => {
 
     populateShowsTable(user.email);
     initializeUsersTable();
-    initializeMoviesTable();
+    populateMoviesTable();
   } else if (user) {
     // User has not verified their email yet
     $('#login-modal').show();
-    $('#site').hide();
+    $('#banner').hide();
+    $('#topbar').hide();
+    $('#main').hide();
+
     $('#login-error').text('Email not verified. Verify and try again.');
     sendEmailVerification(user);
     firebase.auth().signOut();
   } else {
     // User is signed out.
     $('#login-modal').show();
-    $('#site').hide();
+    $('#banner').hide();
+    $('#topbar').hide();
+    $('#main').hide();
 
     destroySubsTable();
     destroyUsersTable();

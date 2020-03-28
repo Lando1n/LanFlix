@@ -1,28 +1,28 @@
-// eslint-disable-next-line no-unused-vars
-function initializeMoviesTable() {
-  const db = firebase.firestore();
-  const table = $('#movies-tbl').DataTable({
-    iDisplayLength: 15,
-    order: [[0, 'asc']],
-    columns: [
-      {
-        data: 'type',
-        title: 'Type',
-      }, {
-        data: 'logo',
-        title: 'Subbed',
-        className: "dt-right",
-        searchable: false,
-      }, {
-        data: 'subbed',
-        title: 'Subbed',
-        visible: false,
-    }],
-    lengthChange: false,
-    bFilter: false,
-  });
+$('#movies-tbl').DataTable({
+  iDisplayLength: 15,
+  order: [[0, 'asc']],
+  columns: [
+    {
+      data: 'type',
+      title: 'Type',
+    }, {
+      data: 'logo',
+      title: 'Subbed',
+      className: "dt-right",
+      searchable: false,
+    }, {
+      data: 'subbed',
+      visible: false,
+  }],
+  lengthChange: false,
+  bFilter: false,
+});
 
+// eslint-disable-next-line no-unused-vars
+function populateMoviesTable() {
+  const db = firebase.firestore();
   const user = firebase.auth().currentUser.email;
+  const table = $('#movies-tbl').DataTable();
 
   db.collection('movies')
       .get()
@@ -44,5 +44,4 @@ function initializeMoviesTable() {
 function destroyMoviesTable() {
   const table = $('#movies-tbl').DataTable();
   table.clear().draw();
-  table.destroy();
 }
