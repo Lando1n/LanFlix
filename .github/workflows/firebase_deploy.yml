@@ -17,12 +17,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
-        cd src/browser-client
         npm install
     - name: Install Firebase tools
       run: |
         sudo npm install -g firebase-tools
     - name: Deploy
       run: |
-        cd src/browser-client
         sudo firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive
