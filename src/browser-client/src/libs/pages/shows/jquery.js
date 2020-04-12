@@ -1,6 +1,6 @@
 const showTableSelector = '#shows-tbl';
 
-$(showTableSelector).on('dblclick', 'tr', function() {
+function toggleShowSubscription() {
   const showData = $(showTableSelector)
       .DataTable()
       .row('.selected')
@@ -33,21 +33,23 @@ $(showTableSelector).on('dblclick', 'tr', function() {
     changeSubOnFirebase(showData.name, true);
     setSubbedForShow(false);
   }
-  
-});
+}
 
 // Highlight row when clicked so that it's selected
-$(showTableSelector).on('click', 'tr', function() {
+function selectShowRow() {
   $(showTableSelector)
-      .DataTable()
-      .rows()
-      .every(function() {
-        this.nodes()
-            .to$()
-            .removeClass('selected');
-      });
+    .DataTable()
+    .rows()
+    .every(function() {
+      this.nodes()
+          .to$()
+          .removeClass('selected');
+    });
   $(this).addClass('selected');
-});
+}
+
+$(showTableSelector).on('dblclick', 'tr', toggleShowSubscription );
+$(showTableSelector).on('click', 'tr', selectShowRow );
 
 // Launch request show dialog
 $('#request-show-button').on('click', function() {
