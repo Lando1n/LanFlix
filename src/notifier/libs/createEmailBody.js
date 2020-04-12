@@ -17,7 +17,7 @@ From my understanding, you asked to be notified about this.</br>
 <p>
 It should be ready any moment to be streamed!
 <p>
-Don't want this notification? Too bad, there isn't functionality to not subscribe to movies yet :)`;
+Don't want this notification? Toggle your subscription on LanFlix.`;
 }
 
 function createNewShowEmailBody(name) {

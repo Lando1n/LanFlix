@@ -80,38 +80,17 @@ function changeSubOnFirebase(showName, isSubbed) {
       .get()
       .then((querySnapshot) => {
         let subs = querySnapshot.data().subs;
+        const index = subs.indexOf(user);
         if (isSubbed) {
           // Unsubscribe
-          if (!subs.includes(user)) {
-            return;
-          }
-          const index = subs.indexOf(user);
-          if (subs.length === 1) {
-            subs = [];
-          } else {
-            subs.splice(index, index);
-          }
+          if (index !== -1) subs.splice(index, 1);
         } else {
           //Subscribe
-          if (subs.includes(user)) {
-            return;
-          }
-          subs.push(user);
+          if (index === -1) subs.push(user);
         }
 
         db.collection('shows')
             .doc(showName)
             .update({subs: subs});
       });
-}
-
-
-// eslint-disable-next-line no-unused-vars
-function makeRequest(name, mediaType) {
-  if (!['show', 'movie'].includes(mediaType)) {
-    throw new Error('Request needs to be either a movie or a show');
-  }
-  const user = firebase.auth().currentUser.email;
-  const db = firebase.firestore();
-  db.collection('requests').doc(name).set({type: mediaType, user: user});
 }
