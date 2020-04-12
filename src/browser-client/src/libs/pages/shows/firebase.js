@@ -80,16 +80,13 @@ function changeSubOnFirebase(showName, isSubbed) {
       .get()
       .then((querySnapshot) => {
         let subs = querySnapshot.data().subs;
+        const index = subs.indexOf(user);
         if (isSubbed) {
           // Unsubscribe
-          const index = subs.indexOf(user);
           if (index !== -1) subs.splice(index, 1);
         } else {
           //Subscribe
-          if (subs.includes(user)) {
-            return;
-          }
-          subs.push(user);
+          if (index === -1) subs.push(user);
         }
 
         db.collection('shows')
