@@ -1,6 +1,5 @@
 const showTableSelector = '#shows-tbl';
 
-// Launch Edit modal on click of a row
 $(showTableSelector).on('dblclick', 'tr', function() {
   const showData = $(showTableSelector)
       .DataTable()
