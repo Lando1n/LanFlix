@@ -1,8 +1,15 @@
 {
-  "name": "lanflix-browser-client",
+  "name": "lanflix",
   "version": "1.0.0",
-  "description": "The Browser Client for LanFlix",
-  "main": "src/index.js",
+  "description": "Personalized notifications for new shows and movies on your Plex server",
+  "main": "",
+  "scripts": {
+    "test": "jest --silent",
+    "lint": "eslint . --quiet",
+    "coverage": "npm run test -- --coverage",
+    "request_monitor": "cd scripts && ./request_monitor.sh",
+    "vpn_monitor": "cd scripts && ./vpn_monitor.sh"
+  },
   "dependencies": {
     "firebase": "^6.4.2",
     "firebase-admin": "^8.10.0",
@@ -13,13 +20,6 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.1.0"
-  },
-  "scripts": {
-    "test": "jest src/ --silent",
-    "lint": "eslint src/ --quiet",
-    "coverage": "npm run test -- --coverage",
-    "request_monitor": "cd scripts && ./request_monitor.sh",
-    "vpn_monitor": "cd scripts && ./vpn_monitor.sh"
   },
   "repository": {
     "type": "git",
