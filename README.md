@@ -70,7 +70,11 @@ The database needs to be setup with the following schema:
 
 #### Add Email Credentials
 
-Using the template under `config/template_sender.json`, create a in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.
+Set your email sending credentials by setting firebase config variables
+```
+firebase functions:config:set sender.email='EMAIL_HERE'
+firebase functions:config:set sender.password='PASSWORD_HERE'
+```
 
 ## Development
 ### Run linting

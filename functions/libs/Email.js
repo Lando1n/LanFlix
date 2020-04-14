@@ -17,7 +17,11 @@ class Email {
   }
 
   setRecipients(recipients = []) {
-    this.to = recipients.join(', ');
+    if (recipients) {
+      this.to = recipients.join(', ');
+    } else {
+      console.warn('Recipients do not exist.')
+    }
   }
 
   sendEmail(senderName, emailProvider, auth = {}) {
@@ -38,7 +42,7 @@ class Email {
       html: this.bodyContent,
     };
     
-    transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         throw new Error(error);
       } else {
