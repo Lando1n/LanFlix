@@ -102,3 +102,68 @@ async function requestShowDialog() {
     }
   );
 }
+
+async function requestMovieDialog() {
+  const {value: searchString } = await Swal.fire({
+    title: 'Which movie would you like to request?',
+    width: '400px',
+    input: 'text',
+    inputPlaceholder: 'Specify the movie name here.',
+    showCancelButton: true,
+    inputValidator: (movieName) => {
+      if (!movieName) {
+        return 'You need to write something!';
+      }
+      return;
+    }
+  });
+
+  let searchOptions = {};
+
+  theMovieDb.search.getMovie({query: encodeURI(searchString)},
+    // Search succeeded
+    async (response) => {
+      const rawResults = JSON.parse(response).results;
+
+      const searchResults = rawResults.length < 3 ? rawResults : rawResults.slice(0, 3);
+
+      if (searchResults.length === 0) {
+        await Swal.fire('Search Failed', 'The search did not return any results', 'error');
+        return requestMovieDialog();
+      }
+      console.log(searchResults);
+      searchResults.forEach((movie) => {
+        const movieString = `${movie.title}: ${movie.release_date}`;
+        searchOptions[movieString] = movieString;
+      });
+
+      const {value: movieName } = await Swal.fire({
+        title: 'Search Results',
+        input: 'radio',
+        inputOptions: searchOptions,
+        inputValidator: (value) => {
+          if (!value) {
+            return 'You need to choose something!'
+          }
+        }
+      });
+    
+    
+      if (!movieName) {
+        return Swal.fire('Failed to request', 'The movie name was not specified', 'error');
+      }
+
+      const request = {
+        name: movieName,
+        mediaType: 'show',
+      };
+      makeRequest(request);
+      Swal.fire('Requested', 'The movie has been requested!', 'success');
+    },
+    // Search Failed
+    (response) => {
+      console.error(response);
+      return Swal.fire('Failed to search', 'Failed to find results from The Movie Database', 'error');
+    }
+  );
+}

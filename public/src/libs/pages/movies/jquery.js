@@ -1,39 +1,7 @@
 const movieTableSelector = "#movies-tbl";
 
 // Launch request show dialog
-$('#request-movie-button').on('click', function() {
-  Swal.fire({
-    title: 'Which movie would you like to request?',
-    width: '400px',
-    input: 'text',
-    showCancelButton: true,
-    inputValidator: (movieName) => {
-      if (!movieName) {
-        return 'You need to write something!';
-      }
-      const movieExists = doesShowExist(movieName);
-      if (movieExists) {
-        return 'movie already exists on database!';
-      } else {
-        const request = {
-          name: movieName,
-          mediaType: 'movie',
-        };
-        makeRequest(request);
-      }
-    },
-  }).then((result) => {
-    if (result.value) {
-      Swal.fire('Requested', 'The movie has been requested!', 'success');
-    } else {
-      Swal.fire(
-          'Failed to request',
-          'The movie has not been requested!',
-          'error',
-      );
-    }
-  });
-});
+$('#request-movie-button').on('click', requestMovieDialog);
 
 $(movieTableSelector).on('dblclick', 'tr', function() {
   const movieData = $(movieTableSelector)
