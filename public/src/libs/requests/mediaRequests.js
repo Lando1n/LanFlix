@@ -98,7 +98,7 @@ async function requestShowDialog() {
     // Search Failed
     (response) => {
       console.error(response);
-      throw new Errror('Failed to find results from The Movie Database');
+      throw new Error('Failed to find results from The Movie Database');
     }
   );
 }
