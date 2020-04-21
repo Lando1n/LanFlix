@@ -52,32 +52,7 @@ $(showTableSelector).on('dblclick', 'tr', toggleShowSubscription );
 $(showTableSelector).on('click', 'tr', selectShowRow );
 
 // Launch request show dialog
-$('#request-show-button').on('click', function() {
-  Swal.fire({
-    title: 'Which TV show would you like to request?',
-    width: '400px',
-    input: 'text',
-    showCancelButton: true,
-    inputValidator: (showName) => {
-      if (!showName) {
-        return 'You need to write something!';
-      }
-
-      if (doesShowExist(showName)) {
-        return 'Show already exists on database!';
-      } else {
-        makeRequest(showName, 'show');
-      }
-    },
-  }).then((result) => {
-    if (result.value) {
-      Swal.fire('Requested', 'The show has been requested!', 'success');
-    } else {
-      Swal.fire('Failed to request',
-          'The show has not been requested!', 'error');
-    }
-  });
-});
+$('#request-show-button').on('click', requestShowDialog);
 
 // Launch add show dialog when Add Show button is clicked
 $('#add-show-button').on('click', function() {
