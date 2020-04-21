@@ -7,15 +7,19 @@ $('#request-movie-button').on('click', function() {
     width: '400px',
     input: 'text',
     showCancelButton: true,
-    inputValidator: (showName) => {
-      if (!showName) {
+    inputValidator: (movieName) => {
+      if (!movieName) {
         return 'You need to write something!';
       }
-      const showExists = doesShowExist(showName);
-      if (showExists) {
+      const movieExists = doesShowExist(movieName);
+      if (movieExists) {
         return 'movie already exists on database!';
       } else {
-        makeRequest(showName, 'movie');
+        const request = {
+          name: movieName,
+          mediaType: 'movie',
+        };
+        makeRequest(request);
       }
     },
   }).then((result) => {

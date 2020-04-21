@@ -1,18 +1,19 @@
 // eslint-disable-next-line no-unused-vars
-function makeRequest(name, mediaType, download = 'all') {
-  if (!['show', 'movie'].includes(mediaType)) {
+function makeRequest(request) {
+  if (!request.mediaType || !['show', 'movie'].includes(request.mediaType)) {
     throw new Error('Request needs to be either a movie or a show');
   }
-  const user = firebase.auth().currentUser.email;
-  const db = firebase.firestore();
+  request.user = firebase.auth().currentUser.email;
 
   var d = new Date();
   var curr_date = d.getDate();
   var curr_month = d.getMonth() + 1; //Months are zero based
   var curr_year = d.getFullYear();
-  const timestamp = `${curr_date}/${curr_month}/${curr_year}`;
+  request.timestamp = `${curr_date}/${curr_month}/${curr_year}`;
 
-  db.collection('requests').doc(name).set({type: mediaType, user, timestamp, download});
+  const db = firebase.firestore();
+  console.log(request);
+  db.collection('requests').doc(request.name).set(request);
 }
 
 async function requestShowDialog() {
@@ -47,8 +48,8 @@ async function requestShowDialog() {
       }
 
       searchResults.forEach((show) => {
-        const showString = `${show.name}, ${show.first_air_date}`;
-        searchOptions[show.name] = showString;
+        const showString = `${show.name}: ${show.first_air_date}`;
+        searchOptions[showString] = showString;
       });
 
       const {value: showName } = await Swal.fire({
@@ -80,11 +81,17 @@ async function requestShowDialog() {
           }
         }
       });
+
+      const request = {
+        name: showName,
+        mediaType: 'show',
+        which: downloadType,
+      };
     
       if (!downloadType) {
         Swal.fire('Failed to request', 'The download type was not specified', 'error');
       } else {
-        makeRequest(showName, 'show', downloadType);
+        makeRequest(request);
         Swal.fire('Requested', 'The show has been requested!', 'success');
       }
     },
