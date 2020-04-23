@@ -155,7 +155,7 @@ async function requestMovieDialog() {
 
       const request = {
         name: movieName,
-        mediaType: 'show',
+        mediaType: 'movie',
       };
       makeRequest(request);
       Swal.fire('Requested', 'The movie has been requested!', 'success');
