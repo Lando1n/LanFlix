@@ -20,8 +20,9 @@ function waitForRequests() {
         const name = doc.id;
         const type = doc.data().mediaType;
         const requester = doc.data().user;
+        const which = doc.data().which;
         email.setSubject(`${type.toUpperCase()} Requested`)
-        const emailBody = createRequestEmailBody(name, type, requester);
+        const emailBody = createRequestEmailBody(name, type, requester, which);
         email.setBody(emailBody);
         email.sendEmail('Plex Server', 'gmail', { user: sender.email, pass: sender.password })
         firebase.removeFromRequests(doc.id);
