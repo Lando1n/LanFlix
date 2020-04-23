@@ -33,6 +33,10 @@ async function requestShowDialog() {
     }
   });
 
+  if (!searchString) {
+    return;
+  }
+
   let searchOptions = {};
 
   theMovieDb.search.getTv({query: encodeURI(searchString)},
@@ -117,6 +121,10 @@ async function requestMovieDialog() {
       return;
     }
   });
+
+  if (!searchString) {
+    return;
+  }
 
   let searchOptions = {};
 
