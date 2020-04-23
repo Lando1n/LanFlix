@@ -17,7 +17,7 @@ exports[`New Show notification snapshot 1`] = `
 If so, continue to LanFlix (lanflix.firebaseapp.com) and toggle the subscription!"
 `;
 
-exports[`Request notification snapshot 1`] = `"Media Type: SHOW</br>SHOW Name: Atlanta</br>Requested by: Mark"`;
+exports[`Request notification snapshot 1`] = `"Media Type: SHOW</br>SHOW Name: Atlanta</br>Requested by: Mark</br>Which: all"`;
 
 exports[`Show notification snapshot 1`] = `
 "Hey there,</br>
