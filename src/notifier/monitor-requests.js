@@ -18,7 +18,7 @@ function waitForRequests() {
       email.setRecipients(recipients);
       if (doc.data().type !== 'placeholder') {
         const name = doc.id;
-        const type = doc.data().type;
+        const type = doc.data().mediaType;
         const requester = doc.data().user;
         email.setSubject(`${type.toUpperCase()} Requested`)
         const emailBody = createRequestEmailBody(name, type, requester);
