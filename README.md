@@ -54,6 +54,7 @@ The database needs to be setup with the following schema:
 
 #### Install Dependencies
 * Install nodejs/npm
+  Note: If already install version must be <= node 10.x
   ```
   sudo apt update
   sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
@@ -70,7 +71,7 @@ The database needs to be setup with the following schema:
 
 #### Add Email Credentials
 
-Using the template under `config/template_sender.json`, create a in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.
+Using the template under `config/template_sender.json`, create a file in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.
 
 ## Development
 ### Run linting
