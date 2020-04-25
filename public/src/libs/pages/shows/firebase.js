@@ -3,11 +3,11 @@ async function getAllShowDocuments() {
   let shows;
   const db = firebase.firestore();
   await db
-      .collection('shows')
-      .get()
-      .then(function(querySnapshot) {
-        shows = querySnapshot;
-      });
+    .collection("shows")
+    .get()
+    .then(function (querySnapshot) {
+      shows = querySnapshot;
+    });
   return shows;
 }
 
@@ -16,16 +16,16 @@ async function getAllShowsForUser(user) {
   const subbedShows = [];
   const db = firebase.firestore();
   await db
-      .collection('shows')
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((show) => {
-          const showData = show.data();
-          if (showData.subs.includes(user)) {
-            subbedShows.push(show.id);
-          }
-        });
+    .collection("shows")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((show) => {
+        const showData = show.data();
+        if (showData.subs.includes(user)) {
+          subbedShows.push(show.id);
+        }
       });
+    });
   return subbedShows;
 }
 
@@ -33,24 +33,22 @@ async function getAllShowsForUser(user) {
 function addShowToFirebase(showName) {
   const db = firebase.firestore();
 
-  db.collection('shows')
-      .doc(showName)
-      .set({subs: []});
+  db.collection("shows").doc(showName).set({ subs: [] });
 }
 
 // eslint-disable-next-line no-unused-vars
 function deleteShowFromFirebase(showName) {
   const db = firebase.firestore();
 
-  db.collection('shows')
-      .doc(showName)
-      .delete()
-      .then(function() {
-        console.debug('Show successfully deleted!');
-      })
-      .catch(function(error) {
-        console.error('Error removing show: ', error);
-      });
+  db.collection("shows")
+    .doc(showName)
+    .delete()
+    .then(function () {
+      console.debug("Show successfully deleted!");
+    })
+    .catch(function (error) {
+      console.error("Error removing show: ", error);
+    });
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -58,15 +56,16 @@ async function isUserSubscribedToShow(showName, user) {
   let subbed = false;
   const db = firebase.firestore();
 
-  await db.collection('shows')
-      .doc(showName)
-      .get()
-      .then((querySnapshot) => {
-        const showData = querySnapshot.data();
-        if (showData.subs.includes(user)) {
-          subbed = true;
-        }
-      });
+  await db
+    .collection("shows")
+    .doc(showName)
+    .get()
+    .then((querySnapshot) => {
+      const showData = querySnapshot.data();
+      if (showData.subs.includes(user)) {
+        subbed = true;
+      }
+    });
   return subbed;
 }
 
@@ -75,22 +74,20 @@ function changeSubOnFirebase(showName, isSubbed) {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser.email;
 
-  db.collection('shows')
-      .doc(showName)
-      .get()
-      .then((querySnapshot) => {
-        let subs = querySnapshot.data().subs;
-        const index = subs.indexOf(user);
-        if (isSubbed) {
-          // Unsubscribe
-          if (index !== -1) subs.splice(index, 1);
-        } else {
-          //Subscribe
-          if (index === -1) subs.push(user);
-        }
+  db.collection("shows")
+    .doc(showName)
+    .get()
+    .then((querySnapshot) => {
+      let subs = querySnapshot.data().subs;
+      const index = subs.indexOf(user);
+      if (isSubbed) {
+        // Unsubscribe
+        if (index !== -1) subs.splice(index, 1);
+      } else {
+        //Subscribe
+        if (index === -1) subs.push(user);
+      }
 
-        db.collection('shows')
-            .doc(showName)
-            .update({subs: subs});
-      });
+      db.collection("shows").doc(showName).update({ subs: subs });
+    });
 }

@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 function makeRequest(request) {
-  if (!request.mediaType || !['show', 'movie'].includes(request.mediaType)) {
-    throw new Error('Request needs to be either a movie or a show');
+  if (!request.mediaType || !["show", "movie"].includes(request.mediaType)) {
+    throw new Error("Request needs to be either a movie or a show");
   }
   request.user = firebase.auth().currentUser.email;
 
@@ -13,24 +13,25 @@ function makeRequest(request) {
 
   const db = firebase.firestore();
   console.log(request);
-  db.collection('requests').doc(request.name).set(request);
+  db.collection("requests").doc(request.name).set(request);
 }
 
+// eslint-disable-next-line no-unused-vars
 async function requestShowDialog() {
-  const {value: searchString } = await Swal.fire({
-    title: 'Which TV show would you like to request?',
-    width: '400px',
-    input: 'text',
-    inputPlaceholder: 'Specify the show name here.',
+  const { value: searchString } = await Swal.fire({
+    title: "Which TV show would you like to request?",
+    width: "400px",
+    input: "text",
+    inputPlaceholder: "Specify the show name here.",
     showCancelButton: true,
     inputValidator: (showName) => {
       if (!showName) {
-        return 'You need to write something!';
+        return "You need to write something!";
       } else if (doesShowExist(showName)) {
-        return 'Show already exists on database!';
+        return "Show already exists on database!";
       }
       return;
-    }
+    },
   });
 
   if (!searchString) {
@@ -39,15 +40,21 @@ async function requestShowDialog() {
 
   let searchOptions = {};
 
-  theMovieDb.search.getTv({query: encodeURI(searchString)},
+  theMovieDb.search.getTv(
+    { query: encodeURI(searchString) },
     // Search succeeded
     async (response) => {
       const rawResults = JSON.parse(response).results;
 
-      const searchResults = rawResults.length < 3 ? rawResults : rawResults.slice(0, 3);
+      const searchResults =
+        rawResults.length < 3 ? rawResults : rawResults.slice(0, 3);
 
       if (searchResults.length === 0) {
-        await Swal.fire('Search Failed', 'The search did not return any results', 'error');
+        await Swal.fire(
+          "Search Failed",
+          "The search did not return any results",
+          "error"
+        );
         return requestShowDialog();
       }
 
@@ -56,70 +63,78 @@ async function requestShowDialog() {
         searchOptions[showString] = showString;
       });
 
-      const {value: showName } = await Swal.fire({
-        title: 'Search Results',
-        input: 'radio',
+      const { value: showName } = await Swal.fire({
+        title: "Search Results",
+        input: "radio",
         inputOptions: searchOptions,
         inputValidator: (value) => {
           if (!value) {
-            return 'You need to choose something!'
+            return "You need to choose something!";
           }
-        }
+        },
       });
-    
-    
+
       if (!showName) {
-        return Swal.fire('Failed to request', 'The show name was not specified', 'error');
+        return Swal.fire(
+          "Failed to request",
+          "The show name was not specified",
+          "error"
+        );
       }
-    
-      const {value: downloadType } = await Swal.fire({
-        title: 'Options',
-        input: 'radio',
+
+      const { value: downloadType } = await Swal.fire({
+        title: "Options",
+        input: "radio",
         inputOptions: {
-          all: 'All Episodes',
-          future: 'Only Future Episodes'
+          all: "All Episodes",
+          future: "Only Future Episodes",
         },
         inputValidator: (value) => {
           if (!value) {
-            return 'You need to choose something!'
+            return "You need to choose something!";
           }
-        }
+        },
       });
 
       const request = {
         name: showName,
-        mediaType: 'show',
+        mediaType: "show",
         which: downloadType,
       };
-    
+
       if (!downloadType) {
-        Swal.fire('Failed to request', 'The download type was not specified', 'error');
+        Swal.fire(
+          "Failed to request",
+          "The download type was not specified",
+          "error"
+        );
       } else {
         makeRequest(request);
-        Swal.fire('Requested', 'The show has been requested!', 'success');
+        Swal.fire("Requested", "The show has been requested!", "success");
       }
     },
     // Search Failed
     (response) => {
       console.error(response);
-      throw new Error('Failed to find results from The Movie Database');
+      throw new Error("Failed to find results from The Movie Database");
     }
   );
 }
 
+// eslint-disable-next-line no-unused-vars
 async function requestMovieDialog() {
-  const {value: searchString } = await Swal.fire({
-    title: 'Which movie would you like to request?',
-    width: '400px',
-    input: 'text',
-    inputPlaceholder: 'Specify the movie name here.',
+  const { value: searchString } = await Swal.fire({
+    title: "Which movie would you like to request?",
+    width: "400px",
+    input: "text",
+    inputPlaceholder: "Specify the movie name here.",
     showCancelButton: true,
     inputValidator: (movieName) => {
       if (!movieName) {
-        return 'You need to write something!';
+        return "You need to write something!";
       }
       return;
-    }
+    },
   });
 
   if (!searchString) {
@@ -128,15 +143,21 @@ async function requestMovieDialog() {
 
   let searchOptions = {};
 
-  theMovieDb.search.getMovie({query: encodeURI(searchString)},
+  theMovieDb.search.getMovie(
+    { query: encodeURI(searchString) },
     // Search succeeded
     async (response) => {
       const rawResults = JSON.parse(response).results;
 
-      const searchResults = rawResults.length < 3 ? rawResults : rawResults.slice(0, 3);
+      const searchResults =
+        rawResults.length < 3 ? rawResults : rawResults.slice(0, 3);
 
       if (searchResults.length === 0) {
-        await Swal.fire('Search Failed', 'The search did not return any results', 'error');
+        await Swal.fire(
+          "Search Failed",
+          "The search did not return any results",
+          "error"
+        );
         return requestMovieDialog();
       }
       console.log(searchResults);
@@ -145,33 +166,40 @@ async function requestMovieDialog() {
         searchOptions[movieString] = movieString;
       });
 
-      const {value: movieName } = await Swal.fire({
-        title: 'Search Results',
-        input: 'radio',
+      const { value: movieName } = await Swal.fire({
+        title: "Search Results",
+        input: "radio",
         inputOptions: searchOptions,
         inputValidator: (value) => {
           if (!value) {
-            return 'You need to choose something!'
+            return "You need to choose something!";
           }
-        }
+        },
       });
-    
-    
+
       if (!movieName) {
-        return Swal.fire('Failed to request', 'The movie name was not specified', 'error');
+        return Swal.fire(
+          "Failed to request",
+          "The movie name was not specified",
+          "error"
+        );
       }
 
       const request = {
         name: movieName,
-        mediaType: 'movie',
+        mediaType: "movie",
       };
       makeRequest(request);
-      Swal.fire('Requested', 'The movie has been requested!', 'success');
+      Swal.fire("Requested", "The movie has been requested!", "success");
     },
     // Search Failed
     (response) => {
       console.error(response);
-      return Swal.fire('Failed to search', 'Failed to find results from The Movie Database', 'error');
+      return Swal.fire(
+        "Failed to search",
+        "Failed to find results from The Movie Database",
+        "error"
+      );
     }
   );
 }

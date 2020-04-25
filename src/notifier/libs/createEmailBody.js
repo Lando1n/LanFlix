@@ -26,13 +26,14 @@ function createNewShowEmailBody(name) {
 If so, continue to LanFlix (lanflix.firebaseapp.com) and toggle the subscription!`;
 }
 
-function createRequestEmailBody(name, type, requester, which = 'all') {
-  return  `Media Type: ${type.toUpperCase()}</br>` +
-          `${type.toUpperCase()} Name: ${name}</br>` +
-          `Requested by: ${requester}</br>` +
-          `Which: ${which}` ;
+function createRequestEmailBody(name, type, requester, which = "all") {
+  return (
+    `Media Type: ${type.toUpperCase()}</br>` +
+    `${type.toUpperCase()} Name: ${name}</br>` +
+    `Requested by: ${requester}</br>` +
+    `Which: ${which}`
+  );
 }
-
 
 module.exports = {
   createShowEmailBody,
