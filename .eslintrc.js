@@ -1,22 +1,37 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'commonjs': true,
-    'es6': true,
+  extends: ['eslint:recommended'],
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
   },
-  'globals': {
-    'Atomics': 'readonly',
-    'SharedArrayBuffer': 'readonly',
-    'test': true,
-    'expect': true,
-    'describe': true,
+  plugins: ['prettier'],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+    test: true,
+    expect: true,
+    describe: true,
+    process: true,
+    Swal: true,
+    $: true,
+    firebase: true,
   },
-  'parserOptions': {
-    'ecmaVersion': 2018,
+  parserOptions: {
+    ecmaVersion: 2018,
   },
-  'rules': {
+  rules: {
+    'prettier/prettier': 'error',
     'new-cap': 'off',
     'require-jsdoc': 'off',
-    'guard-for-in': 'off'
+    'guard-for-in': 'off',
   },
+  overrides: [
+    {
+      files: ['public/**/*.js'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
+  ],
 };

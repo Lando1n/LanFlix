@@ -1,12 +1,11 @@
-
 class Media {
   constructor(filename) {
-    if (filename === undefined || typeof filename !== 'string') {
-      throw new Error('Invalid media name.');
+    if (filename === undefined || typeof filename !== "string") {
+      throw new Error("Invalid media name.");
     }
     this.type = this.getType(filename);
     this.name = this.getName(filename);
-    
+
     // For shows only
     this.episode;
     this.season;
@@ -19,11 +18,11 @@ class Media {
     let type;
 
     if (filename.match(showPattern)) {
-      type = 'show';
+      type = "show";
     } else if (filename.match(seasonPattern)) {
-      type = 'season';
+      type = "season";
     } else {
-      type = 'movie';
+      type = "movie";
     }
     console.debug(`Media determined to be of type: ${type}`);
     return type;
@@ -37,11 +36,11 @@ class Media {
     let nameArray;
     let labelIndex;
 
-    switch(this.type) {
-      case 'movie':
+    switch (this.type) {
+      case "movie":
         name = filename;
         break;
-      case 'show':
+      case "show":
         nameArray = filename.split(".");
 
         for (const word of nameArray) {
@@ -51,11 +50,11 @@ class Media {
           }
         }
         if (!labelIndex) {
-          throw new Error('Could not find matching index');
+          throw new Error("Could not find matching index");
         }
-        name = nameArray.splice(0, labelIndex).join(' ');
+        name = nameArray.splice(0, labelIndex).join(" ");
         break;
-      case 'season':
+      case "season":
         nameArray = filename.split(".");
 
         for (const word of nameArray) {
@@ -65,16 +64,18 @@ class Media {
           }
         }
         if (!labelIndex) {
-          throw new Error('Could not find matching index');
+          throw new Error("Could not find matching index");
         }
-        name = nameArray.splice(0, labelIndex).join(' ');
+        name = nameArray.splice(0, labelIndex).join(" ");
         break;
       default:
-        throw new Error(`Not implemented to find media name with type: ${this.type}`);
+        throw new Error(
+          `Not implemented to find media name with type: ${this.type}`
+        );
     }
 
     if (!name) {
-      throw new Error('Unable to find media name');
+      throw new Error("Unable to find media name");
     }
     return name;
   }
