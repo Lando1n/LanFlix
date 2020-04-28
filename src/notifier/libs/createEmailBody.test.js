@@ -23,10 +23,19 @@ test("New Show notification snapshot", () => {
   expect(body).toMatchSnapshot();
 });
 
-test("Request notification snapshot", () => {
+test("Request show notification snapshot", () => {
   const name = "Atlanta";
-  const type = "show";
-  const user = "Mark";
-  const body = createRequestEmailBody(name, type, user);
+  const mediaType = "show";
+  const requester = "Mark";
+  const which = "all";
+  const body = createRequestEmailBody(name, { mediaType, requester, which });
+  expect(body).toMatchSnapshot();
+});
+
+test("Request movie notification snapshot", () => {
+  const name = "Die Hard";
+  const mediaType = "movie";
+  const requester = "Mark";
+  const body = createRequestEmailBody(name, { mediaType, requester });
   expect(body).toMatchSnapshot();
 });
