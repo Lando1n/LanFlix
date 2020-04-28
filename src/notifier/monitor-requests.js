@@ -12,16 +12,16 @@ const firebase = new FirebaseHelper(firebaseCert);
 function waitForRequests() {
   firebase.db.collection("requests").onSnapshot(function (querySnapshot) {
     querySnapshot.forEach(async function (doc) {
+      const data = doc.data();
       const email = new Email();
       const recipients = await firebase.getAdminEmail("Requests");
       email.setRecipients(recipients);
-      if (doc.data().type !== "placeholder") {
+      if (data.mediaType && data.mediaType !== "placeholder") {
         const name = doc.id;
-        const type = doc.data().mediaType;
-        const requester = doc.data().user;
-        const which = doc.data().which;
-        email.setSubject(`${type.toUpperCase()} Requested`);
-        const emailBody = createRequestEmailBody(name, type, requester, which);
+        email.setSubject(
+          `${data.mediaType.toUpperCase()} requested by ${data.requester}`
+        );
+        const emailBody = createRequestEmailBody(name, data);
         email.setBody(emailBody);
         email.sendEmail("Plex Server", "gmail", {
           user: sender.email,

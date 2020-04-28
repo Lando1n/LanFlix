@@ -12,7 +12,6 @@ function makeRequest(request) {
   request.timestamp = `${curr_date}/${curr_month}/${curr_year}`;
 
   const db = firebase.firestore();
-  console.log(request);
   db.collection("requests").doc(request.name).set(request);
 }
 
@@ -43,7 +42,7 @@ function requestShowDialog() {
         preConfirm: (searchString) => {
           const tmdb = new TheMovieDB();
           const uri = tmdb.getTvSearchUri(searchString);
-          console.log(uri);
+
           return fetch(uri)
             .then((response) => {
               if (!response.ok) {
@@ -53,7 +52,7 @@ function requestShowDialog() {
             })
             .then(async (response) => {
               let resultsTable = `
-              <table class='table table-dark table-striped table-bordered'>
+              <table id='request-table' class='table table-dark table-striped table-bordered'>
                 <thead>
                   <tr>
                     <th>Option</th>
@@ -67,7 +66,6 @@ function requestShowDialog() {
                 response.total_results < 3
                   ? response.results
                   : response.results.slice(0, 3);
-              console.log(results);
 
               let optionNum = 1;
               results.forEach((result) => {
@@ -127,10 +125,9 @@ function requestShowDialog() {
       const request = {
         mediaType: "show",
         which,
-        ...results[selection],
+        ...results[selection - 1],
       };
-      console.log(request);
-      //makeRequest(request);
+      makeRequest(request);
       Swal.fire("Requested", "The show has been requested!", "success");
     })
     .catch((err) => {
@@ -140,83 +137,105 @@ function requestShowDialog() {
 
 // eslint-disable-next-line no-unused-vars
 async function requestMovieDialog() {
-  const { value: searchString } = await Swal.fire({
-    title: "Which movie would you like to request?",
+  let results;
+
+  Swal.mixin({
     input: "text",
-    inputPlaceholder: "Specify the movie name here.",
-    showLoaderOnConfirm: true,
+    confirmButtonText: "Next &rarr;",
     showCancelButton: true,
-    inputValidator: (movieName) => {
-      if (!movieName) {
-        return "You need to write something!";
-      }
-      return;
-    },
-  });
-
-  if (!searchString) {
-    return;
-  }
-
-  let searchOptions = {};
-
-  theMovieDb.search.getMovie(
-    { query: encodeURI(searchString) },
-    // Search succeeded
-    async (response) => {
-      const rawResults = JSON.parse(response).results;
-
-      const searchResults =
-        rawResults.length < 3 ? rawResults : rawResults.slice(0, 3);
-
-      if (searchResults.length === 0) {
-        await Swal.fire(
-          "Search Failed",
-          "The search did not return any results",
-          "error"
-        );
-        return requestMovieDialog();
-      }
-      console.log(searchResults);
-      searchResults.forEach((movie) => {
-        const movieString = `${movie.title}: ${movie.release_date}`;
-        searchOptions[movieString] = movieString;
-      });
-
-      const { value: movieName } = await Swal.fire({
-        title: "Search Results",
-        input: "radio",
-        inputOptions: searchOptions,
-        inputValidator: (value) => {
-          if (!value) {
-            return "You need to choose something!";
+    progressSteps: ["1", "2"],
+  })
+    .queue([
+      {
+        title: "Which Movie would you like to request?",
+        input: "text",
+        inputPlaceholder: "Specify the show name here.",
+        showCancelButton: true,
+        inputValidator: (showName) => {
+          if (!showName) {
+            return "You need to write something!";
+          } else if (doesShowExist(showName)) {
+            return "Show already exists on database!";
           }
+          return;
         },
-      });
+        preConfirm: (searchString) => {
+          const tmdb = new TheMovieDB();
+          const uri = tmdb.getMovieSearchUri(searchString);
 
-      if (!movieName) {
-        return Swal.fire(
-          "Failed to request",
-          "The movie name was not specified",
-          "error"
-        );
+          return fetch(uri)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(response.statusText);
+              }
+              return response.json();
+            })
+            .then(async (response) => {
+              let resultsTable = `
+              <table id='request-table' class='table table-dark table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th>Option</th>
+                    <th>Name</th>
+                    <th>Release Date</th>
+                  </tr>
+                </thead>
+                <tbody>`;
+
+              results =
+                response.total_results < 3
+                  ? response.results
+                  : response.results.slice(0, 3);
+
+              let optionNum = 1;
+              results.forEach((result) => {
+                resultsTable += `
+                <tr>
+                  <td>${optionNum}</td>
+                  <td>${result.title}</td>
+                  <td>${result.release_date}</td>
+                </tr>`;
+                optionNum += 1;
+              });
+              resultsTable += `</tbody></table>`;
+
+              // The user has to choose which search results
+              await Swal.insertQueueStep({
+                title: "Search Results",
+                input: "radio",
+                html: resultsTable,
+                inputOptions: {
+                  "1": 1,
+                  "2": 2,
+                  "3": 3,
+                },
+                inputValidator: (value) => {
+                  if (!value) {
+                    return "You need to choose something!";
+                  }
+                },
+              });
+            });
+        },
+      },
+    ])
+    .then((responses) => {
+      if (!responses.value || responses.value.length !== 2) {
+        return;
       }
+
+      const selection = responses.value[1];
+      const name = results[selection - 1].title;
 
       const request = {
-        name: movieName,
+        name,
         mediaType: "movie",
+        ...results[selection - 1],
       };
       makeRequest(request);
       Swal.fire("Requested", "The movie has been requested!", "success");
-    },
-    // Search Failed
-    (response) => {
-      console.error(response);
-      return Swal.fire(
-        "Failed to search",
-        "Failed to find results from The Movie Database",
-        "error"
-      );
-    }
-  );
+    })
+    .catch((err) => {
+      Swal.fire("Failed to request", `${err}`, "error");
+    });
 }
