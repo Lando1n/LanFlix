@@ -77,3 +77,9 @@ function setSubbedForShow(isSubbed) {
   };
   row.data(rowData).invalidate();
 }
+
+// eslint-disable-next-line no-unused-vars
+function destroySubsTable() {
+  const table = $(showTableSelector).DataTable();
+  table.clear().draw();
+}

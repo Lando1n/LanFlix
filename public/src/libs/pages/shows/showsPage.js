@@ -32,9 +32,3 @@ function doesShowExist(showName) {
     });
   return showExists;
 }
-
-// eslint-disable-next-line no-unused-vars
-function destroySubsTable() {
-  const table = $(showTableSelector).DataTable();
-  table.clear().draw();
-}
