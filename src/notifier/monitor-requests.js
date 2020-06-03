@@ -33,7 +33,7 @@ function waitForRequests(recipients) {
           } else {
             console.warn(`Request doesn't match required schema`);
           }
-          //firebase.removeFromRequests(name);
+          firebase.removeFromRequests(name);
         }
       } catch (e) {
         console.error(e);
