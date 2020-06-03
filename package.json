@@ -7,7 +7,7 @@
     "test": "jest --silent",
     "lint": "eslint . --quiet",
     "coverage": "npm run test -- --coverage",
-    "request_monitor": "cd scripts && ./request_monitor.sh",
+    "monitor-requests": "cd scripts && ./request_monitor.sh",
     "vpn_monitor": "cd scripts && ./vpn_monitor.sh"
   },
   "dependencies": {

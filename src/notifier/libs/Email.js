@@ -27,6 +27,8 @@ class Email {
     }
 
     var transporter = nodemailer.createTransport({
+      debug: true,
+      logger: true,
       service: emailProvider,
       auth,
     });
@@ -40,7 +42,7 @@ class Email {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        throw new Error(error);
+        console.error(error);
       } else {
         console.log("Email sent: " + info.response);
       }

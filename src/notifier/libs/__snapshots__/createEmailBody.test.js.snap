@@ -17,9 +17,9 @@ exports[`New Show notification snapshot 1`] = `
 If so, continue to LanFlix (lanflix.firebaseapp.com) and toggle the subscription!"
 `;
 
-exports[`Request movie notification snapshot 1`] = `"Media Type: MOVIE</br>MOVIE Name: Die Hard</br>Requested by: Mark</br>"`;
+exports[`Request movie notification snapshot 1`] = `"Media Type: MOVIE</br>MOVIE Name: Die Hard</br>Requested by: undefined</br>"`;
 
-exports[`Request show notification snapshot 1`] = `"Media Type: SHOW</br>SHOW Name: Atlanta</br>Requested by: Mark</br>Which: all"`;
+exports[`Request show notification snapshot 1`] = `"Media Type: SHOW</br>SHOW Name: Atlanta</br>Requested by: undefined</br>Which: all"`;
 
 exports[`Show notification snapshot 1`] = `
 "Hey there,</br>
