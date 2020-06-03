@@ -73,6 +73,13 @@ The database needs to be setup with the following schema:
 
 Using the template under `config/template_sender.json`, create a file in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.
 
+## How To Use
+### Monitor Requests
+In order to receive emails for requests, execute the monitor requests script using:
+```
+npm run monitor-requests
+```
+
 ## Development
 ### Run linting
 ```

@@ -26,11 +26,11 @@ function createNewShowEmailBody(name) {
 If so, continue to LanFlix (lanflix.firebaseapp.com) and toggle the subscription!`;
 }
 
-function createRequestEmailBody(name, { mediaType, which, requester }) {
+function createRequestEmailBody(name, { mediaType, which, user }) {
   let body =
     `Media Type: ${mediaType.toUpperCase()}</br>` +
     `${mediaType.toUpperCase()} Name: ${name}</br>` +
-    `Requested by: ${requester}</br>`;
+    `Requested by: ${user}</br>`;
 
   if (mediaType === "show") {
     body += `Which: ${which}`;
