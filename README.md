@@ -1,6 +1,20 @@
 # LanFlix
 
 ## Setup
+### Dependencies
+* Install nodejs/npm
+  Note: If already install version must be <= node 10.x
+  ```
+  sudo apt update
+  sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+  curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+  sudo apt -y install nodejs
+  ```
+* Install all of the npm packages required for the script with: 
+  ```
+  npm install
+  ```
+
 ### Firebase
 * Create a firebase project, or use an existing one.  
   https://console.firebase.google.com/
@@ -18,7 +32,7 @@ The database needs to be setup with the following schema:
 ### Browser Client
 * Navigate to the browser client directory
   ```
-  cd src/browser-client
+  cd public
   ```
 * Install the firebase CLI
   ```
@@ -51,31 +65,17 @@ The database needs to be setup with the following schema:
   You can control versioning of the deployments on Google Firebase Console.
 
 ### Notifier
-
-#### Install Dependencies
-* Install nodejs/npm
-  Note: If already install version must be <= node 10.x
-  ```
-  sudo apt update
-  sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
-  curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-  sudo apt -y install nodejs
-  ```
-* Install all of the npm packages required for the script with: 
-  ```
-  npm install
-  ```
-#### Place the Certificate
+#### Place the Firebase Certificate
 * Get a certificate from `Firebase Settings > Project Settings > Service Accounts > Firebase Admin SDK`
 * Place cert in `config/lanflix-firebase-cert.json`
 
 #### Add Email Credentials
-
 Using the template under `config/template_sender.json`, create a file in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.
 
 ## How To Use
 ### Monitor Requests
 To receive emails for requests from the website and emails from download notifications, you need to have the lanflix-monitor running.
+
 #### Run a Script
 Execute the npm monitor script using:
 ```
@@ -89,12 +89,10 @@ When this process is closed, the monitor will no longer run. If you would prefer
 * Enable and start the services
 ```bash
 sudo systemctl enable --now lanflix-monitor.service
-sudo systemctl enable --now lanflix-requests.service
 ```
 * Check the status of the services
 ```bash
 sudo systemctl status lanflix-monitor.service
-sudo systemctl status lanflix-requests.service
 ```
 
 ## Development
