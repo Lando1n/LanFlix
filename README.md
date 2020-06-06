@@ -86,6 +86,7 @@ npm run monitor-emails
 ```
 
 #### Auto boot on start (systemd)
+* Change the user and group from `plexserver` to the username on your machine
 * Copy the files from `/services/` into /etc/systemd/system/ 
 * Enable and start the services
 ```bash

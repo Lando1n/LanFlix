@@ -4,14 +4,14 @@ After=network.target
 
 [Service]
 # Change and/or create the required user and group.
-User=lanflix
-Group=lanflix
+User=plexserver
+Group=plexserver
 
 # The UMask parameter controls the permissions of folders and files created.
 #UMask=002
 
 # The -data=/path argument can be used to force the config/db folder
-ExecStart=/usr/local/bin/node /opt/LanFlix/src/notifier/monitor-requests.js
+ExecStart=/usr/bin/node /opt/LanFlix/src/notifier/monitor-requests.js
 
 Restart=always
 RestartSec=10
@@ -22,11 +22,3 @@ SyslogIdentifier=lanflix-requests
 
 [Install]
 WantedBy=multi-user.target
-```
-Enable and start the service
-```bash
-sudo systemctl enable --now lanflix.service
-```
-Check the status of the service
-```bash
-sudo systemctl status lanflix.service
