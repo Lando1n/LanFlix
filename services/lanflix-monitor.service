@@ -5,7 +5,7 @@ After=network.target
 [Service]
 # Change and/or create the required user and group.
 User=plexserver
-Group=plexerver
+Group=plexserver
 
 # The UMask parameter controls the permissions of folders and files created.
 #UMask=002
