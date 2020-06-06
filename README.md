@@ -3,7 +3,7 @@
 ## Setup
 ### Dependencies
 * Install nodejs/npm
-  Note: If already install version must be <= node 10.x
+  Note: If already installed, version must be at least node 10.x
   ```
   sudo apt update
   sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
