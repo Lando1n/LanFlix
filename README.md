@@ -72,18 +72,17 @@ The database needs to be setup with the following schema:
 #### Add Email Credentials
 Using the template under `config/template_sender.json`, create a file in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.
 
-## How To Use
-### Monitor Requests
+### Turn on Email Notifications
 To receive emails for requests from the website and emails from download notifications, you need to have the lanflix-monitor running.
 
-#### Run a Script
+#### Option A: Run a script in a terminal
 Execute the npm monitor script using:
 ```
 npm run monitor
 ```
 When this process is closed, the monitor will no longer run. If you would prefer to have it as a background service, look at the next section.
 
-#### Auto boot on start (systemd)
+#### Option B: Auto boot on start with systemd
 * Change the user and group from `plexserver` to the username on your machine
 * Copy the files from `/services/` into /etc/systemd/system/ 
 * Enable and start the services
@@ -93,6 +92,10 @@ sudo systemctl enable --now lanflix-monitor.service
 * Check the status of the services
 ```bash
 sudo systemctl status lanflix-monitor.service
+```
+Note: You may need to adjust the path to node if it is installed in a different location. Find this using:
+```bash
+which node
 ```
 
 ## Development
