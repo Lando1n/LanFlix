@@ -76,45 +76,26 @@ Using the template under `config/template_sender.json`, create a file in the sam
 ## How To Use
 ### Monitor Requests
 #### Run a Script
-In order to receive emails for requests, execute the monitor requests script using:
+To receive emails for requests from the website, execute the monitor requests script using:
 ```
 npm run monitor-requests
 ```
+To receive emails for new content from the website, execute the monitor emails script using:
+```
+npm run monitor-emails
+```
+
 #### Auto boot on start (systemd)
-Create a file called `lanflix.service` in /etc/systemd/system/
-```
-[Unit]
-Description=LanFlix Daemon
-After=network.target
-
-[Service]
-# Change and/or create the required user and group.
-User=lanflix
-Group=lanflix
-
-# The UMask parameter controls the permissions of folders and files created.
-#UMask=002
-
-# The -data=/path argument can be used to force the config/db folder
-ExecStart=/usr/local/bin/node /opt/LanFlix/src/notifier/monitor-requests.js
-
-Restart=always
-RestartSec=10
-
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=lanflix
-
-[Install]
-WantedBy=multi-user.target
-```
-Enable and start the service
+* Copy the files from `/services/` into /etc/systemd/system/ 
+* Enable and start the services
 ```bash
-sudo systemctl enable --now lanflix.service
+sudo systemctl enable --now lanflix-monitor.service
+sudo systemctl enable --now lanflix-requests.service
 ```
-Check the status of the service
+* Check the status of the services
 ```bash
-sudo systemctl status lanflix.service
+sudo systemctl status lanflix-monitor.service
+sudo systemctl status lanflix-requests.service
 ```
 
 ## Development
