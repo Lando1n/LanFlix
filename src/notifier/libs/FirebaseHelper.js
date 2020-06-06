@@ -116,6 +116,18 @@ class FirebaseHelper {
     console.debug(`Found admin emails: ${subs}`);
     return subs;
   }
+
+  async queueEmail({ subject, body, recipients }) {
+    console.debug(
+      `Adding email to queue: ${JSON.stringify({ subject, body, recipients })}`
+    );
+    this.db.collection("email").add({ subject, body, recipients });
+  }
+
+  async removeEmailFromQueue(docId) {
+    console.debug(`Removing email from queue with id: ${docId}`);
+    this.db.collection("email").doc(docId).delete();
+  }
 }
 
 module.exports = FirebaseHelper;

@@ -1,68 +1,49 @@
 const FirebaseHelper = require("./libs/FirebaseHelper");
 const Media = require("./libs/Media");
-const Email = require("./libs/Email");
 const {
   createShowEmailBody,
   createMovieEmailBody,
   createNewShowEmailBody,
 } = require("./libs/createEmailBody");
 
-async function notify(mediaName, firebaseCert) {
-  const firebase = new FirebaseHelper(firebaseCert);
-  const media = new Media(mediaName);
-  const email = new Email();
+async function getEmailContent(media, firebase) {
+  let recipients;
+  let subject;
+  let body;
+
+  console.log(JSON.stringify(media));
 
   // Determine the recipients
-  if (media.type === "movie") {
-    const recipients = await firebase.getMovieSubs("all");
-    email.setRecipients(recipients);
-    email.setSubject(`Movie Alert: ${media.name}`);
-    const emailBody = createMovieEmailBody(media.name);
-    email.setBody(emailBody);
-  } else if (media.type === "show" || media.type === "season") {
-    const showExists = await firebase.doesShowExist(media.name);
-    if (showExists) {
-      const recipients = await firebase.getShowSubs(media.name);
-      email.setRecipients(recipients);
-      email.setSubject(`Show Alert: ${media.name}`);
-      const emailBody = createShowEmailBody(media.name);
-      email.setBody(emailBody);
-    } else {
-      // Send special email
-      const recipients = await firebase.getAllUsers();
-      email.setRecipients(recipients);
-      email.setSubject(`New Show Alert: ${media.name}`);
-      const emailBody = createNewShowEmailBody(media.name);
-      email.setBody(emailBody);
-      firebase.addShowToList(media.name);
-    }
-  } else {
-    throw new Error(`Unrecognized media type '${media.type}'`);
+  switch (media.type) {
+    case "movie":
+      recipients = await firebase.getMovieSubs("all");
+      subject = `Movie Alert: ${media.name}`;
+      body = createMovieEmailBody(media.name);
+      break;
+    case "season":
+    case "show":
+      if (await firebase.doesShowExist(media.name)) {
+        recipients = await firebase.getShowSubs(media.name);
+        subject = `Show Alert: ${media.name}`;
+        body = createShowEmailBody(media.name);
+      } else {
+        // Send special email for a new show on the server
+        recipients = await firebase.getAllUsers();
+        subject = `New Show Alert: ${media.name}`;
+        body = createNewShowEmailBody(media.name);
+        firebase.addShowToList(media.name);
+      }
+      break;
+    default:
+      throw new Error(`Unrecognized media type '${media.type}'`);
   }
-
-  const dryRun = process.argv[3];
-  // Send email if not dry-run
-  if (!dryRun) {
-    email.sendEmail(sender.name, "gmail", {
-      user: sender.email,
-      pass: sender.password,
-    });
-  } else {
-    console.log("Not sending email because dry-run is set.");
-  }
+  return { recipients, subject, body };
 }
 
-// Parse arguments
-const mediaName = process.argv[2];
-
-if (mediaName === undefined) {
-  throw new Error("No media name passed as script argument");
-}
-
-// Get config location
-const sender = require("../../config/sender.json");
-
-// Get firebase cert location
+const media = new Media(process.argv[2]);
 const firebaseCert = require("../../config/lanflix-firebase-cert.json");
+const firebase = new FirebaseHelper(firebaseCert);
 
-notify(mediaName, firebaseCert);
+getEmailContent(media, firebase).then((emailContent) => {
+  firebase.queueEmail(emailContent);
+});
