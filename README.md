@@ -1,4 +1,8 @@
 # LanFlix
+## Description
+LanFlix is a notification provider that sends users an email whenever a show or movie is downloaded which you have selected to be notified for. Using the LanFlix website, multiple users can register then specify which shows they are interested in and what genre of movies. LanFlix is powered by Firebase, so a Google account is required.
+
+Best used in tandem with Sonarr, Radarr, and Plex/Emby.
 
 ## Setup
 ### Dependencies
@@ -97,6 +101,18 @@ Note: You may need to adjust the path to node if it is installed in a different 
 ```bash
 which node
 ```
+
+### Client Scripts
+In order to be notified that content has been added, the client that grabs the content needs to talk to LanFlix. `scripts/client_scripts` helps with that, but each client needs to be setup individually. Many more clients can be used, the scripts just need to be written.
+
+### Transmission
+WIP
+### Deluge
+WIP
+### Sonarr
+WIP
+### Radarr
+WIP
 
 ## Development
 ### Run linting
