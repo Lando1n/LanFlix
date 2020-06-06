@@ -7,6 +7,8 @@
     "test": "jest --silent",
     "lint": "eslint . --quiet",
     "coverage": "npm run test -- --coverage",
+    "monitor-requests": "node ../src/notifier/monitor-requests.js",
+    "monitor-emails": "node ../src/notifier/monitor-emails.js",
     "vpn_monitor": "cd scripts && ./vpn_monitor.sh"
   },
   "dependencies": {
