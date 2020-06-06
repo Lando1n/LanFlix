@@ -75,15 +75,13 @@ Using the template under `config/template_sender.json`, create a file in the sam
 
 ## How To Use
 ### Monitor Requests
+To receive emails for requests from the website and emails from download notifications, you need to have the lanflix-monitor running.
 #### Run a Script
-To receive emails for requests from the website, execute the monitor requests script using:
+Execute the npm monitor script using:
 ```
-npm run monitor-requests
+npm run monitor
 ```
-To receive emails for new content from the website, execute the monitor emails script using:
-```
-npm run monitor-emails
-```
+When this process is closed, the monitor will no longer run. If you would prefer to have it as a background service, look at the next section.
 
 #### Auto boot on start (systemd)
 * Change the user and group from `plexserver` to the username on your machine
