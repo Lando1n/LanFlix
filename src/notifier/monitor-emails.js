@@ -23,12 +23,12 @@ firebase.db.collection("email").onSnapshot((snapshot) => {
             user: sender.email,
             pass: sender.password,
           });
+          firebase.removeEmailFromQueue(change.doc.id);
           break;
         default:
           console.warn(`No implementation for ${change.type}`);
           break;
       }
-      firebase.removeEmailFromQueue(change.doc.id);
     } catch (e) {
       console.error(e);
     }

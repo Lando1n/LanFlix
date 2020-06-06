@@ -1,9 +1,6 @@
 const FirebaseHelper = require("./libs/FirebaseHelper");
-const Email = require("./libs/Email");
-const { createRequestEmailBody } = require("./libs/createEmailBody");
 
-// Get config location
-const sender = require("../../config/sender.json");
+const { createRequestEmailBody } = require("./libs/createEmailBody");
 
 // Get firebase cert location
 const firebaseCert = require("../../config/lanflix-firebase-cert.json");
@@ -13,27 +10,27 @@ function waitForRequests(recipients) {
   firebase.db.collection("requests").onSnapshot((snapshot) => {
     snapshot.docChanges().forEach((change) => {
       try {
-        if (change.type === "added") {
-          const data = change.doc.data();
-          console.log(data);
-          const name = change.doc.id;
-          const email = new Email();
-          email.setRecipients(recipients);
+        const data = change.doc.data();
+        console.log(data);
+        const name = change.doc.id;
 
-          if (data.mediaType) {
-            email.setSubject(
-              `${data.mediaType.toUpperCase()} requested by ${data.user}`
-            );
-            const emailBody = createRequestEmailBody(name, data);
-            email.setBody(emailBody);
-            email.sendEmail("Plex Server", "gmail", {
-              user: sender.email,
-              pass: sender.password,
-            });
-          } else {
-            console.warn(`Request doesn't match required schema`);
-          }
-          firebase.removeFromRequests(name);
+        switch (change.type) {
+          case "added":
+            if (data.mediaType) {
+              const subject = `${data.mediaType.toUpperCase()} requested by ${
+                data.user
+              }`;
+              const body = createRequestEmailBody(name, data);
+
+              firebase.queueEmail({ subject, body, recipients });
+            } else {
+              console.warn(`Media type not defined, request not made.`);
+            }
+            firebase.removeFromRequests(name);
+            break;
+          default:
+            console.warn(`No implementation for ${change.type}`);
+            break;
         }
       } catch (e) {
         console.error(e);
