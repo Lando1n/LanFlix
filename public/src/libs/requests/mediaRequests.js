@@ -16,6 +16,101 @@ function makeRequest(request) {
   db.collection("requests").doc(request.name).set(request);
 }
 
+function getNameDOM(option) {
+  return `<h6>
+  ${option.name || option.title}
+  </h6>`;
+}
+
+function getInfoDOM(option) {
+  return `<h6>
+  ${option.first_air_date || option.release_date}
+  </h6>`;
+}
+
+function getImageDOM(option) {
+  const tmdb = new TheMovieDB();
+  const imageUrl = tmdb.getImageUri(option.poster_path);
+  return `<img src="${imageUrl}"
+  alt="${option.name || option.title}"
+  style="width:80px;height:120px;">`;
+}
+
+function shortenSearchResults(response, resultsToShow = 3) {
+  return response.total_results < resultsToShow
+    ? response.results
+    : response.results.slice(0, resultsToShow);
+}
+
+function createResultsTable(searchOptions) {
+  let titleCols = "";
+  let imageCols = "";
+  let infoCols = "";
+
+  searchOptions.forEach((option) => {
+    titleCols += `<th>${getNameDOM(option)}</th>`;
+    imageCols += `<td>${getImageDOM(option)}</td>`;
+    infoCols += `<td>${getInfoDOM(option)}</td>`;
+  });
+
+  return `
+      <table id='request-table' class='table table-dark table-bordered' style='table-layout: fixed;'>
+        <thead class='thead-dark'>
+          <tr>
+            ${titleCols}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            ${imageCols}
+          </tr>
+          <tr>
+            ${infoCols}
+          </tr>
+        </tbody>
+      </table>`;
+}
+
+async function pickResult(response) {
+  const resultsTable = createResultsTable(response);
+
+  // The user has to choose which search results
+  await Swal.insertQueueStep({
+    title: "Search Results",
+    input: "radio",
+    html: resultsTable,
+    inputOptions: {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+    },
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to choose something!";
+      }
+    },
+  });
+}
+
+async function chooseEpisodesType() {
+  // The user must select the download type
+  await Swal.insertQueueStep({
+    title: "Which Episodes?",
+    input: "select",
+    inputOptions: {
+      all: "All",
+      future: "Upcoming Episodes",
+      last: "Most Recent Season",
+      first: "First Season",
+    },
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to choose something!";
+      }
+    },
+  });
+}
+
 // eslint-disable-next-line no-unused-vars
 function requestShowDialog() {
   let results;
@@ -52,67 +147,10 @@ function requestShowDialog() {
               return response.json();
             })
             .then(async (response) => {
-              let resultsTable = `
-              <table id='request-table' class='table table-dark table-striped table-bordered'>
-                <thead>
-                  <tr>
-                    <th>Option</th>
-                    <th>Name</th>
-                    <th>Release Date</th>
-                  </tr>
-                </thead>
-                <tbody>`;
+              results = shortenSearchResults(response);
+              await pickResult(results);
 
-              results =
-                response.total_results < 3
-                  ? response.results
-                  : response.results.slice(0, 3);
-
-              let optionNum = 1;
-              results.forEach((result) => {
-                resultsTable += `
-                <tr>
-                  <td>${optionNum}</td>
-                  <td>${result.name}</td>
-                  <td>${result.first_air_date}</td>
-                </tr>`;
-                optionNum += 1;
-              });
-              resultsTable += `</tbody></table>`;
-
-              // The user has to choose which search results
-              await Swal.insertQueueStep({
-                title: "Search Results",
-                input: "radio",
-                html: resultsTable,
-                inputOptions: {
-                  "1": 1,
-                  "2": 2,
-                  "3": 3,
-                },
-                inputValidator: (value) => {
-                  if (!value) {
-                    return "You need to choose something!";
-                  }
-                },
-              });
-
-              // The user must select the download type
-              await Swal.insertQueueStep({
-                title: "Which Episodes?",
-                input: "select",
-                inputOptions: {
-                  all: "All",
-                  future: "Upcoming Episodes",
-                  last: "Most Recent Season",
-                  first: "First Season",
-                },
-                inputValidator: (value) => {
-                  if (!value) {
-                    return "You need to choose something!";
-                  }
-                },
-              });
+              await chooseEpisodesType();
             });
         },
       },
@@ -174,50 +212,8 @@ async function requestMovieDialog() {
               return response.json();
             })
             .then(async (response) => {
-              let resultsTable = `
-              <table id='request-table' class='table table-dark table-striped table-bordered'>
-                <thead>
-                  <tr>
-                    <th>Option</th>
-                    <th>Name</th>
-                    <th>Release Date</th>
-                  </tr>
-                </thead>
-                <tbody>`;
-
-              results =
-                response.total_results < 3
-                  ? response.results
-                  : response.results.slice(0, 3);
-
-              let optionNum = 1;
-              results.forEach((result) => {
-                resultsTable += `
-                <tr>
-                  <td>${optionNum}</td>
-                  <td>${result.title}</td>
-                  <td>${result.release_date}</td>
-                </tr>`;
-                optionNum += 1;
-              });
-              resultsTable += `</tbody></table>`;
-
-              // The user has to choose which search results
-              await Swal.insertQueueStep({
-                title: "Search Results",
-                input: "radio",
-                html: resultsTable,
-                inputOptions: {
-                  "1": 1,
-                  "2": 2,
-                  "3": 3,
-                },
-                inputValidator: (value) => {
-                  if (!value) {
-                    return "You need to choose something!";
-                  }
-                },
-              });
+              results = shortenSearchResults(response);
+              await pickResult(results);
             });
         },
       },
