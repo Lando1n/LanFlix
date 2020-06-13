@@ -17,9 +17,9 @@ exports[`New Show notification snapshot 1`] = `
 If so, continue to LanFlix (lanflix.firebaseapp.com) and toggle the subscription!"
 `;
 
-exports[`Request movie notification snapshot 1`] = `"<a href='https://www.themoviedb.org/movie/undefined'><h3>Die Hard</h3></a></br><img src=\\"http://image.tmdb.org/t/p/originalundefined\\" style='width:200px;height:300px;'/><br>"`;
+exports[`Request movie notification snapshot 1`] = `"<a href='https://www.themoviedb.org/movie/undefined'><h3>Die Hard</h3></a></br><img src=\\"https://image.tmdb.org/t/p/originalundefined\\" style='width:200px;height:300px;'/><br>"`;
 
-exports[`Request show notification snapshot 1`] = `"<a href='https://www.themoviedb.org/tv/undefined'><h3>Atlanta</h3></a></br><img src=\\"http://image.tmdb.org/t/p/originalundefined\\" style='width:200px;height:300px;'/><br></br>Which: all"`;
+exports[`Request show notification snapshot 1`] = `"<a href='https://www.themoviedb.org/tv/undefined'><h3>Atlanta</h3></a></br><img src=\\"https://image.tmdb.org/t/p/originalundefined\\" style='width:200px;height:300px;'/><br></br>Which: all"`;
 
 exports[`Show notification snapshot 1`] = `
 "Hey there,</br>
