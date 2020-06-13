@@ -16,32 +16,36 @@ function makeRequest(request) {
   db.collection("requests").doc(request.name).set(request);
 }
 
-function getRequestResultRow(result, optionNum) {
+function getRequestResultRow(option) {
   const tmdb = new TheMovieDB();
-  const imageUrl = tmdb.getImageUri(result.poster_path);
+  const imageUrl = tmdb.getImageUri(option.poster_path);
   return `
           <tr>
-            <td>${optionNum}</td>
+            <td>${option.num}</td>
             <td>
               <img src="${imageUrl}"
-                  alt="${result.name || result.title}"
-                  style="width:80px;height:120px;"
-              >
+                  alt="${option.name || option.title}"
+                  style="width:80px;height:120px;">
             </td>
             <td>
               <h6>
               <br>
-              ${result.name || result.title}
+              ${option.name || option.title}
               <br><br>
-              ${result.first_air_date || result.release_date}
+              ${option.first_air_date || option.release_date}
               </h6>
             </td>
           </tr>`;
 }
 
-function createResultsTable(response) {
-  const resultsToShow = 3;
-  let resultsTable = `
+function shortenSearchResults(response, resultsToShow = 3) {
+  return response.total_results < resultsToShow
+    ? response.results
+    : response.results.slice(0, resultsToShow);
+}
+
+function createResultsTable(searchOptions) {
+  let resultsHTMLTable = `
     <table id='request-table' class='table table-dark table-striped table-bordered'>
       <thead>
         <tr>
@@ -52,18 +56,14 @@ function createResultsTable(response) {
       </thead>
       <tbody>`;
 
-  const results =
-    response.total_results < resultsToShow
-      ? response.results
-      : response.results.slice(0, resultsToShow);
-
   let optionNum = 1;
-  results.forEach((result) => {
-    resultsTable += getRequestResultRow(result, optionNum);
+  searchOptions.forEach((option) => {
+    option.num = optionNum;
+    resultsHTMLTable += getRequestResultRow(option);
     optionNum += 1;
   });
-  resultsTable += `</tbody></table>`;
-  return resultsTable;
+  resultsHTMLTable += `</tbody></table>`;
+  return resultsHTMLTable;
 }
 
 async function pickResult(response) {
@@ -142,7 +142,8 @@ function requestShowDialog() {
               return response.json();
             })
             .then(async (response) => {
-              await pickResult(response);
+              results = shortenSearchResults(response);
+              await pickResult(results);
 
               await chooseEpisodesType();
             });
@@ -206,7 +207,8 @@ async function requestMovieDialog() {
               return response.json();
             })
             .then(async (response) => {
-              pickResult(response);
+              results = shortenSearchResults(response);
+              await pickResult(results);
             });
         },
       },
