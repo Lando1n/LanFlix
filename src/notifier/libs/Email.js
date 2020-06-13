@@ -23,7 +23,7 @@ class Email {
   sendEmail(senderName, emailProvider, auth = {}) {
     console.debug(`Sending email to: ${this.to}`);
     if (!this.to) {
-      throw new Error("Reciepients not set");
+      throw new Error("Recipients not set");
     }
 
     var transporter = nodemailer.createTransport({

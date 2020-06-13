@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['eslint:recommended'],
+  extends: ["plugin:prettier/recommended"],
   env: {
     browser: true,
     commonjs: true,
