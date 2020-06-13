@@ -16,6 +16,57 @@ function makeRequest(request) {
   db.collection("requests").doc(request.name).set(request);
 }
 
+function getRequestResultRow(result, optionNum) {
+  const tmdb = new TheMovieDB();
+  const imageUrl = tmdb.getImageUri(result.poster_path);
+  return `
+          <tr>
+            <td>${optionNum}</td>
+            <td>
+              <img src="${imageUrl}"
+                  alt="${result.name || result.title}"
+                  style="width:80px;height:120px;"
+              >
+            </td>
+            <td>
+              <h6>
+              <br>
+              ${result.name || result.title}
+              <br><br>
+              ${result.first_air_date || result.release_date}
+              </h6>
+            </td>
+          </tr>`;
+}
+
+function createResultsTable(response) {
+  const resultsToShow = 3;
+  let resultsTable = `
+    <table id='request-table' class='table table-dark table-striped table-bordered'>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Poster</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+  const results =
+    response.total_results < resultsToShow
+      ? response.results
+      : response.results.slice(0, 3);
+  console.log(results);
+
+  let optionNum = 1;
+  results.forEach((result) => {
+    resultsTable += getRequestResultRow(result, optionNum);
+    optionNum += 1;
+  });
+  resultsTable += `</tbody></table>`;
+  return resultsTable;
+}
+
 // eslint-disable-next-line no-unused-vars
 function requestShowDialog() {
   let results;
@@ -52,33 +103,7 @@ function requestShowDialog() {
               return response.json();
             })
             .then(async (response) => {
-              let resultsTable = `
-              <table id='request-table' class='table table-dark table-striped table-bordered'>
-                <thead>
-                  <tr>
-                    <th>Option</th>
-                    <th>Name</th>
-                    <th>Release Date</th>
-                  </tr>
-                </thead>
-                <tbody>`;
-
-              results =
-                response.total_results < 3
-                  ? response.results
-                  : response.results.slice(0, 3);
-
-              let optionNum = 1;
-              results.forEach((result) => {
-                resultsTable += `
-                <tr>
-                  <td>${optionNum}</td>
-                  <td>${result.name}</td>
-                  <td>${result.first_air_date}</td>
-                </tr>`;
-                optionNum += 1;
-              });
-              resultsTable += `</tbody></table>`;
+              const resultsTable = createResultsTable(response);
 
               // The user has to choose which search results
               await Swal.insertQueueStep({
@@ -174,33 +199,7 @@ async function requestMovieDialog() {
               return response.json();
             })
             .then(async (response) => {
-              let resultsTable = `
-              <table id='request-table' class='table table-dark table-striped table-bordered'>
-                <thead>
-                  <tr>
-                    <th>Option</th>
-                    <th>Name</th>
-                    <th>Release Date</th>
-                  </tr>
-                </thead>
-                <tbody>`;
-
-              results =
-                response.total_results < 3
-                  ? response.results
-                  : response.results.slice(0, 3);
-
-              let optionNum = 1;
-              results.forEach((result) => {
-                resultsTable += `
-                <tr>
-                  <td>${optionNum}</td>
-                  <td>${result.title}</td>
-                  <td>${result.release_date}</td>
-                </tr>`;
-                optionNum += 1;
-              });
-              resultsTable += `</tbody></table>`;
+              const resultsTable = createResultsTable(response);
 
               // The user has to choose which search results
               await Swal.insertQueueStep({
