@@ -3,7 +3,7 @@ class TheMovieDB {
   constructor() {
     this.apiKey = "0a2f7317616d7c1426d3a93c19babc97";
     this.base_uri = "https://api.themoviedb.org/3";
-    this.images_uri = "http://image.tmdb.org/t/p/original/";
+    this.images_uri = "http://image.tmdb.org/t/p/original";
     this.language = "en-US";
   }
 
@@ -20,6 +20,6 @@ class TheMovieDB {
   }
 
   getImageUri(posterPath) {
-    return `${this.images_uri}/${posterPath}`;
+    return `${this.images_uri}${posterPath}`;
   }
 }

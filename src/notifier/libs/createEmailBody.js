@@ -26,26 +26,20 @@ function createNewShowEmailBody(name) {
 If so, continue to LanFlix (lanflix.firebaseapp.com) and toggle the subscription!`;
 }
 
-function createRequestEmailBody(name, { mediaType, which, user, id }) {
+function createRequestEmailBody(name, { mediaType, which, id, poster_path }) {
+  const imageUri =
+    mediaType === "show"
+      ? `https://www.themoviedb.org/tv/${id}`
+      : `https://www.themoviedb.org/movie/${id}`;
   const lines = [
-    `Media Type: ${mediaType.toUpperCase()}`,
-    `${mediaType.toUpperCase()} Name: ${name}`,
-    `Requested by: ${user}`,
+    `<a href='${imageUri}'><h3>${name}</h3></a>`,
+    `<img src="http://image.tmdb.org/t/p/original${poster_path}" style='width:200px;height:300px;'/><br>`,
   ];
 
-  switch (mediaType) {
-    case "show":
-      lines.push(`Which: ${which}`);
-      lines.push("");
-      lines.push(`https://www.themoviedb.org/tv/${id}`);
-      break;
-    case "movie":
-      lines.push("");
-      lines.push(`https://www.themoviedb.org/movie/${id}`);
-      break;
-    default:
-      break;
+  if (mediaType === "show") {
+    lines.push(`Which: ${which}`);
   }
+
   return lines.join("</br>");
 }
 
