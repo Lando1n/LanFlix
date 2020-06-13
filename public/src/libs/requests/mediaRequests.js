@@ -55,8 +55,7 @@ function createResultsTable(response) {
   const results =
     response.total_results < resultsToShow
       ? response.results
-      : response.results.slice(0, 3);
-  console.log(results);
+      : response.results.slice(0, resultsToShow);
 
   let optionNum = 1;
   results.forEach((result) => {
@@ -65,6 +64,46 @@ function createResultsTable(response) {
   });
   resultsTable += `</tbody></table>`;
   return resultsTable;
+}
+
+async function pickResult(response) {
+  const resultsTable = createResultsTable(response);
+
+  // The user has to choose which search results
+  await Swal.insertQueueStep({
+    title: "Search Results",
+    input: "radio",
+    html: resultsTable,
+    inputOptions: {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+    },
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to choose something!";
+      }
+    },
+  });
+}
+
+async function chooseEpisodesType() {
+  // The user must select the download type
+  await Swal.insertQueueStep({
+    title: "Which Episodes?",
+    input: "select",
+    inputOptions: {
+      all: "All",
+      future: "Upcoming Episodes",
+      last: "Most Recent Season",
+      first: "First Season",
+    },
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to choose something!";
+      }
+    },
+  });
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -103,41 +142,9 @@ function requestShowDialog() {
               return response.json();
             })
             .then(async (response) => {
-              const resultsTable = createResultsTable(response);
+              await pickResult(response);
 
-              // The user has to choose which search results
-              await Swal.insertQueueStep({
-                title: "Search Results",
-                input: "radio",
-                html: resultsTable,
-                inputOptions: {
-                  "1": 1,
-                  "2": 2,
-                  "3": 3,
-                },
-                inputValidator: (value) => {
-                  if (!value) {
-                    return "You need to choose something!";
-                  }
-                },
-              });
-
-              // The user must select the download type
-              await Swal.insertQueueStep({
-                title: "Which Episodes?",
-                input: "select",
-                inputOptions: {
-                  all: "All",
-                  future: "Upcoming Episodes",
-                  last: "Most Recent Season",
-                  first: "First Season",
-                },
-                inputValidator: (value) => {
-                  if (!value) {
-                    return "You need to choose something!";
-                  }
-                },
-              });
+              await chooseEpisodesType();
             });
         },
       },
@@ -199,24 +206,7 @@ async function requestMovieDialog() {
               return response.json();
             })
             .then(async (response) => {
-              const resultsTable = createResultsTable(response);
-
-              // The user has to choose which search results
-              await Swal.insertQueueStep({
-                title: "Search Results",
-                input: "radio",
-                html: resultsTable,
-                inputOptions: {
-                  "1": 1,
-                  "2": 2,
-                  "3": 3,
-                },
-                inputValidator: (value) => {
-                  if (!value) {
-                    return "You need to choose something!";
-                  }
-                },
-              });
+              pickResult(response);
             });
         },
       },
