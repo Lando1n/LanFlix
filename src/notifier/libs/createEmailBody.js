@@ -33,7 +33,7 @@ function createRequestEmailBody(name, { mediaType, which, id, poster_path }) {
       : `https://www.themoviedb.org/movie/${id}`;
   const lines = [
     `<a href='${imageUri}'><h3>${name}</h3></a>`,
-    `<img src="http://image.tmdb.org/t/p/original${poster_path}" style='width:200px;height:300px;'/><br>`,
+    `<img src="https://image.tmdb.org/t/p/original${poster_path}" style='width:200px;height:300px;'/><br>`,
   ];
 
   if (mediaType === "show") {
