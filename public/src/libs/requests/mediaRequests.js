@@ -16,26 +16,24 @@ function makeRequest(request) {
   db.collection("requests").doc(request.name).set(request);
 }
 
-function getRequestResultRow(option) {
+function getNameDOM(option) {
+  return `<h6>
+  ${option.name || option.title}
+  </h6>`;
+}
+
+function getInfoDOM(option) {
+  return `<h6>
+  ${option.first_air_date || option.release_date}
+  </h6>`;
+}
+
+function getImageDOM(option) {
   const tmdb = new TheMovieDB();
   const imageUrl = tmdb.getImageUri(option.poster_path);
-  return `
-          <tr>
-            <td>${option.num}</td>
-            <td>
-              <img src="${imageUrl}"
-                  alt="${option.name || option.title}"
-                  style="width:80px;height:120px;">
-            </td>
-            <td>
-              <h6>
-              <br>
-              ${option.name || option.title}
-              <br><br>
-              ${option.first_air_date || option.release_date}
-              </h6>
-            </td>
-          </tr>`;
+  return `<img src="${imageUrl}"
+  alt="${option.name || option.title}"
+  style="width:80px;height:120px;">`;
 }
 
 function shortenSearchResults(response, resultsToShow = 3) {
@@ -45,25 +43,32 @@ function shortenSearchResults(response, resultsToShow = 3) {
 }
 
 function createResultsTable(searchOptions) {
-  let resultsHTMLTable = `
-    <table id='request-table' class='table table-dark table-striped table-bordered'>
-      <thead>
-        <tr>
-          <th>Option</th>
-          <th>Poster</th>
-          <th>Name</th>
-        </tr>
-      </thead>
-      <tbody>`;
+  let titleCols = "";
+  let imageCols = "";
+  let infoCols = "";
 
-  let optionNum = 1;
   searchOptions.forEach((option) => {
-    option.num = optionNum;
-    resultsHTMLTable += getRequestResultRow(option);
-    optionNum += 1;
+    titleCols += `<th>${getNameDOM(option)}</th>`;
+    imageCols += `<td>${getImageDOM(option)}</td>`;
+    infoCols += `<td>${getInfoDOM(option)}</td>`;
   });
-  resultsHTMLTable += `</tbody></table>`;
-  return resultsHTMLTable;
+
+  return `
+      <table id='request-table' class='table table-dark table-bordered' style='table-layout: fixed;'>
+        <thead class='thead-dark'>
+          <tr>
+            ${titleCols}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            ${imageCols}
+          </tr>
+          <tr>
+            ${infoCols}
+          </tr>
+        </tbody>
+      </table>`;
 }
 
 async function pickResult(response) {
