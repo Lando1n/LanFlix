@@ -32,6 +32,9 @@ firebase.db.collection("email").onSnapshot((snapshot) => {
           break;
       }
     } catch (e) {
+      if (e.toString().includes("Error: Recipients not set")) {
+        firebase.removeEmailFromQueue(change.doc.id);
+      }
       console.error(e);
     }
   });

@@ -12,6 +12,7 @@ function makeRequest(request) {
   request.timestamp = `${curr_date}/${curr_month}/${curr_year}`;
 
   const db = firebase.firestore();
+  console.debug(request);
   db.collection("requests").doc(request.name).set(request);
 }
 
@@ -102,7 +103,9 @@ function requestShowDialog() {
                 input: "select",
                 inputOptions: {
                   all: "All",
-                  future: "Just Upcoming Episodes",
+                  future: "Upcoming Episodes",
+                  last: "Most Recent Season",
+                  first: "First Season",
                 },
                 inputValidator: (value) => {
                   if (!value) {
