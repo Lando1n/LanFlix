@@ -75,19 +75,19 @@ function createResultsTable(searchOptions) {
 }
 
 async function pickResult(response) {
-  const options = response.length;
   const resultsTable = createResultsTable(response);
 
+  let inputOptions = {};
+  for (const i of Array(response.length).keys()) {
+    console.log(i);
+    inputOptions[i] = (i + 1).toString();
+  }
   // The user has to choose which search results
   await Swal.insertQueueStep({
     title: "Search Results",
     input: "radio",
     html: resultsTable,
-    inputOptions: {
-      1: "1",
-      2: "2",
-      3: "3",
-    },
+    inputOptions,
     inputValidator: (value) => {
       if (!value) {
         return "You need to choose something!";
