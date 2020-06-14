@@ -78,16 +78,16 @@ async function pickResult(response) {
   const options = response.length;
   const resultsTable = createResultsTable(response);
 
-  inputOptions = {};
-  for (const i in options) {
-    inputOptions[i] = i;
-  }
   // The user has to choose which search results
   await Swal.insertQueueStep({
     title: "Search Results",
     input: "radio",
     html: resultsTable,
-    inputOptions,
+    inputOptions: {
+      1: "1",
+      2: "2",
+      3: "3",
+    },
     inputValidator: (value) => {
       if (!value) {
         return "You need to choose something!";
@@ -199,8 +199,6 @@ async function requestMovieDialog() {
         inputValidator: (showName) => {
           if (!showName) {
             return "You need to write something!";
-          } else if (doesShowExist(showName)) {
-            return "Show already exists on database!";
           }
           return;
         },
