@@ -37,6 +37,9 @@ function getImageDOM(option) {
 }
 
 function shortenSearchResults(response, resultsToShow = 3) {
+  if (response.total_results === 0) {
+    Swal.fire("Failed to request", `No results found for search`, "error");
+  }
   return response.total_results < resultsToShow
     ? response.results
     : response.results.slice(0, resultsToShow);
@@ -72,18 +75,19 @@ function createResultsTable(searchOptions) {
 }
 
 async function pickResult(response) {
+  const options = response.length;
   const resultsTable = createResultsTable(response);
 
+  inputOptions = {};
+  for (const i in options) {
+    inputOptions[i] = i;
+  }
   // The user has to choose which search results
   await Swal.insertQueueStep({
     title: "Search Results",
     input: "radio",
     html: resultsTable,
-    inputOptions: {
-      "1": 1,
-      "2": 2,
-      "3": 3,
-    },
+    inputOptions,
     inputValidator: (value) => {
       if (!value) {
         return "You need to choose something!";
