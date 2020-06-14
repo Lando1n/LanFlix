@@ -103,7 +103,7 @@ function createRequestEmailBody(name, { mediaType, which, id, poster_path }) {
       ? `https://www.themoviedb.org/tv/${id}`
       : `https://www.themoviedb.org/movie/${id}`;
 
-  const header = `New Request: <a href='${imageUri}'><h3>${name}</h3></a>`;
+  const header = `New Request: <a href='${imageUri}'>${name}</a>`;
   const body = `<img src="https://image.tmdb.org/t/p/original${poster_path}" style='width:200px;height:300px;'/><br>`;
   let footer = ``;
 
