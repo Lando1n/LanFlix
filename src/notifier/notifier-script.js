@@ -44,6 +44,15 @@ const media = new Media(process.argv[2]);
 const firebaseCert = require("../../config/lanflix-firebase-cert.json");
 const firebase = new FirebaseHelper(firebaseCert);
 
+const dryRun = process.argv[3];
+
 getEmailContent(media, firebase).then((emailContent) => {
-  firebase.queueEmail(emailContent);
+  if (!dryRun) {
+    firebase.queueEmail(emailContent);
+  } else {
+    console.log(`Subject: ${emailContent.subject}`);
+    console.log(`Recipients: ${emailContent.recipients}`);
+    console.log(`Body: ${emailContent.body}`);
+    console.log("Dry run selected, email not being sent.");
+  }
 });
