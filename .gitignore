@@ -3,3 +3,4 @@
 node_modules
 firebase-debug.log
 config/*
+output
