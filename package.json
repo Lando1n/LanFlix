@@ -7,6 +7,7 @@
     "test": "jest --silent",
     "lint": "eslint . --quiet",
     "coverage": "npm run test -- --coverage",
+    "e2e-test": "cd test/e2e && npx codeceptjs run",
     "notify": "node src/notifier/notifier-script.js",
     "monitor": "node src/notifier/lanflix-monitor.js",
     "vpn_monitor": "cd scripts && ./vpn_monitor.sh"
@@ -17,11 +18,13 @@
     "nodemailer": "^6.4.5"
   },
   "devDependencies": {
+    "codeceptjs": "^2.6.5",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.1.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "puppeteer": "^4.0.0"
   },
   "repository": {
     "type": "git",
