@@ -1,27 +1,22 @@
+/**
+ * Add a newly logged in user to the users list.
+ */
 function initializeUser() {
   console.log("New user found, adding to database...");
   const db = firebase.firestore();
   db.collection("users").doc(user.email).set({
     email: user.email,
   });
-  // Add user to users list
-  db.collection("movies")
-    .doc("all")
-    .get()
-    .then((querySnapshot) => {
-      const subs = querySnapshot.data().subs;
-      console.log(subs);
-      if (subs.includes(user.email)) {
-        return;
-      }
-      subs.push(user.email);
-
-      db.collection("movies").doc("all").update({ subs: subs });
-    });
 }
 
-// eslint-disable-next-line no-unused-vars
-function changeSubOnFirebase(name, isSubbed, collection) {
+/**
+ * Add or remove a user from the subs list of a specific subscription.
+ *
+ * @param {boolean} subscribe
+ * @param {String} name - Name of the show or movie type to toggle
+ * @param {String} collection - Firebase collection name to modify
+ */
+function changeSubOnFirebase(subscribe, name, collection) {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser.email;
 
@@ -31,19 +26,20 @@ function changeSubOnFirebase(name, isSubbed, collection) {
     .then((querySnapshot) => {
       let subs = querySnapshot.data().subs;
       const index = subs.indexOf(user);
-      if (isSubbed) {
+      if (subscribe) {
         // Unsubscribe
-        if (index !== -1) subs.splice(index, 1);
+        if (index === -1) subs.push(user);
       } else {
         //Subscribe
-        if (index === -1) subs.push(user);
+        if (index !== -1) subs.splice(index, 1);
       }
-
       db.collection(collection).doc(name).update({ subs: subs });
     });
 }
 
-// eslint-disable-next-line no-unused-vars
+/**
+ * Return list of all registered users.
+ */
 async function getAllUsers() {
   const users = [];
   const db = firebase.firestore();

@@ -3,6 +3,12 @@ const subbedLogo =
 const unsubbedLogo =
   '<i class="fas fa-times-circle fa-lg" style="color:red"></i>';
 
+/**
+ * Populate a DataTable from a given firebase collection.
+ *
+ * @param {String} tableSelector - Selector Value of the DataTable
+ * @param {String} collection - Firebase collection name to grab data from
+ */
 function populateSubTable(tableSelector, collection) {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser.email;
@@ -25,22 +31,38 @@ function populateSubTable(tableSelector, collection) {
     });
 }
 
+/**
+ * Remove all data from a DataTable.
+ *
+ * @param {String} tableSelector - Selector Value of the DataTable
+ */
 function destroyTable(tableSelector) {
   $(tableSelector).DataTable().clear().draw();
 }
 
-function setSubbed(isSubbed, tableSelector) {
+/**
+ * @param {boolean} subscribe
+ * @param {String} tableSelector
+ */
+function setSubbed(subscribe, tableSelector) {
   const row = $(tableSelector).DataTable().row(".selected");
   const currentSubscribers = row.data().subscribers;
   const rowData = {
     name: row.data().name,
-    subscribers: isSubbed ? currentSubscribers + 1 : currentSubscribers - 1,
-    logo: isSubbed ? subbedLogo : unsubbedLogo,
-    subbed: isSubbed ? "yes" : "no",
+    subscribers: subscribe ? currentSubscribers + 1 : currentSubscribers - 1,
+    logo: subscribe ? subbedLogo : unsubbedLogo,
+    subbed: subscribe ? "yes" : "no",
   };
   row.data(rowData).invalidate();
 }
 
+/**
+ * Toggle the icon of the selected row of the specified DataTable and
+ * add/or remove the user from the subs list on firebase.
+ *
+ * @param {String} tableSelector - Selector Value of the DataTable
+ * @param {String} collection - Firebase collection name to modify
+ */
 function toggleSubscription(tableSelector, collection) {
   const data = $(tableSelector).DataTable().row(".selected").data();
   const isSubbed = data.subbed === "yes";
@@ -56,19 +78,19 @@ function toggleSubscription(tableSelector, collection) {
     },
   });
 
-  if (!isSubbed) {
-    Toast.fire({
-      icon: "success",
-      title: `Subscribed to ${data.name}!`,
-    });
-    changeSubOnFirebase(data.name, false, collection);
-    setSubbed(true, tableSelector);
-  } else {
+  if (isSubbed) {
     Toast.fire({
       icon: "error",
       title: `Unsubscribed from ${data.name}`,
     });
-    changeSubOnFirebase(data.name, true, collection);
+    changeSubOnFirebase(false, data.name, collection);
     setSubbed(false, tableSelector);
+  } else {
+    Toast.fire({
+      icon: "success",
+      title: `Subscribed to ${data.name}!`,
+    });
+    changeSubOnFirebase(true, data.name, collection);
+    setSubbed(true, tableSelector);
   }
 }
