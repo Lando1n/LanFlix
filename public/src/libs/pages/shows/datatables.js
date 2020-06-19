@@ -12,6 +12,11 @@ $(showTableSelector).DataTable({
       title: "Show Name",
     },
     {
+      data: "subscribers",
+      title: "Subscribers",
+      searchable: false,
+    },
+    {
       data: "logo",
       title: "Subbed",
       className: "dt-right",
@@ -42,6 +47,7 @@ function populateShowsTable(user) {
 
       const row = {
         name: show.id,
+        subscribers: showData.subs.length,
         logo: subbed === "yes" ? subbedLogo : unsubbedLogo,
         subbed,
       };
@@ -49,16 +55,6 @@ function populateShowsTable(user) {
     });
     table.draw();
   });
-}
-
-// eslint-disable-next-line no-unused-vars
-function addShowToTable(showName) {
-  const table = $(showTableSelector).DataTable();
-  const data = {
-    name: showName,
-    subbed: "yes",
-  };
-  table.row.add(data).draw();
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -70,8 +66,10 @@ function removeShowFromTable() {
 // eslint-disable-next-line no-unused-vars
 function setSubbedForShow(isSubbed) {
   const row = $(showTableSelector).DataTable().row(".selected");
+  const currentSubscribers = row.data().subscribers;
   const rowData = {
     name: row.data().name,
+    subscribers: isSubbed ? currentSubscribers + 1 : currentSubscribers - 1,
     logo: isSubbed ? subbedLogo : unsubbedLogo,
     subbed: isSubbed ? "yes" : "no",
   };
