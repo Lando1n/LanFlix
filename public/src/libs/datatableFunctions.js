@@ -94,3 +94,26 @@ function toggleSubscription(tableSelector, collection) {
     setSubbed(true, tableSelector);
   }
 }
+
+/**
+ * Check if the show exists in the table already.
+ * @param {String} showName
+ */
+function doesShowExist(showName) {
+  console.log("Looking for show: ", showName);
+  let showExists = false;
+  $("#shows-tbl")
+    .DataTable()
+    .rows()
+    .every(function () {
+      try {
+        const show = this.data();
+        if (show.name.toLowerCase() === showName.toLowerCase()) {
+          showExists = true;
+        }
+      } catch (e) {
+        console.error(`Failed to get row name:\n${e}`);
+      }
+    });
+  return showExists;
+}
