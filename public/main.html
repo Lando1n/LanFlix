@@ -42,7 +42,6 @@
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/showsPage.js'></script>
 
 		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/users/firebase.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/users/userPage.js'></script>
 
 		<script defer type='text/javascript' charset='utf8' src='src/main.js'></script>
 
@@ -66,7 +65,6 @@
 		<div id='topbar' class='tab'>
 			<button class='tablinks' id='show-select-btn' onclick="selectPage(event, 'shows-page')"><i class="fas fa-tv fa-sm"></i> Shows</button>
 			<button class='tablinks' id='movie-select-btn' onclick="selectPage(event, 'movies-page')"><i class="fas fa-film fa-sm"></i> Movies</button>
-			<button class='tablinks' id='users-select-btn' onclick="selectPage(event, 'users-page')"><i class="fas fa-users-cog fa-sm"></i> User Info</button>
 			<div class='right-top-bar'>
 				<button id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
 				<button id='request-movie-button'><i class="fas fa-plus"></i> Request Movie</button>
@@ -95,18 +93,7 @@
 						<tr id='movie-headers'>
 							<th></th>
 							<th></th>
-						</tr>
-					</thead>
-				</table>
-			</div>
-			<!-- USERS PAGE -->
-			<div id='users-page' class='tab-content' style='display:none'>
-				<br>
-				<table id='users-tbl' class='table table-dark table-striped table-bordered'>
-					<thead>
-						<tr id='users-tbl-header'>
-							<th>Key</th>
-							<th>Value</th>
+							<th></th>
 						</tr>
 					</thead>
 				</table>

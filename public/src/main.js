@@ -34,7 +34,6 @@ firebase.auth().onAuthStateChanged(async (user) => {
     console.log(`Successfully loggged in as ${JSON.stringify(user.email)}`);
 
     populateShowsTable(user.email);
-    initializeUsersTable();
     populateMoviesTable();
   } else if (user) {
     // User has not verified their email yet
@@ -48,7 +47,6 @@ firebase.auth().onAuthStateChanged(async (user) => {
     firebase.auth().signOut();
   } else {
     destroySubsTable();
-    destroyUsersTable();
     destroyMoviesTable();
     window.location = "index.html";
   }

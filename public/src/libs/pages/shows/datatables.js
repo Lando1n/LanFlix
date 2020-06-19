@@ -13,7 +13,7 @@ $(showTableSelector).DataTable({
     },
     {
       data: "subscribers",
-      title: "Subscribers",
+      title: "Total Subscribers",
       searchable: false,
     },
     {
