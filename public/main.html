@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>LANFlix Subscriptions</title>
+		<meta charset="utf-8"/>
+
+		<!-- The core Firebase JS SDK is always required and must be listed first -->
+		<script defer src="/__/firebase/6.5.0/firebase-app.js"></script>
+
+		<!-- Firebase SDK's -->
+		<script defer src="https://www.gstatic.com/firebasejs/6.4.2/firebase-firestore.js"></script>
+		<script defer src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>	
+		<script defer src="/__/firebase/6.6.1/firebase-auth.js"></script>
+
+
+		<!-- Initialize Firebase -->
+		<script defer src="/__/firebase/init.js"></script>
+
+		<!-- Third Party Scripts -->
+		<script defer type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script defer type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+		<script defer type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+		<!-- Local Scripts -->
+		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/jquery.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/login.js'></script>
+		
+		<script defer type='text/javascript' charset='utf8' src='src/libs/nav/topbar.js'></script>
+
+		<script defer type='text/javascript' charset='utf8' src='src/libs/requests/TheMovieDB.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/requests/mediaRequests.js'></script>
+
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/movies/datatables.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/movies/firebase.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/movies/jquery.js'></script>
+
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/jquery.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/firebase.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/datatables.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/shows/showsPage.js'></script>
+
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/users/firebase.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='src/libs/pages/users/userPage.js'></script>
+
+		<script defer type='text/javascript' charset='utf8' src='src/main.js'></script>
+
+		<!-- Third Party CSS -->
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+		<link rel='stylesheet' type="text/css" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+
+		<!-- Local CSS -->
+		<link rel='stylesheet' type='text/css' href='css/heroImage.css'>
+		<link rel='stylesheet' type='text/css' href='css/topbar.css'>
+		<link rel='stylesheet' type='text/css' href='css/index.css'>
+	</head>
+	<body>
+		<div id='banner' class="hero-image">
+			<div class="hero-text">
+				<img src='images/logo.png'>
+				</div>
+		</div> 
+		<div id='topbar' class='tab'>
+			<button class='tablinks' id='show-select-btn' onclick="selectPage(event, 'shows-page')"><i class="fas fa-tv fa-sm"></i> Shows</button>
+			<button class='tablinks' id='movie-select-btn' onclick="selectPage(event, 'movies-page')"><i class="fas fa-film fa-sm"></i> Movies</button>
+			<button class='tablinks' id='users-select-btn' onclick="selectPage(event, 'users-page')"><i class="fas fa-users-cog fa-sm"></i> User Info</button>
+			<div class='right-top-bar'>
+				<button id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
+				<button id='request-movie-button'><i class="fas fa-plus"></i> Request Movie</button>
+				<button class='logout' id='logout-btn'><i class="fas fa-sign-out-alt"></i> Log Out</button>
+			</div>
+		</div>
+		<!-- MAIN PAGES -->
+		<div id='main'>
+			<!-- SHOW PAGE -->
+			<div id='shows-page' class='tab-content'>
+				<br>
+				<table id='shows-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
+					<thead>
+						<tr id='headers'>
+							<th>Show Name</th>
+							<th>Subbed</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div id='movies-page' class='tab-content' style='display:none'>
+				<br>
+				<table id='movies-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
+					<thead>
+						<tr id='movie-headers'>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<!-- USERS PAGE -->
+			<div id='users-page' class='tab-content' style='display:none'>
+				<br>
+				<table id='users-tbl' class='table table-dark table-striped table-bordered'>
+					<thead>
+						<tr id='users-tbl-header'>
+							<th>Key</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>
