@@ -11,43 +11,74 @@ firebase.auth().onAuthStateChanged(async (user) => {
     const users = await getAllUsers();
 
     if (!users.includes(user.email)) {
-      console.log("New user found, adding to database...");
-      const db = firebase.firestore();
-      db.collection("users").doc(user.email).set({
-        email: user.email,
-      });
-      // Add user to users list
-      db.collection("movies")
-        .doc("all")
-        .get()
-        .then((querySnapshot) => {
-          const subs = querySnapshot.data().subs;
-          console.log(subs);
-          if (subs.includes(user.email)) {
-            return;
-          }
-          subs.push(user.email);
-
-          db.collection("movies").doc("all").update({ subs: subs });
-        });
+      initializeUser();
     }
     console.log(`Successfully loggged in as ${JSON.stringify(user.email)}`);
 
-    populateShowsTable(user.email);
-    populateMoviesTable();
+    populateSubTable("#movies-tbl", "movies");
+    populateSubTable("#shows-tbl", "shows");
   } else if (user) {
-    // User has not verified their email yet
-    $("#login-modal").show();
-    $("#banner").hide();
-    $("#topbar").hide();
-    $("#main").hide();
-
-    $("#login-error").text("Email not verified. Verify and try again.");
-    sendEmailVerification(user);
+    window.location = "index.html";
     firebase.auth().signOut();
   } else {
-    destroySubsTable();
-    destroyMoviesTable();
+    destroyTable("#movies-tbl");
+    destroyTable("#shows-tbl");
     window.location = "index.html";
   }
+});
+
+$("#movies-tbl").DataTable({
+  iDisplayLength: 15,
+  order: [[0, "asc"]],
+  columns: [
+    {
+      data: "name",
+      title: "Type",
+    },
+    {
+      data: "subscribers",
+      title: "Total Subscribers",
+      searchable: false,
+    },
+    {
+      data: "logo",
+      title: "Subbed",
+      className: "dt-right",
+      searchable: false,
+    },
+    {
+      data: "subbed",
+      visible: false,
+    },
+  ],
+  lengthChange: false,
+  bFilter: false,
+});
+
+$("#shows-tbl").DataTable({
+  iDisplayLength: 15,
+  order: [[0, "asc"]],
+  columns: [
+    {
+      data: "name",
+      title: "Show Name",
+    },
+    {
+      data: "subscribers",
+      title: "Total Subscribers",
+      searchable: false,
+    },
+    {
+      data: "logo",
+      title: "Subbed",
+      className: "dt-right",
+      searchable: false,
+    },
+    {
+      data: "subbed",
+      title: "Subbed",
+      visible: false,
+    },
+  ],
+  lengthChange: false,
 });
