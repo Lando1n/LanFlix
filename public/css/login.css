@@ -1,35 +1,37 @@
-.login-btn {
-    position:absolute;
-    bottom: 0;
-    height: 40px;
-    width:100%;
+body {
+  background-color: #1f2326;
 }
 
-.logged-in-user-text {
-  position: absolute;
-  bottom: 40px;
-  left: 10px;
-  text-align: center; 
-  color: #f1f1f1;
+.login-modal {
+  text-align: center;
+  width: 500px;
+  margin-left: auto ;
+  margin-right: auto ;
+  margin-top: 100px;
+  float: none;
+}
+
+.login-button {
+  width: 150px;
+  /* 
+  Plex colours
+  background-color: #f2ad18;
+  border: none;
+  color: black;
+  */
+}
+
+.login-btn-group {
+  margin-top: 20px;
 }
 
   /* Full-width inputs */
 input[type=text], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
-
-  /* Avatar image */
-  img.avatar {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-radius: 50%;
-  }
+  width: 70%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+}

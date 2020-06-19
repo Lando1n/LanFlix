@@ -1,13 +1,3 @@
-// Execute a function when the user releases a key on the keyboard
-document.getElementById("password").addEventListener("keyup", function (event) {
-  // Number 13 is the "Enter" key on the keyboard
-  if (event.keyCode === 13) {
-    // Override enter on login page
-    event.preventDefault();
-    document.getElementById("login-submit-btn").click();
-  }
-});
-
 $("#login-btn").on("click", function () {
   $("#login-modal").modal("show");
 });
@@ -22,8 +12,8 @@ $("#login-modal").on("hidden.bs.modal", function () {
 
 $("#login-submit-btn").on("click", function () {
   $("#login-error").text("");
-  const email = $("#username").val();
-  const password = $("#password").val();
+  const email = $("#username-input").val();
+  const password = $("#password-input").val();
   firebase
     .auth()
     .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
