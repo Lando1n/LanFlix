@@ -7,6 +7,11 @@ $("#movies-tbl").DataTable({
       title: "Type",
     },
     {
+      data: "subscribers",
+      title: "Total Subscribers",
+      searchable: false,
+    },
+    {
       data: "logo",
       title: "Subbed",
       className: "dt-right",
@@ -34,6 +39,7 @@ function populateMoviesTable() {
         const subbed = movieType.data().subs.includes(user);
         const row = {
           type: movieType.id,
+          subscribers: movieType.data().subs.length,
           logo: subbed ? subbedLogo : unsubbedLogo,
           subbed: subbed ? "yes" : "no",
         };
@@ -52,8 +58,10 @@ function destroyMoviesTable() {
 // eslint-disable-next-line no-unused-vars
 function setSubbedForMovie(isSubbed) {
   const row = $(movieTableSelector).DataTable().row(".selected");
+  const currentSubscribers = row.data().subscribers;
   const rowData = {
     type: row.data().type,
+    subscribers: isSubbed ? currentSubscribers + 1 : currentSubscribers - 1,
     logo: isSubbed ? subbedLogo : unsubbedLogo,
     subbed: isSubbed ? "yes" : "no",
   };
