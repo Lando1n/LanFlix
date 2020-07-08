@@ -53,3 +53,15 @@ async function getAllUsers() {
     });
   return users;
 }
+
+/**
+ * Returns all of the website settings.
+ */
+async function getSettings() {
+  const db = firebase.firestore();
+  return db
+    .collection("settings")
+    .doc("website")
+    .get()
+    .then((querySnapshot) => querySnapshot.data());
+}

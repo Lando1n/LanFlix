@@ -1,3 +1,5 @@
+let settings;
+
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user && user.emailVerified) {
     $("#logged-in-username").text(user.email);
@@ -9,6 +11,8 @@ firebase.auth().onAuthStateChanged(async (user) => {
     selectPage(null, "shows-page");
     // Check if the user exists yet, add it to list if not.
     const users = await getAllUsers();
+    settings = await getSettings();
+    console.log(settings);
 
     if (!users.includes(user.email)) {
       initializeUser();
