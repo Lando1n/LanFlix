@@ -100,12 +100,7 @@ async function chooseEpisodesType() {
   await Swal.insertQueueStep({
     title: "Which Episodes?",
     input: "select",
-    inputOptions: {
-      all: "All",
-      future: "Upcoming Episodes",
-      last: "Most Recent Season",
-      first: "First Season",
-    },
+    inputOptions: settings.tv_request_options,
     inputValidator: (value) => {
       if (!value) {
         return "You need to choose something!";
