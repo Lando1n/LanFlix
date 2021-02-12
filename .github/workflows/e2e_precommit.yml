@@ -1,0 +1,22 @@
+name: E2E Preflight Check
+
+on: [pull_request]
+
+jobs:
+  setup:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - name: Npm Install
+        run: |
+          npm install
+          npm install -g firebase-tools
+          npx firebase serve &
+      - name: Run tests
+        working-directory: test/e2e
+        run: |
+          npx codeceptjs run
