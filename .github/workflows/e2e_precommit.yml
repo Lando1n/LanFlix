@@ -20,5 +20,7 @@ jobs:
           npx firebase serve --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive &
       - name: Run tests
         working-directory: test/e2e
+        env:
+          HEADLESS: true
         run: |
           npx codeceptjs run

@@ -4,7 +4,7 @@ exports.config = {
   helpers: {
     Playwright: {
       url: "http:/localhost:5000",
-      show: true,
+      show: !process.env.HEADLESS,
       browser: "chromium",
     },
   },
