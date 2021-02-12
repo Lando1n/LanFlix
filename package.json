@@ -15,8 +15,7 @@
   "dependencies": {
     "firebase": "^8.2.7",
     "firebase-admin": "^9.5.0",
-    "nodemailer": "^6.4.5",
-    "playwright": "^1.8.1"
+    "nodemailer": "^6.4.5"
   },
   "devDependencies": {
     "codeceptjs": "^3.0.5",
@@ -24,6 +23,7 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.1.0",
+    "playwright": "^1.8.1",
     "prettier": "^2.0.5"
   },
   "repository": {
