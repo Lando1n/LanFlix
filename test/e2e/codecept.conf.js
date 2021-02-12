@@ -2,10 +2,10 @@ exports.config = {
   tests: "./tests/**/*_test.js",
   output: "./output",
   helpers: {
-    Puppeteer: {
+    Playwright: {
       url: "http:/localhost:5000",
-      show: true,
-      windowSize: "1200x900",
+      show: !process.env.HEADLESS,
+      browser: "chromium",
     },
   },
   include: {
