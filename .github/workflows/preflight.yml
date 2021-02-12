@@ -1,0 +1,58 @@
+name: Preflight Check
+
+on: [pull_request]
+
+jobs:
+  setup:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - name: Npm Install
+        run: |
+          npm install
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-${{ github.sha }}
+  jest_check:
+    needs: setup
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12'
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+        path: ./node_modules
+        key: ${{ runner.os }}-${{ github.sha }}
+    - name: Run Jest
+      uses: landon-martin/code-coverage-commenter@v0.0.8
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        coverage-command: "npm run coverage"
+        comment-title: "Source Unit Test Coverage Report"
+  lint_check:
+    needs: setup
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12'
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+        path: ./node_modules
+        key: ${{ runner.os }}-${{ github.sha }}
+    - name: Run Lint
+      run: |
+        npm run lint
