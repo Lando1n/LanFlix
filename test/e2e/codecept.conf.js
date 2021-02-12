@@ -4,7 +4,7 @@ exports.config = {
   helpers: {
     Playwright: {
       url: "http:/localhost:5000",
-      show: false,
+      show: true,
       browser: "chromium",
     },
   },
