@@ -1,4 +1,10 @@
 exports.config = {
+  users: {
+    default: {
+      username: process.env.LANFLIX_USERNAME,
+      password: process.env.LANFLIX_PASSWORD,
+    },
+  },
   tests: "./tests/**/*_test.js",
   output: "./output",
   helpers: {

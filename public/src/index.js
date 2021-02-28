@@ -3,7 +3,9 @@ firebase.auth().onAuthStateChanged((user) => {
     window.location = "main.html";
   } else if (user) {
     // User has not verified their email yet
-    $("#login-error").text("Email not verified. Verify and try again.");
+    $("#login-error").text(
+      "Email not verified. Check your email for a verification email and try again. Check the junk just in case!"
+    );
     sendEmailVerification(user);
     firebase.auth().signOut();
   }
