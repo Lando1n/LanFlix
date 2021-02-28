@@ -48,4 +48,5 @@ Scenario("Successful login", ({ I }) => {
   I.fillField("#username-input", auth.username);
   I.fillField("#password-input", auth.password);
   I.click("#login-submit-btn");
+  I.seeElement('#banner');
 });
