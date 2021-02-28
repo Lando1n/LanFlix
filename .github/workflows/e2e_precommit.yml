@@ -17,7 +17,7 @@ jobs:
           npm install -g firebase-tools
       - name: Switch to staging
         run: |
-          npx firebase use staging
+          npx firebase use staging --token "${{ secrets.STAGING_FIREBASE_TOKEN }}"
       - name: Host server
         run: |
           npx firebase serve --token "${{ secrets.STAGING_FIREBASE_TOKEN }}" --non-interactive &
