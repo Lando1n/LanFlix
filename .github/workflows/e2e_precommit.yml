@@ -28,4 +28,4 @@ jobs:
           LANFLIX_USERNAME: ${{ secrets.STAGING_USERNAME }}
           LANFLIX_PASSWORD: ${{ secrets.STAGING_PASSWORD }}
         run: |
-          npx codeceptjs run
+          npx codeceptjs run --verbose --steps
