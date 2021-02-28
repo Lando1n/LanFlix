@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "lanflix"
+    "default": "lanflix",
+    "staging": "lanflixstaging"
   }
 }

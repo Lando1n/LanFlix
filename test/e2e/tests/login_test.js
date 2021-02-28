@@ -41,3 +41,12 @@ Scenario("No password throws error", ({ I }) => {
     "#login-error"
   );
 });
+
+Scenario("Successful login", ({ I }) => {
+  const auth = codeceptjs.config.get("users").default;
+  I.click("#username-input");
+  I.fillField("#username-input", auth.username);
+  I.fillField("#password-input", auth.password);
+  I.click("#login-submit-btn");
+  I.seeElement("#banner");
+});
