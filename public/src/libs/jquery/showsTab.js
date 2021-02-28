@@ -13,8 +13,4 @@ $("#shows-tbl").on("dblclick", "tr", () => {
   toggleSubscription("#shows-tbl", "shows");
 });
 
-$("#shows-tbl").on("click", "tr", () => {
-  selectShowRow();
-  console.log("tapped");
-  toggleSubscription("#shows-tbl", "shows");
-});
+$("#shows-tbl").on("click", "tr", selectShowRow);
