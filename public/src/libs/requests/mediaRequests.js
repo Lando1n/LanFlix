@@ -128,8 +128,6 @@ function requestShowDialog() {
         inputValidator: (showName) => {
           if (!showName) {
             return "You need to write something!";
-          } else if (doesShowExist(showName)) {
-            return "Show already exists on database!";
           }
           return;
         },
@@ -153,7 +151,7 @@ function requestShowDialog() {
         },
       },
     ])
-    .then((responses) => {
+    .then(async (responses) => {
       if (!responses.value || responses.value.length !== 3) {
         return;
       }
@@ -166,6 +164,45 @@ function requestShowDialog() {
         which,
         ...results[selection - 1],
       };
+      // Prevent people from requesting a show that already is registered
+      if (doesShowExist(request.name)) {
+        const confirmResult = await Swal.fire({
+          title: "Are you sure?",
+          icon: "warning",
+          text:
+            "The show already has been registered. Please confirm that you have checked that what you want isn't already available.",
+          showCancelButton: true,
+          confirmButtonText: `Confirm and Continue`,
+        });
+        if (!confirmResult.isConfirmed) {
+          // witty dialog
+          const regretResult = await Swal.fire({
+            title: "Show was not requested",
+            icon: "info",
+            text:
+              "You have regretted your actions and decided not to request anything. Your admin applauds you.",
+            confirmButtonText: `I admit, I messed up.`,
+            showCancelButton: true,
+            cancelButtonText: "Pfft, I did nothing wrong.",
+          });
+          const toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 2000,
+            onOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+          toast.fire({
+            title: regretResult.isConfirmed
+              ? "Your honesty is admired."
+              : "Alright, you keep thinking that.",
+          });
+          return;
+        }
+      }
       makeRequest(request);
       Swal.fire("Requested", "The show has been requested!", "success");
     })
