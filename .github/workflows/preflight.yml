@@ -1,4 +1,4 @@
-name: Preflight Check
+name: preflight
 
 on: [pull_request]
 
