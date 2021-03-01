@@ -27,22 +27,25 @@ exports.config = {
     autoLogin: {
       enabled: true,
       saveToFile: true,
-      inject: 'loginAs',
+      inject: "loginAs",
       users: {
         default: {
           login: (I) => {
-            const { loginPage }= inject();
+            const { loginPage } = inject();
             I.amOnPage("/");
             I.fillField(loginPage.usernameField, process.env.LANFLIX_USERNAME);
-            I.fillField(loginPage.passwordField, secret(process.env.LANFLIX_PASSWORD));
+            I.fillField(
+              loginPage.passwordField,
+              secret(process.env.LANFLIX_PASSWORD)
+            );
             I.click(loginPage.submitButton);
-          }, 
+          },
           check: (I) => {
-            const { showsPage }= inject();
+            const { showsPage } = inject();
             I.seeElement(showsPage.banner);
           },
         },
       },
-    }
+    },
   },
 };
