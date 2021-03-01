@@ -4,49 +4,48 @@ Before(({ I }) => {
   I.amOnPage("/");
 });
 
-Scenario("Login Page shown without authenticating", ({ I }) => {
-  I.seeElement("#login-modal");
+Scenario("Login Page shown without authenticating", ({ I, loginPage }) => {
+  I.seeElement(loginPage.rootSelector);
 });
 
-Scenario("User is able to enter username", ({ I }) => {
-  I.click("#username-input");
-  I.fillField("#username-input", "testuser");
-  I.seeInField("#username-input", "testuser");
+Scenario("User is able to enter username", ({ I, loginPage }) => {
+  I.click(loginPage.usernameField);
+  I.fillField(loginPage.usernameField, "testuser");
+  I.seeInField(loginPage.usernameField, "testuser");
 });
 
-Scenario("No email throws error", ({ I }) => {
-  I.click("#login-submit-btn");
+Scenario("No email throws error", ({ I, loginPage }) => {
+  I.click(loginPage.submitButton);
   I.see(
     "Error auth/invalid-email, The email address is badly formatted.",
-    "#login-error"
+    loginPage.error
   );
 });
 
-Scenario("Invalid email throws error", ({ I }) => {
-  I.click("#username-input");
-  I.fillField("#username-input", "testuser");
-  I.click("#login-submit-btn");
+Scenario("Invalid email throws error", ({ I, loginPage }) => {
+  I.click(loginPage.usernameField);
+  I.fillField(loginPage.usernameField, "testuser");
+  I.click(loginPage.submitButton);
   I.see(
     "Error auth/invalid-email, The email address is badly formatted.",
-    "#login-error"
+    loginPage.error
   );
 });
 
-Scenario("No password throws error", ({ I }) => {
-  I.click("#username-input");
-  I.fillField("#username-input", "testuser@gmail.com");
-  I.click("#login-submit-btn");
+Scenario("No password throws error", ({ I, loginPage }) => {
+  I.click(loginPage.usernameField);
+  I.fillField(loginPage.usernameField, "testuser@gmail.com");
+  I.click(loginPage.submitButton);
   I.see(
     "Error auth/wrong-password, The password is invalid or the user does not have a password.",
-    "#login-error"
+    loginPage.error
   );
 });
 
-Scenario("Successful login", ({ I }) => {
+Scenario("Successful login", ({ I, loginPage, showsPage }) => {
   const auth = codeceptjs.config.get("users").default;
-  I.click("#username-input");
-  I.fillField("#username-input", auth.username);
-  I.fillField("#password-input", auth.password);
-  I.click("#login-submit-btn");
-  I.seeElement("#banner");
+  I.fillField(loginPage.usernameField, auth.username);
+  I.fillField(loginPage.passwordField, secret(auth.password));
+  I.click(loginPage.submitButton);
+  I.seeElement(showsPage.banner);
 });

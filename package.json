@@ -7,7 +7,7 @@
     "test": "jest --silent",
     "lint": "eslint . --quiet",
     "coverage": "npm run test -- --coverage",
-    "e2e-test": "cd test/e2e && npx codeceptjs run",
+    "e2e-test": "cd test/e2e && npx codeceptjs run --verbose --steps",
     "notify": "node src/notifier/notifier-script.js",
     "monitor": "node src/notifier/lanflix-monitor.js",
     "vpn_monitor": "cd scripts && ./vpn_monitor.sh"
