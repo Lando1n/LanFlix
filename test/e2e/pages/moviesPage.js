@@ -6,6 +6,6 @@ class moviesPage extends mainPage {
     super(...arguments);
     this.table = "#movies-tbl";
   }
-};
+}
 
 module.exports = new moviesPage();

@@ -6,6 +6,6 @@ class showsPage extends mainPage {
     super(...arguments);
     this.table = "#shows-tbl";
   }
-};
+}
 
 module.exports = new showsPage();

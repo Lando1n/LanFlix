@@ -6,5 +6,5 @@ module.exports = {
   passwordField: "#password-input",
   submitButton: "#login-submit-btn",
   registerButton: "#register-btn",
-  error: "#login-error"
+  error: "#login-error",
 };
