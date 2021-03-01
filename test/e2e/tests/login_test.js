@@ -42,10 +42,7 @@ Scenario("No password throws error", ({ I, loginPage }) => {
   );
 });
 
-Scenario("Successful login", ({ I, loginPage, showsPage }) => {
-  const auth = codeceptjs.config.get("users").default;
-  I.fillField(loginPage.usernameField, auth.username);
-  I.fillField(loginPage.passwordField, secret(auth.password));
-  I.click(loginPage.submitButton);
+Scenario("Successful login", ({ I, loginAs, showsPage }) => {
+  loginAs('default');
   I.seeElement(showsPage.banner);
 });

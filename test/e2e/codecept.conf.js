@@ -1,10 +1,4 @@
 exports.config = {
-  users: {
-    default: {
-      username: process.env.LANFLIX_USERNAME,
-      password: process.env.LANFLIX_PASSWORD,
-    },
-  },
   tests: "./tests/**/*_test.js",
   output: "./output",
   helpers: {
@@ -30,5 +24,25 @@ exports.config = {
     screenshotOnFail: {
       enabled: true,
     },
+    autoLogin: {
+      enabled: true,
+      saveToFile: true,
+      inject: 'loginAs',
+      users: {
+        default: {
+          login: (I) => {
+            const { loginPage }= inject();
+            I.amOnPage("/");
+            I.fillField(loginPage.usernameField, process.env.LANFLIX_USERNAME);
+            I.fillField(loginPage.passwordField, secret(process.env.LANFLIX_PASSWORD));
+            I.click(loginPage.submitButton);
+          }, 
+          check: (I) => {
+            const { showsPage }= inject();
+            I.seeElement(showsPage.banner);
+          },
+        },
+      },
+    }
   },
 };
