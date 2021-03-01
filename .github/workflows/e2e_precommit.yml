@@ -1,9 +1,9 @@
-name: E2E Preflight Check
+name: preflight
 
 on: [pull_request]
 
 jobs:
-  setup:
+  e2e_test:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
