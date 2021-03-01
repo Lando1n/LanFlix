@@ -13,7 +13,7 @@ jobs:
           node-version: '12'
       - name: Npm Install
         run: |
-          npm install
+          npm install --save-dev
       - name: Cache
         uses: actions/cache@v2
         with:

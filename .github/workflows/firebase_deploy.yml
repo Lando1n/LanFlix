@@ -14,7 +14,7 @@ jobs:
       with:
         node-version: '12'
     - run: |
-        npm install
+        npm install --production
     - name: Install Firebase tools
       run: |
         sudo npm install -g firebase-tools
