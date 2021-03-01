@@ -20,4 +20,5 @@ jobs:
         sudo npm install -g firebase-tools
     - name: Deploy
       run: |
-        sudo firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive
+        npx firebase use default --token "${{ secrets.FIREBASE_TOKEN }}"
+        npx firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive
