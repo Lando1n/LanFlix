@@ -1,10 +1,22 @@
+// Setup the credentials
+let testUsers = {
+  default: {},
+};
+
+try {
+  testUsers = require("./test_users.json");
+} catch (e) {
+  console.debug(e);
+  console.warn("test_users.json does not exist or is improperly formatted");
+}
+// By default use env vars
+testUsers.default.username =
+  process.env.LANFLIX_USERNAME || testUsers.default.username;
+testUsers.default.password =
+  process.env.LANFLIX_PASSWORD || testUsers.default.password;
+
 exports.config = {
-  users: {
-    default: {
-      username: process.env.LANFLIX_USERNAME,
-      password: process.env.LANFLIX_PASSWORD,
-    },
-  },
+  testUsers,
   tests: "./tests/**/*_test.js",
   output: "./output",
   helpers: {
@@ -29,6 +41,29 @@ exports.config = {
     },
     screenshotOnFail: {
       enabled: true,
+    },
+    autoLogin: {
+      enabled: true,
+      saveToFile: true,
+      inject: "loginAs",
+      users: {
+        default: {
+          login: (I) => {
+            const { loginPage } = inject();
+            I.amOnPage("/");
+            I.fillField(loginPage.usernameField, testUsers.default.username);
+            I.fillField(
+              loginPage.passwordField,
+              secret(testUsers.default.password)
+            );
+            I.click(loginPage.submitButton);
+          },
+          check: (I) => {
+            const { showsPage } = inject();
+            I.seeElement(showsPage.banner);
+          },
+        },
+      },
     },
   },
 };
