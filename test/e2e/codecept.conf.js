@@ -29,8 +29,7 @@ exports.config = {
   include: {
     I: "./steps_file.js",
     loginPage: "./pages/loginPage.js",
-    showsPage: "./pages/showsPage.js",
-    moviesPage: "./pages/moviesPage.js",
+    home: "./pages/homePage.js",
   },
   bootstrap: null,
   mocha: {},
@@ -59,9 +58,10 @@ exports.config = {
             I.click(loginPage.submitButton);
           },
           check: (I) => {
-            const { showsPage } = inject();
-            I.seeElement(showsPage.banner);
+            const { home } = inject();
+            I.seeElement(home.banner);
           },
+          restore: () => {},
         },
       },
     },

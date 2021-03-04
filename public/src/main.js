@@ -11,8 +11,14 @@ firebase.auth().onAuthStateChanged(async (user) => {
     selectPage(null, "shows-page");
     // Check if the user exists yet, add it to list if not.
     const users = await getAllUsers();
-    settings = await getSettings();
-    console.log(settings);
+    settings = (await getSettings()) || {
+      tv_request_options: {
+        all: "All episodes",
+        new: "New episodes",
+        first: "First Season",
+        next: "Next Available Season",
+      },
+    };
 
     if (!users.includes(user.email)) {
       initializeUser();
