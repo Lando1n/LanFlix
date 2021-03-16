@@ -4,8 +4,9 @@
 function initializeUser() {
   console.log("New user found, adding to database...");
   const db = firebase.firestore();
-  db.collection("users").doc(user.email).set({
-    email: user.email,
+  const email = firebase.auth().currentUser.email;
+  db.collection("users").doc(email).set({
+    email,
   });
 }
 

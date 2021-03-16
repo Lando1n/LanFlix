@@ -1,5 +1,3 @@
-const { I } = inject();
-
 module.exports = {
   rootSelector: "#login-modal",
   usernameField: "#username-input",

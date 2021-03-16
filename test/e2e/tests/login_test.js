@@ -41,8 +41,3 @@ Scenario("No password throws error", ({ I, loginPage }) => {
     loginPage.error
   );
 });
-
-Scenario("Successful login", ({ I, loginAs, showsPage }) => {
-  loginAs("default");
-  I.seeElement(showsPage.banner);
-});
