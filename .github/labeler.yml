@@ -1,8 +1,11 @@
 NOTIFIER:
-  - src/notifier/*
+  - packages/notifier/*
 
 BROWSER_CLIENT:
-  - public/*
+  - packages/webc/*
+
+TEST_AUTOMATION:
+  - packages/e2e-test/*
 
 WORKFLOWS:
   - .github/workflows/*
