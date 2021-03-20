@@ -4,4 +4,4 @@ node_modules
 firebase-debug.log
 config/*
 output
-test/e2e/test_users.json
+test_users.json

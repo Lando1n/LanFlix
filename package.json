@@ -6,10 +6,14 @@
   "scripts": {
     "test": "jest --silent",
     "lint": "eslint . --quiet",
+    "serve": "firebase serve",
+    "deploy": "firebase deploy",
+    "use-env": "firebase use",
     "coverage": "npm run test -- --coverage",
-    "e2e-test": "cd test/e2e && npx codeceptjs run --verbose --steps",
-    "notify": "node src/notifier/notifier-script.js",
-    "monitor": "node src/notifier/lanflix-monitor.js",
+    "e2e-test": "cd packages/e2e-tests && codeceptjs run --verbose --steps",
+    "e2e-test:headless": "env HEADLESS=true npm run e2e-test",
+    "notify": "node packages/notifier/notifier-script.js",
+    "monitor": "node packages/notifier/lanflix-monitor.js",
     "vpn_monitor": "cd scripts && ./vpn_monitor.sh"
   },
   "dependencies": {

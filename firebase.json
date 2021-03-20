@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "packages/webc",
     "ignore": [
       "firebase.json",
       "**/.*",
