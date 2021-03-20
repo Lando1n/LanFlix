@@ -19,7 +19,7 @@ jobs:
         with:
           path: ./node_modules
           key: ${{ runner.os }}-${{ github.sha }}
-  jest_check:
+  jest:
     needs: setup
     runs-on: ubuntu-20.04
     steps:
@@ -39,7 +39,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         coverage-command: "npm run coverage"
         comment-title: "Source Unit Test Coverage Report"
-  lint_check:
+  lint:
     needs: setup
     runs-on: ubuntu-20.04
     steps:
@@ -56,7 +56,7 @@ jobs:
     - name: Run Lint
       run: |
         npm run lint
-  e2e-test:
+  e2e:
     needs: setup
     runs-on: ubuntu-20.04
     steps:
@@ -70,8 +70,9 @@ jobs:
       with:
         path: ./node_modules
         key: ${{ runner.os }}-${{ github.sha }}
-    - name: Install firebase tools
+    - name: Install extra tools
       run: |
+        npm install playwright
         npm install -g firebase-tools
     - name: Switch to staging
       run: |
