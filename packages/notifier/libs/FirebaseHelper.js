@@ -45,7 +45,7 @@ class FirebaseHelper {
       querySnapshot.forEach(function (doc) {
         if (
           doc.exists &&
-          doc.data().disabled !== true &&
+          !doc.data().disabled &&
           name.toLowerCase() === doc.id.toLowerCase()
         ) {
           subs = doc.data().subs;

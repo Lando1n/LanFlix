@@ -18,7 +18,7 @@ function populateSubTable(tableSelector, collection) {
     .get()
     .then(function (querySnapshot) {
       querySnapshot.forEach(function (entry) {
-        if (entry.data().disabled !== true) {
+        if (!entry.data().disabled) {
           const subbed = entry.data().subs.includes(user);
           const row = {
             name: entry.id,
