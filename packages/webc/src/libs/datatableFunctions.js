@@ -18,14 +18,16 @@ function populateSubTable(tableSelector, collection) {
     .get()
     .then(function (querySnapshot) {
       querySnapshot.forEach(function (entry) {
-        const subbed = entry.data().subs.includes(user);
-        const row = {
-          name: entry.id,
-          subscribers: entry.data().subs.length,
-          logo: subbed ? subbedLogo : unsubbedLogo,
-          subbed: subbed ? "yes" : "no",
-        };
-        table.row.add(row);
+        if (!entry.data().disabled) {
+          const subbed = entry.data().subs.includes(user);
+          const row = {
+            name: entry.id,
+            subscribers: entry.data().subs.length,
+            logo: subbed ? subbedLogo : unsubbedLogo,
+            subbed: subbed ? "yes" : "no",
+          };
+          table.row.add(row);
+        }
       });
       table.draw();
     });

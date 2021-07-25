@@ -43,7 +43,11 @@ class FirebaseHelper {
 
     await docRef.get().then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
-        if (doc.exists && name.toLowerCase() === doc.id.toLowerCase()) {
+        if (
+          doc.exists &&
+          !doc.data().disabled &&
+          name.toLowerCase() === doc.id.toLowerCase()
+        ) {
           subs = doc.data().subs;
         }
       });
@@ -124,9 +128,36 @@ class FirebaseHelper {
     this.db.collection("email").add({ subject, body, recipients });
   }
 
-  async removeEmailFromQueue(docId) {
+  removeEmailFromQueue(docId) {
     console.debug(`Removing email from queue with id: ${docId}`);
     this.db.collection("email").doc(docId).delete();
+  }
+
+  disableShow(showId) {
+    console.debug(`Disabling show: ${showId}`);
+    this.db.collection("shows").doc(showId).update({ disabled: true });
+  }
+
+  enableShow(showId) {
+    console.debug(`Disabling show: ${showId}`);
+    this.db.collection("shows").doc(showId).update({ disabled: false });
+  }
+
+  async isShowDisabled(showId) {
+    let disabled = false;
+
+    const docRef = this.db.collection("shows");
+
+    await docRef.get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        if (showId.toLowerCase() === doc.id.toLowerCase()) {
+          disabled =
+            doc.data().disabled !== undefined ? doc.data().disabled : false;
+        }
+      });
+    });
+
+    return disabled;
   }
 }
 
