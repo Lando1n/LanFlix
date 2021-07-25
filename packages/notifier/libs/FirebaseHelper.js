@@ -142,6 +142,23 @@ class FirebaseHelper {
     console.debug(`Disabling show: ${showId}`);
     this.db.collection("shows").doc(showId).update({ disabled: false });
   }
+
+  async isShowDisabled(showId) {
+    let disabled = false;
+
+    const docRef = this.db.collection("shows");
+
+    await docRef.get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        if (showId.toLowerCase() === doc.id.toLowerCase()) {
+          disabled =
+            doc.data().disabled !== undefined ? doc.data().disabled : false;
+        }
+      });
+    });
+
+    return disabled;
+  }
 }
 
 module.exports = FirebaseHelper;

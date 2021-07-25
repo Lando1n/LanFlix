@@ -22,7 +22,13 @@ async function getEmailContent(media, firebase) {
       break;
     case "season":
     case "show":
-      if (await firebase.doesShowExist(media.name)) {
+      const showExists = await firebase.doesShowExist(media.name);
+      if (showExists) {
+        const showDisabled = await firebase.isShowDisabled(media.name);
+        // Re-enable the show if it has downloaded again
+        if (!showDisabled) {
+          firebase.enableShow(media.name);
+        }
         recipients = await firebase.getShowSubs(media.name);
         subject = `Show Alert: ${media.name}`;
         body = createShowEmailBody(media.name);
