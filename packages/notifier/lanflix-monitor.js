@@ -43,23 +43,30 @@ firebase.db.collection("email").onSnapshot((snapshot) => {
 firebase.getAdminEmail("Requests").then((recipients) => {
   firebase.db.collection("requests").onSnapshot((snapshot) => {
     snapshot.docChanges().forEach((change) => {
+      let name;
       try {
         const data = change.doc.data();
-        console.log(data);
-        const name = change.doc.id;
+        name = change.doc.id;
 
         switch (change.type) {
           case "added":
-            if (data.mediaType) {
-              const subject = `${data.mediaType.toUpperCase()} requested by ${
-                data.user
-              }`;
-              const body = createRequestEmailBody(name, data);
-              firebase.queueEmail({ subject, body, recipients });
-            } else {
-              console.warn(`Media type not defined, request not made.`);
+            if (data.status === "Pending") {
+              console.debug(`${name} has been requested`);
+              if (data.mediaType) {
+                const subject = `${data.mediaType.toUpperCase()} requested by ${
+                  data.user
+                }`;
+                const body = createRequestEmailBody(name, data);
+                firebase.queueEmail({ subject, body, recipients });
+              } else {
+                console.warn(`Media type not defined, request not made.`);
+                firebase.updateRequestStatus(
+                  name,
+                  "Failed request (invalid media type)"
+                );
+              }
+              firebase.updateRequestStatus(name, "Requested");
             }
-            firebase.removeFromRequests(name);
             break;
           default:
             console.warn(`No implementation for '${change.type}'`);
@@ -67,6 +74,9 @@ firebase.getAdminEmail("Requests").then((recipients) => {
         }
       } catch (e) {
         console.error(e);
+        if (name) {
+          firebase.updateRequestStatus(name, "Failed request (error)");
+        }
       }
     });
   });

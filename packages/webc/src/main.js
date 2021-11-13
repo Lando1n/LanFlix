@@ -21,14 +21,44 @@ firebase.auth().onAuthStateChanged(async (user) => {
 
     populateSubTable("#movies-tbl", "movies");
     populateSubTable("#shows-tbl", "shows");
+    populateRequestsTable();
   } else if (user) {
     window.location = "index.html";
     firebase.auth().signOut();
   } else {
     destroyTable("#movies-tbl");
     destroyTable("#shows-tbl");
+    destroyTable("#requests-tbl");
     window.location = "index.html";
   }
+});
+
+$("#shows-tbl").DataTable({
+  iDisplayLength: 15,
+  order: [[0, "asc"]],
+  columns: [
+    {
+      data: "name",
+      title: "Show Name",
+    },
+    {
+      data: "subscribers",
+      title: "Total Subscribers",
+      searchable: false,
+    },
+    {
+      data: "logo",
+      title: "Subbed",
+      className: "dt-right",
+      searchable: false,
+    },
+    {
+      data: "subbed",
+      title: "Subbed",
+      visible: false,
+    },
+  ],
+  lengthChange: false,
 });
 
 $("#movies-tbl").DataTable({
@@ -59,30 +89,32 @@ $("#movies-tbl").DataTable({
   bFilter: false,
 });
 
-$("#shows-tbl").DataTable({
+$("#requests-tbl").DataTable({
   iDisplayLength: 15,
   order: [[0, "asc"]],
   columns: [
     {
       data: "name",
-      title: "Show Name",
+      title: "Request",
+      searchable: true,
     },
     {
-      data: "subscribers",
-      title: "Total Subscribers",
+      data: "type",
+      title: "Type",
+      searchable: true,
+    },
+    {
+      data: "timestamp",
+      title: "Date Requested",
       searchable: false,
     },
     {
-      data: "logo",
-      title: "Subbed",
+      data: "status",
+      title: "Status",
+      searchable: true,
       className: "dt-right",
-      searchable: false,
-    },
-    {
-      data: "subbed",
-      title: "Subbed",
-      visible: false,
     },
   ],
   lengthChange: false,
+  bFilter: false,
 });

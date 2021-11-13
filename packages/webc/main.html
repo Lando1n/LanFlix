@@ -59,6 +59,7 @@
 		<div id='topbar' class='tab'>
 			<button class='tablinks' id='show-select-btn' onclick="selectPage(event, 'shows-page')"><i class="fas fa-tv fa-sm"></i> Shows</button>
 			<button class='tablinks' id='movie-select-btn' onclick="selectPage(event, 'movies-page')"><i class="fas fa-film fa-sm"></i> Movies</button>
+			<button class='tablinks' id='movie-select-btn' onclick="selectPage(event, 'requests-page')"><i class="fas fa-ticket-alt"></i> Requests</button>
 			<div class='right-top-bar'>
 				<button id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
 				<button id='request-movie-button'><i class="fas fa-plus"></i> Request Movie</button>
@@ -85,6 +86,19 @@
 				<table id='movies-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
 					<thead>
 						<tr id='movie-headers'>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div id='requests-page' class='tab-content' style='display:none'>
+				<br>
+				<table id='requests-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
+					<thead>
+						<tr id='requests-headers'>
+							<th></th>
 							<th></th>
 							<th></th>
 							<th></th>

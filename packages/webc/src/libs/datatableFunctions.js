@@ -34,6 +34,33 @@ function populateSubTable(tableSelector, collection) {
 }
 
 /**
+ * Populates the requests DataTable with requests only from this user
+ */
+function populateRequestsTable() {
+  const db = firebase.firestore();
+  const user = firebase.auth().currentUser.email;
+  const table = $("#requests-tbl").DataTable();
+
+  db.collection("requests")
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (entry) {
+        const data = entry.data();
+        if (user === data.user) {
+          const row = {
+            name: data.name,
+            type: data.mediaType,
+            timestamp: data.timestamp,
+            status: data.status,
+          };
+          table.row.add(row);
+        }
+      });
+      table.draw();
+    });
+}
+
+/**
  * Remove all data from a DataTable.
  *
  * @param {String} tableSelector - Selector Value of the DataTable
