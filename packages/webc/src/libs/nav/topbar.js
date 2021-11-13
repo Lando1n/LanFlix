@@ -24,3 +24,7 @@ function selectPage(evt, tabName) {
     tablinks[0].className += " active";
   }
 }
+
+module.exports = {
+  selectPage,
+};

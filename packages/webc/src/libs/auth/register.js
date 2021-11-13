@@ -1,16 +1,15 @@
-// eslint-disable-next-line no-unused-vars
+const { createUserWithEmailAndPassword, getAuth } = require("firebase/auth");
+
 function registerAccount(email, password) {
   // Checks if the email is already registered
   // Registers the user account to firebase
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .catch(function (error) {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      $("#login-error").text(`Error ${errorCode}, ${errorMessage}`);
-    });
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, email, password).catch(function (error) {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    $("#login-error").text(`Error ${errorCode}, ${errorMessage}`);
+  });
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -25,3 +24,8 @@ function sendEmailVerification(user) {
       $("#login-error").text(`Error: Failed to send verification email.`);
     });
 }
+
+module.exports = {
+  registerAccount,
+  sendEmailVerification,
+};

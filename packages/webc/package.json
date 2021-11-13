@@ -1,0 +1,27 @@
+{
+  "name": "lanflix-webc",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "build-dev": "npm run build -- --mode=development",
+    "watch": "npm run build -- --watch"
+  },
+  "dependencies": {
+    "datatables.net": "^1.11.3",
+    "datatables.net-dt": "^1.11.3",
+    "firebase": "^9.4.1",
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {
+    "codeceptjs": "^3.0.5",
+    "expose-loader": "^3.1.0",
+    "playwright": "^1.8.1",
+    "webpack": "^5.64.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "author": "Landon Martin",
+  "license": "ISC"
+}

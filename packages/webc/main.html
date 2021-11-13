@@ -5,40 +5,7 @@
 		<title>LANFlix Subscriptions</title>
 		<meta charset="utf-8"/>
 
-		<!-- The core Firebase JS SDK is always required and must be listed first -->
-		<script defer src="/__/firebase/6.5.0/firebase-app.js"></script>
-
-		<!-- Firebase SDK's -->
-		<script defer src="https://www.gstatic.com/firebasejs/6.4.2/firebase-firestore.js"></script>
-		<script defer src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>	
-		<script defer src="/__/firebase/6.6.1/firebase-auth.js"></script>
-
-
-		<!-- Initialize Firebase -->
-		<script defer src="/__/firebase/init.js"></script>
-
-		<!-- Third Party Scripts -->
-		<script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous"></script>		<script defer type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
-		<script defer type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-		<script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
-		<!-- Local Scripts -->
-		
-		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/login.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/auth/register.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/nav/topbar.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/requests/mediaRequests.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/requests/TheMovieDB.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/requests/listener.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/datatableFunctions.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/firebaseFunctions.js'></script>
-
-		<script defer type='text/javascript' charset='utf8' src='src/libs/jquery/moviesTab.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/jquery/showsTab.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/jquery/loginPage.js'></script>
-		<script defer type='text/javascript' charset='utf8' src='src/libs/jquery/requests.js'></script>
-
-		<script defer type='text/javascript' charset='utf8' src='src/main.js'></script>
+		<script defer type='text/javascript' charset='utf8' src='dist/main.js'></script>
 
 		<!-- Third Party CSS -->
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -58,9 +25,9 @@
 				</div>
 		</div> 
 		<div id='topbar' class='tab'>
-			<button class='tablinks' id='show-select-btn' onclick="selectPage(event, 'shows-page')"><i class="fas fa-tv fa-sm"></i> Shows</button>
-			<button class='tablinks' id='movie-select-btn' onclick="selectPage(event, 'movies-page')"><i class="fas fa-film fa-sm"></i> Movies</button>
-			<button class='tablinks' id='movie-select-btn' onclick="selectPage(event, 'requests-page')"><i class="fas fa-ticket-alt"></i> Requests</button>
+			<button class='tablinks' id='show-select-btn'><i class="fas fa-tv fa-sm"></i> Shows</button>
+			<button class='tablinks' id='movie-select-btn'><i class="fas fa-film fa-sm"></i> Movies</button>
+			<button class='tablinks' id='movie-select-btn'><i class="fas fa-ticket-alt"></i> Requests</button>
 			<div class='right-top-bar'>
 				<button id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
 				<button id='request-movie-button'><i class="fas fa-plus"></i> Request Movie</button>

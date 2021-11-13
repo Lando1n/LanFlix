@@ -1,7 +1,38 @@
+const { getAuth, onAuthStateChanged, signOut } = require("firebase/auth");
+const { initializeApp } = require("firebase/app");
+require("datatables.net")(window, $);
+require("datatables.net-dt")(window, $);
+
+require("./libs/jquery/loginPage");
+require("./libs/jquery/moviesTab");
+require("./libs/jquery/requests");
+require("./libs/jquery/showsTab");
+require("./libs/jquery/navigation");
+
+const { selectPage } = require("./libs/nav/topbar");
+
 let settings;
 let unsubscribeRequestsListener;
 
-firebase.auth().onAuthStateChanged(async (user) => {
+// TODO: Add SDKs for Firebase products that you want to use
+
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCDDQXk9E6-t55GgFQhSkvx3hX_j1wKOkE",
+  authDomain: "lanflix.firebaseapp.com",
+  databaseURL: "https://lanflix.firebaseio.com",
+  projectId: "lanflix",
+  storageBucket: "lanflix.appspot.com",
+  messagingSenderId: "208193875375",
+  appId: "1:208193875375:web:8eb09f6978f36258c6135a",
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
+const auth = getAuth();
+
+onAuthStateChanged(auth, async (user) => {
   if (user && user.emailVerified) {
     $("#logged-in-username").text(user.email);
     $("#login-modal").hide();
@@ -27,7 +58,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
   } else if (user) {
     unsubscribeRequestsListener();
     window.location = "index.html";
-    firebase.auth().signOut();
+    signOut(auth);
   } else {
     unsubscribeRequestsListener();
     destroyTable("#movies-tbl");
