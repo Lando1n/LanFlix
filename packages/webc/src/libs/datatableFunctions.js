@@ -1,8 +1,6 @@
 const {
   getFirestore,
-  doc,
   collection,
-  getDoc,
   getDocs,
   query,
   where,
@@ -12,11 +10,6 @@ const Swal = require("sweetalert2");
 
 const { changeSubOnFirebase } = require("./firebaseFunctions");
 
-const subbedLogo =
-  '<i class="fas fa-check-circle fa-lg" style="color:#32CD32"></i>';
-const unsubbedLogo =
-  '<i class="fas fa-times-circle fa-lg" style="color:red"></i>';
-
 /**
  * Populate a DataTable from a given firebase collection.
  *
@@ -24,6 +17,12 @@ const unsubbedLogo =
  * @param {String} collection - Firebase collection name to grab data from
  */
 async function populateSubTable(tableSelector, collectionName) {
+  console.debug(`Populating table with data: ${collectionName}`);
+  const subbedLogo =
+    '<i class="fas fa-check-circle fa-lg" style="color:#32CD32"></i>';
+  const unsubbedLogo =
+    '<i class="fas fa-times-circle fa-lg" style="color:red"></i>';
+
   const db = getFirestore();
   const auth = getAuth();
   const user = auth.currentUser.email;
