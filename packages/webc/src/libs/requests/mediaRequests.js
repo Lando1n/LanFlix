@@ -10,6 +10,7 @@ function makeRequest(request) {
   var curr_month = d.getMonth() + 1; //Months are zero based
   var curr_year = d.getFullYear();
   request.timestamp = `${curr_date}/${curr_month}/${curr_year}`;
+  request.status = 'Pending';
 
   const db = firebase.firestore();
   console.debug(request);

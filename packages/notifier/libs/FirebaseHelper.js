@@ -106,6 +106,11 @@ class FirebaseHelper {
     this.db.collection("requests").doc(name).delete();
   }
 
+  async updateRequestStatus(name, newStatus) {
+    console.debug(`Setting Request status of '${name}' to '${newStatus}'`);
+    return await this.db.collection("requests").doc(name).update({status: newStatus})
+  }
+
   async getAdminEmail(type) {
     console.debug(`Getting admin email for type ${type}`);
     let subs = [];
