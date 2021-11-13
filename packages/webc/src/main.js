@@ -95,7 +95,7 @@ $("#movies-tbl").DataTable({
 
 $("#requests-tbl").DataTable({
   iDisplayLength: 15,
-  order: [[0, "asc"]],
+  order: [[2, "desc"]],
   columns: [
     {
       data: "name",
