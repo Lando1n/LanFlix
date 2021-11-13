@@ -1,4 +1,5 @@
 let settings;
+let unsubscribeRequestsListener;
 
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user && user.emailVerified) {
@@ -22,10 +23,13 @@ firebase.auth().onAuthStateChanged(async (user) => {
     populateSubTable("#movies-tbl", "movies");
     populateSubTable("#shows-tbl", "shows");
     populateRequestsTable();
+    unsubscribeRequestsListener = setupRequestsListener();
   } else if (user) {
+    unsubscribeRequestsListener();
     window.location = "index.html";
     firebase.auth().signOut();
   } else {
+    unsubscribeRequestsListener();
     destroyTable("#movies-tbl");
     destroyTable("#shows-tbl");
     destroyTable("#requests-tbl");

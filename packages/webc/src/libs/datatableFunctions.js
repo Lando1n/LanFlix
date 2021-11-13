@@ -39,6 +39,7 @@ function populateSubTable(tableSelector, collection) {
 function populateRequestsTable() {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser.email;
+  destroyTable("#requests-tbl");
   const table = $("#requests-tbl").DataTable();
 
   db.collection("requests")
