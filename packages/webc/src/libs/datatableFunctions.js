@@ -8,6 +8,7 @@ const {
   where,
 } = require("firebase/firestore");
 const { getAuth } = require("firebase/auth");
+const Swal = require("sweetalert2");
 
 const { changeSubOnFirebase } = require("./firebaseFunctions");
 
@@ -50,30 +51,26 @@ async function populateSubTable(tableSelector, collectionName) {
 /**
  * Populates the requests DataTable with requests only from this user
  */
-function populateRequestsTable() {
+async function populateRequestsTable() {
   const db = getFirestore();
   const auth = getAuth();
   const user = auth.currentUser.email;
   destroyTable("#requests-tbl");
   const table = $("#requests-tbl").DataTable();
+  const q = query(collection(db, "requests"), where("user", "==", user));
 
-  db.collection("requests")
-    .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (entry) {
-        const data = entry.data();
-        if (user === data.user) {
-          const row = {
-            name: data.name,
-            type: data.mediaType,
-            timestamp: data.timestamp,
-            status: data.status,
-          };
-          table.row.add(row);
-        }
-      });
-      table.draw();
-    });
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach(function (entry) {
+    const data = entry.data();
+    const row = {
+      name: data.name,
+      type: data.mediaType,
+      timestamp: data.timestamp,
+      status: data.status,
+    };
+    table.row.add(row);
+  });
+  table.draw();
 }
 
 /**

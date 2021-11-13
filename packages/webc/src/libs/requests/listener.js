@@ -1,9 +1,16 @@
-const { getFirestore } = require("firebase/firestore");
+const {
+  collection,
+  getFirestore,
+  onSnapshot,
+  query,
+} = require("firebase/firestore");
+const { populateRequestsTable } = require("../datatableFunctions");
 
 function setupRequestsListener() {
   console.debug("Listening for request changes");
   const db = getFirestore();
-  return db.collection("requests").onSnapshot(() => {
+  const q = query(collection(db, "requests"));
+  return onSnapshot(q, () => {
     populateRequestsTable();
   });
 }

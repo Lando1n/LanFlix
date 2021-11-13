@@ -15,7 +15,8 @@ $("#login-btn").on("click", function () {
 
 $("#logout-btn").on("click", function () {
   console.debug("logging out...");
-  signOut();
+  const auth = getAuth();
+  signOut(auth);
 });
 
 $("#login-modal").on("hidden.bs.modal", function () {

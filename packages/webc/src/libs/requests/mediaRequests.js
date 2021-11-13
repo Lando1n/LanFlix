@@ -1,4 +1,5 @@
 const { getFirestore } = require("firebase/firestore");
+const Swal = require("sweetalert2");
 
 const { TheMovieDB } = require("./TheMovieDB");
 

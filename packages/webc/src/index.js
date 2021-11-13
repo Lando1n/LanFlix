@@ -16,7 +16,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
+
+require("./libs/jquery/loginPage");
 
 const auth = getAuth();
 

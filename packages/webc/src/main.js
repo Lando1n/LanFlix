@@ -21,6 +21,7 @@ require("datatables.net")(window, $);
 require("datatables.net-dt")(window, $);
 
 const {
+  destroyTable,
   populateRequestsTable,
   populateSubTable,
 } = require("./libs/datatableFunctions");
@@ -63,11 +64,15 @@ onAuthStateChanged(auth, async (user) => {
     await populateRequestsTable();
     unsubscribeRequestsListener = setupRequestsListener();
   } else if (user) {
-    unsubscribeRequestsListener();
+    if (unsubscribeRequestsListener) {
+      unsubscribeRequestsListener();
+    }
     window.location = "index.html";
     signOut(auth);
   } else {
-    unsubscribeRequestsListener();
+    if (unsubscribeRequestsListener) {
+      unsubscribeRequestsListener();
+    }
     destroyTable("#movies-tbl");
     destroyTable("#shows-tbl");
     destroyTable("#requests-tbl");
