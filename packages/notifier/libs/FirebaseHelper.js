@@ -108,7 +108,10 @@ class FirebaseHelper {
 
   async updateRequestStatus(name, newStatus) {
     console.debug(`Setting Request status of '${name}' to '${newStatus}'`);
-    return await this.db.collection("requests").doc(name).update({status: newStatus})
+    return await this.db
+      .collection("requests")
+      .doc(name)
+      .update({ status: newStatus });
   }
 
   async getAdminEmail(type) {

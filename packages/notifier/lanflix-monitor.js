@@ -60,7 +60,10 @@ firebase.getAdminEmail("Requests").then((recipients) => {
                 firebase.queueEmail({ subject, body, recipients });
               } else {
                 console.warn(`Media type not defined, request not made.`);
-                firebase.updateRequestStatus(name, "Failed request (invalid media type)");
+                firebase.updateRequestStatus(
+                  name,
+                  "Failed request (invalid media type)"
+                );
               }
               firebase.updateRequestStatus(name, "Requested");
             }
