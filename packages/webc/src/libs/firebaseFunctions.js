@@ -2,6 +2,7 @@ const {
   getFirestore,
   doc,
   collection,
+  getDoc,
   getDocs,
   query,
 } = require("firebase/firestore");
@@ -57,7 +58,6 @@ async function getAllUsers() {
   const q = query(collection(db, "users"));
   const userSnap = await getDocs(q);
   userSnap.forEach((user) => {
-    console.log(user.id);
     users.push(user.id);
   });
   return users;
@@ -68,11 +68,9 @@ async function getAllUsers() {
  */
 async function getSettings() {
   const db = getFirestore();
-  return db
-    .collection("settings")
-    .doc("website")
-    .get()
-    .then((querySnapshot) => querySnapshot.data());
+  const docRef = doc(db, "settings", "website");
+  const docSnap = await getDoc(docRef);
+  return docSnap.data();
 }
 
 module.exports = {

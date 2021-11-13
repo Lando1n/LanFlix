@@ -1,13 +1,8 @@
 const { initializeApp } = require("firebase/app");
 const { getAuth, onAuthStateChanged, signOut } = require("firebase/auth");
-require("datatables.net")(window, $);
-require("datatables.net-dt")(window, $);
 
 // TODO: Add SDKs for Firebase products that you want to use
-
 // https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDDQXk9E6-t55GgFQhSkvx3hX_j1wKOkE",
@@ -20,11 +15,17 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-console.log(app.name);
+initializeApp(firebaseConfig);
 
+require("datatables.net")(window, $);
+require("datatables.net-dt")(window, $);
+
+const {
+  populateRequestsTable,
+  populateSubTable,
+} = require("./libs/datatableFunctions");
 const { selectPage } = require("./libs/nav/topbar");
-const { getAllUsers } = require("./libs/firebaseFunctions");
+const { getAllUsers, getSettings } = require("./libs/firebaseFunctions");
 const { setupRequestsListener } = require("./libs/requests/listener");
 
 let settings;
@@ -57,9 +58,9 @@ onAuthStateChanged(auth, async (user) => {
     }
     console.log(`Successfully loggged in as ${JSON.stringify(user.email)}`);
 
-    populateSubTable("#movies-tbl", "movies");
-    populateSubTable("#shows-tbl", "shows");
-    populateRequestsTable();
+    await populateSubTable("#movies-tbl", "movies");
+    await populateSubTable("#shows-tbl", "shows");
+    await populateRequestsTable();
     unsubscribeRequestsListener = setupRequestsListener();
   } else if (user) {
     unsubscribeRequestsListener();

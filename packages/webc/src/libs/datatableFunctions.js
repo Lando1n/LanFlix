@@ -1,5 +1,13 @@
+const {
+  getFirestore,
+  doc,
+  collection,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} = require("firebase/firestore");
 const { getAuth } = require("firebase/auth");
-const { getFirestore } = require("firebase/firestore");
 
 const { changeSubOnFirebase } = require("./firebaseFunctions");
 
@@ -14,29 +22,29 @@ const unsubbedLogo =
  * @param {String} tableSelector - Selector Value of the DataTable
  * @param {String} collection - Firebase collection name to grab data from
  */
-function populateSubTable(tableSelector, collection) {
+async function populateSubTable(tableSelector, collectionName) {
   const db = getFirestore();
   const auth = getAuth();
   const user = auth.currentUser.email;
   const table = $(tableSelector).DataTable();
 
-  db.collection(collection)
-    .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (entry) {
-        if (!entry.data().disabled) {
-          const subbed = entry.data().subs.includes(user);
-          const row = {
-            name: entry.id,
-            subscribers: entry.data().subs.length,
-            logo: subbed ? subbedLogo : unsubbedLogo,
-            subbed: subbed ? "yes" : "no",
-          };
-          table.row.add(row);
-        }
-      });
-      table.draw();
-    });
+  const q = query(
+    collection(db, collectionName),
+    where("disabled", "!=", true)
+  );
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach(function (entry) {
+    const subbed = entry.data().subs.includes(user);
+    const row = {
+      name: entry.id,
+      subscribers: entry.data().subs.length,
+      logo: subbed ? subbedLogo : unsubbedLogo,
+      subbed: subbed ? "yes" : "no",
+    };
+    table.row.add(row);
+  });
+  table.draw();
 }
 
 /**
