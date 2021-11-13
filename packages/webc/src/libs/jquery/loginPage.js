@@ -3,18 +3,19 @@ const {
   setPersistence,
   browserLocalPersistence,
   signInWithEmailAndPassword,
+  signOut,
 } = require("firebase/auth");
 
 const { registerAccount } = require("../auth/register");
-const { logout } = require("../auth/login");
 
 $("#login-btn").on("click", function () {
-  console.log("login");
+  console.log("logging in...");
   $("#login-modal").modal("show");
 });
 
 $("#logout-btn").on("click", function () {
-  logout();
+  console.debug("logging out...");
+  signOut();
 });
 
 $("#login-modal").on("hidden.bs.modal", function () {

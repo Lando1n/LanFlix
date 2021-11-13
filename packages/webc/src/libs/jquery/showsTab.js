@@ -1,3 +1,5 @@
+const { toggleSubscription } = require("../datatableFunctions");
+
 // Highlight row when clicked so that it's selected
 function selectShowRow() {
   $("#shows-tbl")

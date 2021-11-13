@@ -1,9 +1,19 @@
+const {
+  getFirestore,
+  doc,
+  collection,
+  getDocs,
+  query,
+} = require("firebase/firestore");
+const { getAuth } = require("firebase/auth");
+
 /**
  * Add a newly logged in user to the users list.
  */
 function initializeUser() {
   console.log("New user found, adding to database...");
-  const db = firebase.firestore();
+
+  const db = getFirestore();
   db.collection("users").doc(user.email).set({
     email: user.email,
   });
@@ -17,8 +27,9 @@ function initializeUser() {
  * @param {String} collection - Firebase collection name to modify
  */
 function changeSubOnFirebase(subscribe, name, collection) {
-  const db = firebase.firestore();
-  const user = firebase.auth().currentUser.email;
+  const db = getFirestore();
+  const auth = getAuth();
+  const user = auth.currentUser.email;
 
   db.collection(collection)
     .doc(name)
@@ -42,15 +53,13 @@ function changeSubOnFirebase(subscribe, name, collection) {
  */
 async function getAllUsers() {
   const users = [];
-  const db = firebase.firestore();
-  await db
-    .collection("users")
-    .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach((user) => {
-        users.push(user.id);
-      });
-    });
+  const db = getFirestore();
+  const q = query(collection(db, "users"));
+  const userSnap = await getDocs(q);
+  userSnap.forEach((user) => {
+    console.log(user.id);
+    users.push(user.id);
+  });
   return users;
 }
 
@@ -58,10 +67,17 @@ async function getAllUsers() {
  * Returns all of the website settings.
  */
 async function getSettings() {
-  const db = firebase.firestore();
+  const db = getFirestore();
   return db
     .collection("settings")
     .doc("website")
     .get()
     .then((querySnapshot) => querySnapshot.data());
 }
+
+module.exports = {
+  initializeUser,
+  changeSubOnFirebase,
+  getAllUsers,
+  getSettings,
+};

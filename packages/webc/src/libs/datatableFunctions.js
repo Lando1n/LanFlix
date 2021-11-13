@@ -1,3 +1,8 @@
+const { getAuth } = require("firebase/auth");
+const { getFirestore } = require("firebase/firestore");
+
+const { changeSubOnFirebase } = require("./firebaseFunctions");
+
 const subbedLogo =
   '<i class="fas fa-check-circle fa-lg" style="color:#32CD32"></i>';
 const unsubbedLogo =
@@ -10,8 +15,9 @@ const unsubbedLogo =
  * @param {String} collection - Firebase collection name to grab data from
  */
 function populateSubTable(tableSelector, collection) {
-  const db = firebase.firestore();
-  const user = firebase.auth().currentUser.email;
+  const db = getFirestore();
+  const auth = getAuth();
+  const user = auth.currentUser.email;
   const table = $(tableSelector).DataTable();
 
   db.collection(collection)
@@ -37,8 +43,9 @@ function populateSubTable(tableSelector, collection) {
  * Populates the requests DataTable with requests only from this user
  */
 function populateRequestsTable() {
-  const db = firebase.firestore();
-  const user = firebase.auth().currentUser.email;
+  const db = getFirestore();
+  const auth = getAuth();
+  const user = auth.currentUser.email;
   destroyTable("#requests-tbl");
   const table = $("#requests-tbl").DataTable();
 
@@ -147,3 +154,11 @@ function doesShowExist(showName) {
     });
   return showExists;
 }
+
+module.exports = {
+  populateSubTable,
+  populateRequestsTable,
+  destroyTable,
+  toggleSubscription,
+  doesShowExist,
+};

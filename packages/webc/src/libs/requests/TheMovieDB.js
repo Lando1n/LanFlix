@@ -23,3 +23,5 @@ class TheMovieDB {
     return `${this.images_uri}${posterPath}`;
   }
 }
+
+module.exports = TheMovieDB;

@@ -1,22 +1,13 @@
-const { getAuth, onAuthStateChanged, signOut } = require("firebase/auth");
 const { initializeApp } = require("firebase/app");
+const { getAuth, onAuthStateChanged, signOut } = require("firebase/auth");
 require("datatables.net")(window, $);
 require("datatables.net-dt")(window, $);
-
-require("./libs/jquery/loginPage");
-require("./libs/jquery/moviesTab");
-require("./libs/jquery/requests");
-require("./libs/jquery/showsTab");
-require("./libs/jquery/navigation");
-
-const { selectPage } = require("./libs/nav/topbar");
-
-let settings;
-let unsubscribeRequestsListener;
 
 // TODO: Add SDKs for Firebase products that you want to use
 
 // https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDDQXk9E6-t55GgFQhSkvx3hX_j1wKOkE",
@@ -29,7 +20,22 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+console.log(app.name);
+
+const { selectPage } = require("./libs/nav/topbar");
+const { getAllUsers } = require("./libs/firebaseFunctions");
+const { setupRequestsListener } = require("./libs/requests/listener");
+
+let settings;
+let unsubscribeRequestsListener;
+
+require("./libs/jquery/loginPage");
+require("./libs/jquery/moviesTab");
+require("./libs/jquery/requests");
+require("./libs/jquery/showsTab");
+require("./libs/jquery/navigation");
+
 const auth = getAuth();
 
 onAuthStateChanged(auth, async (user) => {

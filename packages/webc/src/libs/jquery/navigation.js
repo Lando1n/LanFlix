@@ -5,9 +5,9 @@ $("#show-select-btn").on("click", (event) => {
 });
 
 $("#movie-select-btn").on("click", (event) => {
-  selectPage(event, "movie-page");
+  selectPage(event, "movies-page");
 });
 
 $("#request-select-btn").on("click", (event) => {
-  selectPage(event, "request-page");
+  selectPage(event, "requests-page");
 });

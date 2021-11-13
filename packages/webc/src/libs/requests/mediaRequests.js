@@ -1,4 +1,7 @@
-// eslint-disable-next-line no-unused-vars
+const { getFirestore } = require("firebase/firestore");
+
+const { TheMovieDB } = require("./TheMovieDB");
+
 function makeRequest(request) {
   if (!request.mediaType || !["show", "movie"].includes(request.mediaType)) {
     throw new Error("Request needs to be either a movie or a show");
@@ -12,7 +15,7 @@ function makeRequest(request) {
   request.timestamp = `${curr_date}/${curr_month}/${curr_year}`;
   request.status = "Pending";
 
-  const db = firebase.firestore();
+  const db = getFirestore();
   console.debug(request);
   db.collection("requests").doc(request.name).set(request);
 }

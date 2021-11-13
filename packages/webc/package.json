@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "build-dev": "npm run build -- --mode=development",
-    "watch": "npm run build -- --watch"
+    "watch": "npm run build-dev -- --watch"
   },
   "dependencies": {
     "datatables.net": "^1.11.3",
