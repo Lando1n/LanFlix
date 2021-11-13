@@ -1,13 +1,17 @@
-const { getFirestore } = require("firebase/firestore");
+const { getAuth } = require("firebase/auth");
+const { getFirestore, doc, setDoc } = require("firebase/firestore");
 const Swal = require("sweetalert2");
+const { getSettings } = require("../firebaseFunctions");
+const { doesShowExist } = require("../datatableFunctions");
 
 const TheMovieDB = require("./TheMovieDB");
 
-function makeRequest(request) {
+async function makeRequest(request) {
   if (!request.mediaType || !["show", "movie"].includes(request.mediaType)) {
     throw new Error("Request needs to be either a movie or a show");
   }
-  request.user = firebase.auth().currentUser.email;
+  const auth = getAuth();
+  request.user = auth.currentUser.email;
 
   var d = new Date();
   var curr_date = d.getDate();
@@ -18,7 +22,7 @@ function makeRequest(request) {
 
   const db = getFirestore();
   console.debug(request);
-  db.collection("requests").doc(request.name).set(request);
+  await setDoc(doc(db, "requests", request.name), request);
 }
 
 function getNameDOM(option) {
@@ -102,6 +106,7 @@ async function pickResult(response) {
 
 async function chooseEpisodesType() {
   // The user must select the download type
+  const settings = await getSettings();
   await Swal.insertQueueStep({
     title: "Which Episodes?",
     input: "select",
@@ -208,7 +213,7 @@ function requestShowDialog() {
           return;
         }
       }
-      makeRequest(request);
+      await makeRequest(request);
       Swal.fire("Requested", "The show has been requested!", "success");
     })
     .catch((err) => {
@@ -256,7 +261,7 @@ async function requestMovieDialog() {
         },
       },
     ])
-    .then((responses) => {
+    .then(async (responses) => {
       if (!responses.value || responses.value.length !== 2) {
         return;
       }
@@ -269,7 +274,7 @@ async function requestMovieDialog() {
         mediaType: "movie",
         ...results[selection - 1],
       };
-      makeRequest(request);
+      await makeRequest(request);
       Swal.fire("Requested", "The movie has been requested!", "success");
     })
     .catch((err) => {
