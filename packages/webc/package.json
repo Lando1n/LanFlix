@@ -14,7 +14,7 @@
     "datatables.net-dt": "^1.11.3",
     "firebase": "^9.4.1",
     "jquery": "^3.4.1",
-    "sweetalert2": "^11.1.10"
+    "sweetalert2": "^9.17.2"
   },
   "devDependencies": {
     "codeceptjs": "^3.0.5",

@@ -1,7 +1,7 @@
 const { getFirestore } = require("firebase/firestore");
 const Swal = require("sweetalert2");
 
-const { TheMovieDB } = require("./TheMovieDB");
+const TheMovieDB = require("./TheMovieDB");
 
 function makeRequest(request) {
   if (!request.mediaType || !["show", "movie"].includes(request.mediaType)) {
@@ -276,3 +276,8 @@ async function requestMovieDialog() {
       Swal.fire("Failed to request", `${err}`, "error");
     });
 }
+
+module.exports = {
+  requestMovieDialog,
+  requestShowDialog,
+};
