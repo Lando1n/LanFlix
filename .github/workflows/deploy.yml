@@ -20,7 +20,10 @@ jobs:
         working-directory: packages/webc
         run: |
           npm run build
-      - name: Deploy
+      - name: Set Env
         run: |
           npm run use-env -- default --token "${{ secrets.FIREBASE_TOKEN }}"
+      - name: Deploy
+        working-directory: packages/webc
+        run: |
           npm run deploy -- --token "${{ secrets.FIREBASE_TOKEN }}" --non-interactive

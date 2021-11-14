@@ -1,0 +1,19 @@
+{
+  "name": "lanflix-e2e-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "codecept.conf.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "codeceptjs run --verbose --steps",
+    "test:headless": "env HEADLESS=true npm run test"
+  },
+  "dependencies": {
+    "codeceptjs": "^3.0.5",
+    "playwright": "^1.8.1"
+  },
+  "author": "Landon Martin",
+  "license": "ISC"
+}
