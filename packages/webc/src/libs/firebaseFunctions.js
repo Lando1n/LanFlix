@@ -4,6 +4,7 @@ const {
   collection,
   getDoc,
   getDocs,
+  updateDoc,
   query,
 } = require("firebase/firestore");
 const { getAuth } = require("firebase/auth");
@@ -15,6 +16,7 @@ function initializeUser() {
   console.log("New user found, adding to database...");
 
   const db = getFirestore();
+  // TODO: Update this to modular
   db.collection("users").doc(user.email).set({
     email: user.email,
   });
@@ -25,28 +27,28 @@ function initializeUser() {
  *
  * @param {boolean} subscribe
  * @param {String} name - Name of the show or movie type to toggle
- * @param {String} collection - Firebase collection name to modify
+ * @param {String} collectionName - Firebase collection name to modify
  */
-function changeSubOnFirebase(subscribe, name, collection) {
+async function changeSubOnFirebase(subscribe, name, collectionName) {
   const db = getFirestore();
   const auth = getAuth();
   const user = auth.currentUser.email;
 
-  db.collection(collection)
-    .doc(name)
-    .get()
-    .then((querySnapshot) => {
-      let subs = querySnapshot.data().subs;
-      const index = subs.indexOf(user);
-      if (subscribe) {
-        // Unsubscribe
-        if (index === -1) subs.push(user);
-      } else {
-        //Subscribe
-        if (index !== -1) subs.splice(index, 1);
-      }
-      db.collection(collection).doc(name).update({ subs: subs });
-    });
+  const docRef = doc(db, collectionName, name);
+
+  const docSnap = await getDoc(docRef);
+  const subs = docSnap.data().subs;
+
+  const index = subs.indexOf(user);
+  if (subscribe) {
+    // Subscribe
+    if (index === -1) subs.push(user);
+  } else {
+    // Unsubscribe
+    if (index !== -1) subs.splice(index, 1);
+  }
+
+  return await updateDoc(docRef, { subs: subs });
 }
 
 /**

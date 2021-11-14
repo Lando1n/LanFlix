@@ -10,6 +10,11 @@ const Swal = require("sweetalert2");
 
 const { changeSubOnFirebase } = require("./firebaseFunctions");
 
+const subbedLogo =
+  '<i class="fas fa-check-circle fa-lg" style="color:#32CD32"></i>';
+const unsubbedLogo =
+  '<i class="fas fa-times-circle fa-lg" style="color:red"></i>';
+
 /**
  * Populate a DataTable from a given firebase collection.
  *
@@ -18,10 +23,6 @@ const { changeSubOnFirebase } = require("./firebaseFunctions");
  */
 async function populateSubTable(tableSelector, collectionName) {
   console.debug(`Populating table with data: ${collectionName}`);
-  const subbedLogo =
-    '<i class="fas fa-check-circle fa-lg" style="color:#32CD32"></i>';
-  const unsubbedLogo =
-    '<i class="fas fa-times-circle fa-lg" style="color:red"></i>';
 
   const db = getFirestore();
   const auth = getAuth();
@@ -104,7 +105,7 @@ function setSubbed(subscribe, tableSelector) {
  * @param {String} tableSelector - Selector Value of the DataTable
  * @param {String} collection - Firebase collection name to modify
  */
-function toggleSubscription(tableSelector, collection) {
+async function toggleSubscription(tableSelector, collection) {
   const data = $(tableSelector).DataTable().row(".selected").data();
   const isSubbed = data.subbed === "yes";
 
@@ -124,14 +125,14 @@ function toggleSubscription(tableSelector, collection) {
       icon: "error",
       title: `Unsubscribed from ${data.name}`,
     });
-    changeSubOnFirebase(false, data.name, collection);
+    await changeSubOnFirebase(false, data.name, collection);
     setSubbed(false, tableSelector);
   } else {
     Toast.fire({
       icon: "success",
       title: `Subscribed to ${data.name}!`,
     });
-    changeSubOnFirebase(true, data.name, collection);
+    await changeSubOnFirebase(true, data.name, collection);
     setSubbed(true, tableSelector);
   }
 }

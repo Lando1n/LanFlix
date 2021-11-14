@@ -11,8 +11,8 @@ function selectShowRow() {
   $(this).addClass("selected");
 }
 
-$("#shows-tbl").on("dblclick", "tr", () => {
-  toggleSubscription("#shows-tbl", "shows");
+$("#shows-tbl").on("dblclick", "tr", async () => {
+  await toggleSubscription("#shows-tbl", "shows");
 });
 
 $("#shows-tbl").on("click", "tr", selectShowRow);
