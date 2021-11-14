@@ -7,24 +7,28 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Npm Install
+      - name: Root Dependencies
         run: |
           npm install
-      - name: Cache
+      - name: Install Webc dependencies
+        working-directory: packages/webc
+        run: |
+          npm install
+      - name: Cache Dependencies
         uses: actions/cache@v2
         with:
-          path: ./node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
   jest:
     needs: setup
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Cache
+      - name: Cache Dependencies
         uses: actions/cache@v2
         with:
-          path: ./node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run Jest
         uses: landon-martin/code-coverage-commenter@v0.0.8
         with:
@@ -36,11 +40,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Cache
+      - name: Cache Dependencies
         uses: actions/cache@v2
         with:
-          path: ./node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
       - name: Run Lint
         run: |
           npm run lint
@@ -49,11 +53,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Cache
+      - name: Cache Dependencies
         uses: actions/cache@v2
         with:
-          path: ./node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install extra tools
         run: |
           npm install playwright
