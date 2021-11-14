@@ -18,7 +18,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ github.sha }}
   jest:
     needs: setup
     runs-on: ubuntu-20.04
@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ github.sha }}
       - name: Run Jest
         uses: landon-martin/code-coverage-commenter@v0.0.8
         with:
@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ github.sha }}
       - name: Run Lint
         run: |
           npm run lint
@@ -57,7 +57,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ github.sha }}
       - name: Install extra tools
         run: |
           npm install playwright
