@@ -22,7 +22,6 @@ module.exports = {
   },
   rules: {
     "prettier/prettier": "error",
-    "new-cap": "off",
     "require-jsdoc": "off",
     "guard-for-in": "off",
   },
