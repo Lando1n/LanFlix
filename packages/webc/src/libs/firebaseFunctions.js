@@ -6,18 +6,19 @@ const {
   getDocs,
   updateDoc,
   query,
+  setDoc,
 } = require("firebase/firestore");
 const { getAuth } = require("firebase/auth");
 
 /**
  * Add a newly logged in user to the users list.
  */
-function initializeUser() {
-  console.log("New user found, adding to database...");
+async function initializeUser() {
+  console.debug("New user found, adding to database...");
 
   const db = getFirestore();
-  // TODO: Update this to modular
-  db.collection("users").doc(user.email).set({
+
+  await setDoc(doc(db, "users", user.email), {
     email: user.email,
   });
 }

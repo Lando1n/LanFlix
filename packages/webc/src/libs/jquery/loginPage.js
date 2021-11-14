@@ -9,7 +9,7 @@ const {
 const { registerAccount } = require("../auth/register");
 
 $("#login-btn").on("click", function () {
-  console.log("logging in...");
+  console.debug("logging in...");
   $("#login-modal").modal("show");
 });
 

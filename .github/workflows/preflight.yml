@@ -7,10 +7,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12'
       - name: Npm Install
         run: |
           npm install
@@ -23,68 +19,56 @@ jobs:
     needs: setup
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '12'
-    - name: Cache
-      uses: actions/cache@v2
-      with:
-        path: ./node_modules
-        key: ${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
-    - name: Run Jest
-      uses: landon-martin/code-coverage-commenter@v0.0.8
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        coverage-command: "npm run coverage"
-        comment-title: "Source Unit Test Coverage Report"
+      - uses: actions/checkout@v2
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
+      - name: Run Jest
+        uses: landon-martin/code-coverage-commenter@v0.0.8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          coverage-command: "npm run coverage"
+          comment-title: "Source Unit Test Coverage Report"
   lint:
     needs: setup
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '12'
-    - name: Cache
-      uses: actions/cache@v2
-      with:
-        path: ./node_modules
-        key: ${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
-    - name: Run Lint
-      run: |
-        npm run lint
+      - uses: actions/checkout@v2
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
+      - name: Run Lint
+        run: |
+          npm run lint
   e2e:
     needs: setup
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '12'
-    - name: Cache
-      uses: actions/cache@v2
-      with:
-        path: ./node_modules
-        key: ${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
-    - name: Install extra tools
-      run: |
-        npm install playwright
-        npm install -g firebase-tools
-    - name: Switch to staging
-      run: |
-        npm run use-env -- staging --token "${{ secrets.STAGING_FIREBASE_TOKEN }}"
-    - name: Host server
-      run: |
-        npm run serve -- --token "${{ secrets.STAGING_FIREBASE_TOKEN }}" --non-interactive &
-    - name: Run tests
-      working-directory: packages/e2e-tests
-      env:
-        HEADLESS: true
-        LANFLIX_USERNAME: ${{ secrets.STAGING_USERNAME }}
-        LANFLIX_PASSWORD: ${{ secrets.STAGING_PASSWORD }}
-      run: |
-        npm run e2e-test -- --verbose --steps
+      - uses: actions/checkout@v2
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
+      - name: Install extra tools
+        run: |
+          npm install playwright
+          npm install -g firebase-tools
+      - name: Switch to staging
+        run: |
+          npm run use-env -- staging --token "${{ secrets.STAGING_FIREBASE_TOKEN }}"
+      - name: Host server
+        run: |
+          npm run serve -- --token "${{ secrets.STAGING_FIREBASE_TOKEN }}" --non-interactive &
+      - name: Run tests
+        working-directory: packages/e2e-tests
+        env:
+          HEADLESS: true
+          LANFLIX_USERNAME: ${{ secrets.STAGING_USERNAME }}
+          LANFLIX_PASSWORD: ${{ secrets.STAGING_PASSWORD }}
+        run: |
+          npm run e2e-test -- --verbose --steps

@@ -51,12 +51,12 @@ onAuthStateChanged(auth, async (user) => {
     // Check if the user exists yet, add it to list if not.
     const users = await getAllUsers();
     settings = await getSettings();
-    console.log(settings);
+    console.debug(settings);
 
     if (!users.includes(user.email)) {
-      initializeUser();
+      await initializeUser();
     }
-    console.log(`Successfully loggged in as ${JSON.stringify(user.email)}`);
+    console.debug(`Successfully loggged in as ${JSON.stringify(user.email)}`);
 
     await populateSubTable("#movies-tbl", "movies");
     await populateSubTable("#shows-tbl", "shows");

@@ -142,7 +142,7 @@ async function toggleSubscription(tableSelector, collection) {
  * @param {String} showName
  */
 function doesShowExist(showName) {
-  console.log("Looking for show: ", showName);
+  console.debug("Looking for show: ", showName);
   let showExists = false;
   $("#shows-tbl")
     .DataTable()
