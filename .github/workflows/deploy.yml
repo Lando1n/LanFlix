@@ -9,13 +9,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Install root dependencies
-        run: |
-          npm install --only=prod
       - name: Install package dependencies
         working-directory: packages/webc
         run: |
-          npm install --only=prod
+          npm install
       - name: Install Firebase tools
         run: |
           sudo npm install -g firebase-tools
