@@ -74,6 +74,7 @@ jobs:
         run: |
           npm run use-env -- staging --token "${{ secrets.STAGING_FIREBASE_TOKEN }}"
       - name: Host server
+        working-directory: packages/webc
         run: |
           npm run serve -- --token "${{ secrets.STAGING_FIREBASE_TOKEN }}" --non-interactive &
       - name: Run tests
