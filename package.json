@@ -6,28 +6,17 @@
   "scripts": {
     "test": "jest --silent",
     "lint": "eslint . --quiet",
-    "serve": "firebase serve",
-    "deploy": "firebase deploy",
-    "use-env": "firebase use",
     "coverage": "npm run test -- --coverage",
-    "e2e-test": "cd packages/e2e-tests && codeceptjs run --verbose --steps",
-    "e2e-test:headless": "env HEADLESS=true npm run e2e-test",
     "notify": "node packages/notifier/notifier-script.js",
     "monitor": "node packages/notifier/lanflix-monitor.js",
-    "vpn_monitor": "cd scripts && ./vpn_monitor.sh"
-  },
-  "dependencies": {
-    "firebase": "^8.2.7",
-    "firebase-admin": "^9.5.0",
-    "nodemailer": "^6.7.0"
+    "vpn_monitor": "cd scripts && ./vpn_monitor.sh",
+    "use-env": "firebase use"
   },
   "devDependencies": {
-    "codeceptjs": "^3.0.5",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.1.0",
-    "playwright": "^1.8.1",
     "prettier": "^2.0.5"
   },
   "repository": {

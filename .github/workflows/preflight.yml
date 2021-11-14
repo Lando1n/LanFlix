@@ -10,6 +10,10 @@ jobs:
       - name: Root Dependencies
         run: |
           npm install
+      - name: Install Notifier dependencies
+        working-directory: packages/notifier
+        run: |
+          npm install
       - name: Install Webc dependencies
         working-directory: packages/webc
         run: |
@@ -71,8 +75,7 @@ jobs:
       - name: Run tests
         working-directory: packages/e2e-tests
         env:
-          HEADLESS: true
           LANFLIX_USERNAME: ${{ secrets.STAGING_USERNAME }}
           LANFLIX_PASSWORD: ${{ secrets.STAGING_PASSWORD }}
         run: |
-          npm run e2e-test -- --verbose --steps
+          npm run test:headless -- --verbose --steps
