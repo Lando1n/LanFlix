@@ -1,7 +1,45 @@
+const { initializeApp } = require("firebase/app");
+const { getAuth, onAuthStateChanged, signOut } = require("firebase/auth");
+
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCDDQXk9E6-t55GgFQhSkvx3hX_j1wKOkE",
+  authDomain: "lanflix.firebaseapp.com",
+  databaseURL: "https://lanflix.firebaseio.com",
+  projectId: "lanflix",
+  storageBucket: "lanflix.appspot.com",
+  messagingSenderId: "208193875375",
+  appId: "1:208193875375:web:8eb09f6978f36258c6135a",
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
+
+require("datatables.net")(window, $);
+require("datatables.net-dt")(window, $);
+
+const {
+  destroyTable,
+  populateRequestsTable,
+  populateSubTable,
+} = require("./libs/datatableFunctions");
+const { selectPage } = require("./libs/nav/topbar");
+const { getAllUsers, getSettings } = require("./libs/firebaseFunctions");
+const { setupRequestsListener } = require("./libs/requests/listener");
+
 let settings;
 let unsubscribeRequestsListener;
 
-firebase.auth().onAuthStateChanged(async (user) => {
+require("./libs/jquery/loginPage");
+require("./libs/jquery/moviesTab");
+require("./libs/jquery/requests");
+require("./libs/jquery/showsTab");
+require("./libs/jquery/navigation");
+
+const auth = getAuth();
+
+onAuthStateChanged(auth, async (user) => {
   if (user && user.emailVerified) {
     $("#logged-in-username").text(user.email);
     $("#login-modal").hide();
@@ -13,23 +51,27 @@ firebase.auth().onAuthStateChanged(async (user) => {
     // Check if the user exists yet, add it to list if not.
     const users = await getAllUsers();
     settings = await getSettings();
-    console.log(settings);
+    console.debug(settings);
 
     if (!users.includes(user.email)) {
-      initializeUser();
+      await initializeUser();
     }
-    console.log(`Successfully loggged in as ${JSON.stringify(user.email)}`);
+    console.debug(`Successfully loggged in as ${JSON.stringify(user.email)}`);
 
-    populateSubTable("#movies-tbl", "movies");
-    populateSubTable("#shows-tbl", "shows");
-    populateRequestsTable();
+    await populateSubTable("#movies-tbl", "movies");
+    await populateSubTable("#shows-tbl", "shows");
+    await populateRequestsTable();
     unsubscribeRequestsListener = setupRequestsListener();
   } else if (user) {
-    unsubscribeRequestsListener();
+    if (unsubscribeRequestsListener) {
+      unsubscribeRequestsListener();
+    }
     window.location = "index.html";
-    firebase.auth().signOut();
+    signOut(auth);
   } else {
-    unsubscribeRequestsListener();
+    if (unsubscribeRequestsListener) {
+      unsubscribeRequestsListener();
+    }
     destroyTable("#movies-tbl");
     destroyTable("#shows-tbl");
     destroyTable("#requests-tbl");

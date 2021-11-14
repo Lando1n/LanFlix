@@ -1,3 +1,5 @@
+const { toggleSubscription } = require("../datatableFunctions");
+
 // Highlight row when clicked so that it's selected
 function selectShowRow() {
   $("#shows-tbl")
@@ -9,8 +11,8 @@ function selectShowRow() {
   $(this).addClass("selected");
 }
 
-$("#shows-tbl").on("dblclick", "tr", () => {
-  toggleSubscription("#shows-tbl", "shows");
+$("#shows-tbl").on("dblclick", "tr", async () => {
+  await toggleSubscription("#shows-tbl", "shows");
 });
 
 $("#shows-tbl").on("click", "tr", selectShowRow);

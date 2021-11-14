@@ -1,5 +1,7 @@
-$("#movies-tbl").on("dblclick", "tr", () => {
-  toggleSubscription("#movies-tbl", "movies");
+const { toggleSubscription } = require("../datatableFunctions");
+
+$("#movies-tbl").on("dblclick", "tr", async () => {
+  await toggleSubscription("#movies-tbl", "movies");
 });
 
 // Highlight row when clicked so that it's selected

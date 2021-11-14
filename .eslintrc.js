@@ -1,14 +1,12 @@
 module.exports = {
   extends: ["plugin:prettier/recommended"],
   env: {
-    browser: true,
     commonjs: true,
-    es6: true,
   },
-  plugins: ['prettier'],
+  plugins: ["prettier"],
   globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+    Atomics: "readonly",
+    SharedArrayBuffer: "readonly",
     test: true,
     expect: true,
     describe: true,
@@ -21,17 +19,13 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-    'prettier/prettier': 'error',
-    'new-cap': 'off',
-    'require-jsdoc': 'off',
-    'guard-for-in': 'off',
+    "prettier/prettier": "error",
+    "require-jsdoc": "off",
+    "guard-for-in": "off",
   },
   overrides: [
     {
-      files: ['public/**/*.js'],
-      rules: {
-        'no-undef': 'off',
-      },
+      files: ["packages/**/*.js"],
     },
   ],
 };

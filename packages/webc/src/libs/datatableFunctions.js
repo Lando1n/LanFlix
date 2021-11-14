@@ -1,3 +1,15 @@
+const {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} = require("firebase/firestore");
+const { getAuth } = require("firebase/auth");
+const Swal = require("sweetalert2");
+
+const { changeSubOnFirebase } = require("./firebaseFunctions");
+
 const subbedLogo =
   '<i class="fas fa-check-circle fa-lg" style="color:#32CD32"></i>';
 const unsubbedLogo =
@@ -9,56 +21,56 @@ const unsubbedLogo =
  * @param {String} tableSelector - Selector Value of the DataTable
  * @param {String} collection - Firebase collection name to grab data from
  */
-function populateSubTable(tableSelector, collection) {
-  const db = firebase.firestore();
-  const user = firebase.auth().currentUser.email;
+async function populateSubTable(tableSelector, collectionName) {
+  console.debug(`Populating table with data: ${collectionName}`);
+
+  const db = getFirestore();
+  const auth = getAuth();
+  const user = auth.currentUser.email;
   const table = $(tableSelector).DataTable();
 
-  db.collection(collection)
-    .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (entry) {
-        if (!entry.data().disabled) {
-          const subbed = entry.data().subs.includes(user);
-          const row = {
-            name: entry.id,
-            subscribers: entry.data().subs.length,
-            logo: subbed ? subbedLogo : unsubbedLogo,
-            subbed: subbed ? "yes" : "no",
-          };
-          table.row.add(row);
-        }
-      });
-      table.draw();
-    });
+  const q = query(
+    collection(db, collectionName),
+    where("disabled", "!=", true)
+  );
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach(function (entry) {
+    const subbed = entry.data().subs.includes(user);
+    const row = {
+      name: entry.id,
+      subscribers: entry.data().subs.length,
+      logo: subbed ? subbedLogo : unsubbedLogo,
+      subbed: subbed ? "yes" : "no",
+    };
+    table.row.add(row);
+  });
+  table.draw();
 }
 
 /**
  * Populates the requests DataTable with requests only from this user
  */
-function populateRequestsTable() {
-  const db = firebase.firestore();
-  const user = firebase.auth().currentUser.email;
+async function populateRequestsTable() {
+  const db = getFirestore();
+  const auth = getAuth();
+  const user = auth.currentUser.email;
   destroyTable("#requests-tbl");
   const table = $("#requests-tbl").DataTable();
+  const q = query(collection(db, "requests"), where("user", "==", user));
 
-  db.collection("requests")
-    .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (entry) {
-        const data = entry.data();
-        if (user === data.user) {
-          const row = {
-            name: data.name,
-            type: data.mediaType,
-            timestamp: data.timestamp,
-            status: data.status,
-          };
-          table.row.add(row);
-        }
-      });
-      table.draw();
-    });
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach(function (entry) {
+    const data = entry.data();
+    const row = {
+      name: data.name,
+      type: data.mediaType,
+      timestamp: data.timestamp,
+      status: data.status,
+    };
+    table.row.add(row);
+  });
+  table.draw();
 }
 
 /**
@@ -93,7 +105,7 @@ function setSubbed(subscribe, tableSelector) {
  * @param {String} tableSelector - Selector Value of the DataTable
  * @param {String} collection - Firebase collection name to modify
  */
-function toggleSubscription(tableSelector, collection) {
+async function toggleSubscription(tableSelector, collection) {
   const data = $(tableSelector).DataTable().row(".selected").data();
   const isSubbed = data.subbed === "yes";
 
@@ -113,14 +125,14 @@ function toggleSubscription(tableSelector, collection) {
       icon: "error",
       title: `Unsubscribed from ${data.name}`,
     });
-    changeSubOnFirebase(false, data.name, collection);
+    await changeSubOnFirebase(false, data.name, collection);
     setSubbed(false, tableSelector);
   } else {
     Toast.fire({
       icon: "success",
       title: `Subscribed to ${data.name}!`,
     });
-    changeSubOnFirebase(true, data.name, collection);
+    await changeSubOnFirebase(true, data.name, collection);
     setSubbed(true, tableSelector);
   }
 }
@@ -130,7 +142,7 @@ function toggleSubscription(tableSelector, collection) {
  * @param {String} showName
  */
 function doesShowExist(showName) {
-  console.log("Looking for show: ", showName);
+  console.debug("Looking for show: ", showName);
   let showExists = false;
   $("#shows-tbl")
     .DataTable()
@@ -147,3 +159,11 @@ function doesShowExist(showName) {
     });
   return showExists;
 }
+
+module.exports = {
+  populateSubTable,
+  populateRequestsTable,
+  destroyTable,
+  toggleSubscription,
+  doesShowExist,
+};
