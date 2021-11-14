@@ -29,9 +29,6 @@ module.exports = {
   overrides: [
     {
       files: ["packages/**/*.js"],
-      rules: {
-        "no-undef": "off",
-      },
     },
   ],
 };

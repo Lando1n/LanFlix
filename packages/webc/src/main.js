@@ -1,8 +1,6 @@
 const { initializeApp } = require("firebase/app");
 const { getAuth, onAuthStateChanged, signOut } = require("firebase/auth");
-const { where } = require("firebase/firestore");
 
-// TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {

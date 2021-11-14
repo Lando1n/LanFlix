@@ -1,10 +1,7 @@
 const { initializeApp } = require("firebase/app");
 const { getAuth, onAuthStateChanged, signOut } = require("firebase/auth");
 
-// TODO: Add SDKs for Firebase products that you want to use
-
 // https://firebase.google.com/docs/web/setup#available-libraries
-
 const firebaseConfig = {
   apiKey: "AIzaSyCDDQXk9E6-t55GgFQhSkvx3hX_j1wKOkE",
   authDomain: "lanflix.firebaseapp.com",
