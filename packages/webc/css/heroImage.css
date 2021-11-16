@@ -1,20 +1,32 @@
-body, html {
+body,
+html {
   height: 100%;
   margin: 0;
   max-width: 100%;
   overflow-x: hidden;
 }
 
+.main {
+  width: 90%;
+  margin: auto;
+}
+
 /* The hero image */
 .hero-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
   background-image: url("../images/space_banner.jpg");
-
+  background-color: #212529;
+  border-radius: 25px;
+  border: 3px solid white;
   /* Set a specific height */
   height: 200px;
+  width: 90%;
+
+  margin: auto;
 
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
+  text-align: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;

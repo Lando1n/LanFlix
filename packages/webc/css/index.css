@@ -1,47 +1,53 @@
 #title {
-	font-weight:bold;
-	font-size:30px;
+  font-weight: bold;
+  font-size: 30px;
 }
 
 body {
-	font-family: sans-serif;
-	width: 100%;
+  font-family: sans-serif;
+  width: 100%;
 }
 
-#inventory, h1 {
-	text-align: center;
+.main {
+  width: 90%;
+  margin: auto;
+}
+
+#inventory,
+h1 {
+  text-align: center;
 }
 
 .modal-title {
-	text-align: right;
+  text-align: right;
 }
 
 td {
-	padding: 5px;
+  padding: 5px;
 }
 
 textarea {
-	width: 100%;
-	resize: none;
+  width: 100%;
+  resize: none;
 }
 
 select {
-	align-self: left;
+  align-self: left;
 }
 
 #modal-error {
-	color: red;
-	text-align: center;
+  color: red;
+  text-align: center;
 }
 
 .modal-header {
-	font-weight: bolder;
+  font-weight: bolder;
 }
 
 .main-header {
-	height:100px;
+  height: 100px;
 }
 
 .error-message {
-	color:red;
+  color: red;
 }
