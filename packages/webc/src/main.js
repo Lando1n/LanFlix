@@ -16,8 +16,8 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
-require("datatables.net")(window, $);
-require("datatables.net-dt")(window, $);
+require("bootstrap");
+require("datatables.net-bs5")(window, $);
 
 const {
   destroyTable,

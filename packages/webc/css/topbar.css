@@ -1,14 +1,16 @@
 /* Style the tab */
 .tab {
   overflow: hidden;
-  background-color: #333;
-  width: auto;
+  background-color: #212529;
+  width: 90%;
+  margin: auto;
+  border-radius: 25px;
 }
 
 /* Style the buttons that are used to open the tab content */
 .tab button {
   background-color: inherit;
-  color: white;
+  color: #f2ad18;
   float: left;
   border: none;
   outline: none;
@@ -18,12 +20,12 @@
 }
 
 .tab .right-top-bar {
-  float:right;
+  float: right;
 }
 
 .tab .right-top-bar .logout {
   background-color: red;
-  color:white;
+  color: white;
 }
 
 /* Change background color of buttons on hover */
@@ -52,6 +54,10 @@
 
 /* Go from zero to full opacity */
 @keyframes fadeEffect {
-  from {opacity: 0;}
-  to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
