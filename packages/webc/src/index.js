@@ -1,5 +1,10 @@
 const { initializeApp } = require("firebase/app");
-const { getAuth, onAuthStateChanged, signOut, sendSignInLinkToEmail } = require("firebase/auth");
+const {
+  getAuth,
+  onAuthStateChanged,
+  signOut,
+  sendSignInLinkToEmail,
+} = require("firebase/auth");
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 const firebaseConfig = {
@@ -27,10 +32,11 @@ onAuthStateChanged(auth, (user) => {
     $("#login-error").text(
       "Email not verified. Check your email for a verification email and try again. Check the junk just in case!"
     );
-    sendSignInLinkToEmail(auth, user.email)
-    .catch(function (e) {
+    sendSignInLinkToEmail(auth, user.email).catch(function (e) {
       // An error happened.
-      $("#login-error").text(`Error: Failed to send verification email. Reason: ${e}`);
+      $("#login-error").text(
+        `Error: Failed to send verification email. Reason: ${e}`
+      );
     });
     signOut(auth);
   }
