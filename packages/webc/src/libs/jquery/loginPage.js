@@ -1,12 +1,11 @@
 const {
+  createUserWithEmailAndPassword,
   getAuth,
   setPersistence,
   browserLocalPersistence,
   signInWithEmailAndPassword,
   signOut,
 } = require("firebase/auth");
-
-const { registerAccount } = require("../auth/register");
 
 $("#login-btn").on("click", function () {
   console.debug("logging in...");
@@ -47,5 +46,11 @@ $("#register-btn").on("click", () => {
   $("#login-error").text("");
   const email = $("#username-input").val();
   const password = $("#password-input").val();
-  registerAccount(email, password);
+  const auth = getAuth();
+
+  createUserWithEmailAndPassword(auth, email, password).catch(function (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    $("#login-error").text(`Error ${errorCode}, ${errorMessage}`);
+  });
 });
