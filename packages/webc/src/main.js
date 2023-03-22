@@ -17,7 +17,8 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 require("bootstrap");
-require("datatables.net-bs5")(window, $);
+require("datatables.net-bs5");
+require('datatables.net-responsive-bs5');
 
 const {
   destroyTable,
@@ -105,6 +106,7 @@ $("#shows-tbl").DataTable({
     },
   ],
   lengthChange: false,
+  responsive: true
 });
 
 $("#movies-tbl").DataTable({
@@ -133,6 +135,7 @@ $("#movies-tbl").DataTable({
   ],
   lengthChange: false,
   bFilter: false,
+  responsive: true
 });
 
 $("#requests-tbl").DataTable({
@@ -163,4 +166,5 @@ $("#requests-tbl").DataTable({
   ],
   lengthChange: false,
   bFilter: false,
+  responsive: true
 });

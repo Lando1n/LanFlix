@@ -11,11 +11,11 @@ Best used in tandem with Sonarr, Radarr, and Plex/Emby.
 ### Dependencies
 
 - Install nodejs/npm
-  Note: If already installed, version must be at least node 10.x
+  Note: If already installed, version must be at least node 16.x
   ```
   sudo apt update
   sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
-  curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+  curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
   sudo apt -y install nodejs
   ```
 - Install all of the npm packages required for the script with:
