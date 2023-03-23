@@ -11,9 +11,9 @@ const Swal = require("sweetalert2");
 const { changeSubOnFirebase } = require("./firebaseFunctions");
 
 const subbedLogo =
-  '<i class="fas fa-check-circle fa-lg" style="color:#32CD32"></i>';
+  '<i class="fas fa-check-circle fa-lg" style="color:#99CC99"></i>';
 const unsubbedLogo =
-  '<i class="fas fa-times-circle fa-lg" style="color:red"></i>';
+  '<i class="fas fa-times-circle fa-lg" style="color:#FF607F"></i>';
 
 /**
  * Populate a DataTable from a given firebase collection.
