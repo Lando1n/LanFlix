@@ -16,9 +16,9 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
+// Initialize bootstrap
 require("bootstrap");
 require("datatables.net-bs5");
-require("datatables.net-responsive-bs5");
 
 const {
   destroyTable,
@@ -80,8 +80,15 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-$("#shows-tbl").DataTable({
+const defaultOptions = {
   iDisplayLength: 15,
+  lengthChange: false,
+  bFilter: false,
+  language: { search: "", searchPlaceholder: "Search..."},
+  searching: true,
+}
+
+$("#shows-tbl").DataTable({
   order: [[0, "asc"]],
   columns: [
     {
@@ -105,12 +112,10 @@ $("#shows-tbl").DataTable({
       visible: false,
     },
   ],
-  lengthChange: false,
-  responsive: true,
+  ...defaultOptions
 });
 
 $("#movies-tbl").DataTable({
-  iDisplayLength: 15,
   order: [[0, "asc"]],
   columns: [
     {
@@ -133,13 +138,10 @@ $("#movies-tbl").DataTable({
       visible: false,
     },
   ],
-  lengthChange: false,
-  bFilter: false,
-  responsive: true,
+  ...defaultOptions
 });
 
 $("#requests-tbl").DataTable({
-  iDisplayLength: 15,
   order: [[2, "desc"]],
   columns: [
     {
@@ -164,7 +166,5 @@ $("#requests-tbl").DataTable({
       className: "dt-right",
     },
   ],
-  lengthChange: false,
-  bFilter: false,
-  responsive: true,
+  ...defaultOptions
 });

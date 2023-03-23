@@ -2,30 +2,37 @@
 .tab {
   overflow: hidden;
   background-color: #212529;
-  width: 90%;
-  margin: auto;
-  border-radius: 25px;
+  width: 100%;
+  height: auto;
+  position: relative;
 }
 
 /* Style the buttons that are used to open the tab content */
 .tab button {
   background-color: inherit;
   color: white;
-  float: left;
   border: none;
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.tab .logo {
+  float: left;
+  background-color: inherit;
+  height: 100px;
 }
 
 .tab .right-top-bar {
   float: right;
 }
 
-.tab .right-top-bar .logout {
-  background-color: red;
-  color: white;
+.tab .right-top-bar button:hover{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
 }
 
 /* Change background color of buttons on hover */
@@ -34,10 +41,16 @@
   color: black;
 }
 
+.tab .right-top-bar button.active {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
 /* Create an active/current tablink class */
 .tab button.active {
   background-color: #80bfff;
   color: black;
+  border-bottom: #212529;
 }
 
 /* Style the tab content */
@@ -46,6 +59,7 @@
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+
 }
 
 .tabcontent {

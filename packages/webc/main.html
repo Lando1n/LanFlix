@@ -18,27 +18,23 @@
 		<link rel='stylesheet' type='text/css' href='css/index.css'>
 	</head>
 	<body>
-		<div id='banner' class="hero-image">
-			<div class="hero-text">
-				<img src='images/logo.png'>
-			</div>
-		</div> 
 		<div id='topbar' class='tab'>
-			<button class='tablinks' id='show-select-btn'><i class="fas fa-tv fa-sm"></i> Shows</button>
+			<img class='logo' src='images/logo.png'>
+			<button class='tablinks' id='show-select-btn'><i class="fas fa-tv fa-sm"></i> <b>Shows</b></button>
 			<button class='tablinks' id='movie-select-btn'><i class="fas fa-film fa-sm"></i> Movies</button>
 			<button class='tablinks' id='request-select-btn'><i class="fas fa-ticket-alt"></i> Requests</button>
 			<div class='right-top-bar'>
 				<button id='request-show-button'><i class="fas fa-plus"></i> Request TV Show</button>
 				<button id='request-movie-button'><i class="fas fa-plus"></i> Request Movie</button>
-				<button class='logout' id='logout-btn'><i class="fas fa-sign-out-alt"></i></button>
+				<button class='logout' id='logout-btn'><i class="fas fa-sign-out-alt"></i> Logout</button>
 			</div>
 		</div>
 		<!-- MAIN PAGES -->
+		<br>
 		<div id='main' class='main'>
 			<!-- SHOW PAGE -->
 			<div id='shows-page' class='tab-content'>
-				<br>
-				<table id='shows-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
+				<table id='shows-tbl' class='table table-dark table-compact table-hover' width="100%">
 					<thead>
 						<tr id='headers'>
 							<th></th>
@@ -49,8 +45,7 @@
 				</table>
 			</div>
 			<div id='movies-page' class='tab-content' style='display:none'>
-				<br>
-				<table id='movies-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
+				<table id='movies-tbl' class='table table-dark table-striped table-bordered' width="100%">
 					<thead>
 						<tr id='movie-headers'>
 							<th></th>
@@ -61,8 +56,7 @@
 				</table>
 			</div>
 			<div id='requests-page' class='tab-content' style='display:none'>
-				<br>
-				<table id='requests-tbl' class='table table-dark table-striped table-bordered' style='width: 100%'>
+				<table id='requests-tbl' class='table table-dark table-striped table-bordered' width="100%">
 					<thead>
 						<tr id='requests-headers'>
 							<th></th>
