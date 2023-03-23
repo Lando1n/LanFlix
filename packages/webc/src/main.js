@@ -84,9 +84,9 @@ const defaultOptions = {
   iDisplayLength: 15,
   lengthChange: false,
   bFilter: false,
-  language: { search: "", searchPlaceholder: "Search..."},
+  language: { search: "", searchPlaceholder: "Search..." },
   searching: true,
-}
+};
 
 $("#shows-tbl").DataTable({
   order: [[0, "asc"]],
@@ -112,7 +112,7 @@ $("#shows-tbl").DataTable({
       visible: false,
     },
   ],
-  ...defaultOptions
+  ...defaultOptions,
 });
 
 $("#movies-tbl").DataTable({
@@ -138,7 +138,7 @@ $("#movies-tbl").DataTable({
       visible: false,
     },
   ],
-  ...defaultOptions
+  ...defaultOptions,
 });
 
 $("#requests-tbl").DataTable({
@@ -166,5 +166,5 @@ $("#requests-tbl").DataTable({
       className: "dt-right",
     },
   ],
-  ...defaultOptions
+  ...defaultOptions,
 });
