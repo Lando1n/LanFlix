@@ -52,3 +52,8 @@ select {
 .error-message {
   color: red;
 }
+
+.bottom-message {
+  text-align: center;
+  width: 100%;
+}
