@@ -6,10 +6,11 @@
 body {
   font-family: sans-serif;
   width: 100%;
+  background-color: #80bfff;
 }
 
 .main {
-  width: 90%;
+  width: 99%;
   margin: auto;
 }
 
@@ -50,4 +51,9 @@ select {
 
 .error-message {
   color: red;
+}
+
+.bottom-message {
+  text-align: center;
+  width: 100%;
 }

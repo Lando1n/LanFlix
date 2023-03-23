@@ -2,16 +2,67 @@
 .tab {
   overflow: hidden;
   background-color: #212529;
-  width: 90%;
-  margin: auto;
-  border-radius: 25px;
+  width: 100%;
+  height: auto;
+  position: relative;
 }
 
 /* Style the buttons that are used to open the tab content */
 .tab button {
   background-color: inherit;
   color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.tab .logo {
   float: left;
+  background-color: inherit;
+  height: 75px;
+}
+
+.tab .left-top-bar {
+  padding-top: 25px;
+  float: left;
+}
+
+.tab .right-top-bar {
+  padding-top: 25px;
+  float: right;
+}
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #cceeff;
+  color: #212529;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #80bfff;
+  color: #212529;
+}
+
+/* Style the tab content */
+.tabcontent {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-bottom: 5px;
+  border-bottom-color: ff9160
+}
+
+.tabcontent {
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+.tab .right-top-bar .request-button:hover  {
+  background-color: #99CC99;
+  color: black;
   border: none;
   outline: none;
   cursor: pointer;
@@ -19,38 +70,16 @@
   transition: 0.3s;
 }
 
-.tab .right-top-bar {
-  float: right;
-}
-
-.tab .right-top-bar .logout {
-  background-color: red;
-  color: white;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #cceeff;
+.tab .right-top-bar .logout-btn:hover  {
+  background-color: #ff7779;
   color: black;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
 }
 
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #80bfff;
-  color: black;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-
-.tabcontent {
-  animation: fadeEffect 1s; /* Fading effect takes 1 second */
-}
 
 /* Go from zero to full opacity */
 @keyframes fadeEffect {
