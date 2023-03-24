@@ -119,7 +119,23 @@ async function chooseEpisodesType() {
   });
 }
 
-// eslint-disable-next-line no-unused-vars
+async function requestDialog() {
+  const result = await Swal.fire({
+    title: "What would you like to request?",
+    confirmButtonText: "Movie",
+    confirmButtonColor: "#99CC99",
+    showCancelButton: true,
+    cancelButtonText: "TV Series",
+    cancelButtonColor: "#99CC99",
+  });
+
+  if (result.isConfirmed) {
+    await requestMovieDialog();
+  } else if (result.dismiss === Swal.DismissReason.cancel) {
+    await requestShowDialog();
+  }
+}
+
 function requestShowDialog() {
   let results;
 
@@ -285,4 +301,5 @@ async function requestMovieDialog() {
 module.exports = {
   requestMovieDialog,
   requestShowDialog,
+  requestDialog,
 };

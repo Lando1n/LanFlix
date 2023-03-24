@@ -90,3 +90,16 @@
     opacity: 1;
   }
 }
+
+/* Hide stuff when the screen is too small */
+@media (max-width: 800px) {
+  .tab .logo {
+    display: none;
+  }
+}
+
+@media (max-width: 580px) {
+  .logout-btn {
+    display: none;
+  }
+}
