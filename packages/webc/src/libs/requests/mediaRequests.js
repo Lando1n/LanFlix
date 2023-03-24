@@ -121,12 +121,12 @@ async function chooseEpisodesType() {
 
 async function requestDialog() {
   const result = await Swal.fire({
-    title: 'What would you like to request?',
-    confirmButtonText: 'Movie',
-    confirmButtonColor: '#99CC99',
+    title: "What would you like to request?",
+    confirmButtonText: "Movie",
+    confirmButtonColor: "#99CC99",
     showCancelButton: true,
-    cancelButtonText: 'TV Series',
-    cancelButtonColor: '#99CC99',
+    cancelButtonText: "TV Series",
+    cancelButtonColor: "#99CC99",
   });
 
   if (result.isConfirmed) {
