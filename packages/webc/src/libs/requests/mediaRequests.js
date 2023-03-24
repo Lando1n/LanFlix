@@ -55,31 +55,23 @@ function shortenSearchResults(response, resultsToShow = 3) {
 }
 
 function createResultsTable(searchOptions) {
-  let titleCols = "";
-  let imageCols = "";
-  let infoCols = "";
+  let body = "";
+  let num = 1;
 
   searchOptions.forEach((option) => {
-    titleCols += `<th>${getNameDOM(option)}</th>`;
-    imageCols += `<td>${getImageDOM(option)}</td>`;
-    infoCols += `<td>${getInfoDOM(option)}</td>`;
+    body += `
+    <tr>
+      <td style="vertical-align:middle">${getImageDOM(option)}</td>
+      <td style="vertical-align:middle">${getNameDOM(option)}</td>
+      <td style="vertical-align:middle">${getInfoDOM(option)}</td>
+      <td id=request-selection-button-${num} style="vertical-align:middle"><button class="btn btn-primary">Request</button></td>
+    </tr>`;
+    num++;
   });
 
   return `
-      <table id='request-table' class='table table-dark table-bordered' style='table-layout: fixed;'>
-        <thead class='thead-dark'>
-          <tr>
-            ${titleCols}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            ${imageCols}
-          </tr>
-          <tr>
-            ${infoCols}
-          </tr>
-        </tbody>
+      <table id='request-table' class='table table-bordered' style='table-layout: fixed;'>
+      ${body}
       </table>`;
 }
 
@@ -87,23 +79,16 @@ async function pickResult(response) {
   const resultsTable = createResultsTable(response);
 
   // The user has to choose which search results
-  return (
-    await Swal.fire({
-      title: "Search Results",
-      input: "radio",
-      html: resultsTable,
-      inputOptions: {
-        1: "1",
-        2: "2",
-        3: "3",
-      },
-      inputValidator: (value) => {
-        if (!value) {
-          return "You need to choose something!";
-        }
-      },
-    })
-  ).value;
+  return await Swal.fire({
+    title: "Search Results",
+    html: resultsTable,
+    showConfirmButton: false,
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to choose something!";
+      }
+    },
+  });
 }
 
 async function chooseEpisodesType() {
