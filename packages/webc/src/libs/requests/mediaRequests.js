@@ -64,7 +64,7 @@ function createResultsTable(searchOptions) {
       <td style="vertical-align:middle">${getImageDOM(option)}</td>
       <td style="vertical-align:middle">${getNameDOM(option)}</td>
       <td style="vertical-align:middle">${getInfoDOM(option)}</td>
-      <td id=request-selection-button-${num} style="vertical-align:middle"><button class="btn btn-primary">Request</button></td>
+      <td style="vertical-align:middle"><button type="button" onclick="console.log(${num})" class="btn btn-primary">Request</button></td>
     </tr>`;
     num++;
   });
@@ -164,8 +164,8 @@ function requestShowDialog() {
         });
     },
   })
-    .then(async () => {
-      if (!selection || !which) {
+    .then(async (result) => {
+      if (!selection || !which || result.dismiss) {
         return;
       }
 
@@ -255,8 +255,8 @@ async function requestMovieDialog() {
         });
     },
   })
-    .then(async () => {
-      if (!selection || !results) {
+    .then(async (result) => {
+      if (!selection || !results || result.dismiss) {
         return;
       }
 
