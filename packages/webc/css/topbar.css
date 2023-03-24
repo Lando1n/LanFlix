@@ -26,18 +26,6 @@
   height: 75px;
 }
 
-@media (max-width: 830px) {
-  .tab .logo {
-    display: none;
-  }
-}
-
-@media (max-width: 610px) {
-  .logout-btn {
-    display: none;
-  }
-}
-
 .tab .left-top-bar {
   padding-top: 25px;
   float: left;
@@ -100,5 +88,18 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Hide stuff when the screen is too small */
+@media (max-width: 800px) {
+  .tab .logo {
+    display: none;
+  }
+}
+
+@media (max-width: 580px) {
+  .logout-btn {
+    display: none;
   }
 }
