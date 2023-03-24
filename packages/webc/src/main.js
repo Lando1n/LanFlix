@@ -142,7 +142,7 @@ $("#movies-tbl").DataTable({
 });
 
 $("#requests-tbl").DataTable({
-  order: [[2, "desc"]],
+  order: [[3, "desc"]],
   columns: [
     {
       data: "name",
