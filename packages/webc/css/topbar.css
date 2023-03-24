@@ -26,6 +26,18 @@
   height: 75px;
 }
 
+@media (max-width: 830px) {
+  .tab .logo {
+    display: none;
+  }
+}
+
+@media (max-width: 610px) {
+  .logout-btn {
+    display: none;
+  }
+}
+
 .tab .left-top-bar {
   padding-top: 25px;
   float: left;
