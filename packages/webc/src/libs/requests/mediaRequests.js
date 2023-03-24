@@ -87,36 +87,40 @@ async function pickResult(response) {
   const resultsTable = createResultsTable(response);
 
   // The user has to choose which search results
-  return (await Swal.fire({
-    title: "Search Results",
-    input: "radio",
-    html: resultsTable,
-    inputOptions: {
-      1: "1",
-      2: "2",
-      3: "3",
-    },
-    inputValidator: (value) => {
-      if (!value) {
-        return "You need to choose something!";
-      }
-    },
-  })).value;
+  return (
+    await Swal.fire({
+      title: "Search Results",
+      input: "radio",
+      html: resultsTable,
+      inputOptions: {
+        1: "1",
+        2: "2",
+        3: "3",
+      },
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to choose something!";
+        }
+      },
+    })
+  ).value;
 }
 
 async function chooseEpisodesType() {
   // The user must select the download type
   const settings = await getSettings();
-  return (await Swal.fire({
-    title: "Which Episodes?",
-    input: "select",
-    inputOptions: settings.tv_request_options,
-    inputValidator: (value) => {
-      if (!value) {
-        return "You need to choose something!";
-      }
-    },
-  })).value;
+  return (
+    await Swal.fire({
+      title: "Which Episodes?",
+      input: "select",
+      inputOptions: settings.tv_request_options,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to choose something!";
+        }
+      },
+    })
+  ).value;
 }
 
 async function requestDialog() {
@@ -127,7 +131,7 @@ async function requestDialog() {
     showCancelButton: true,
     cancelButtonText: "TV Series",
     cancelButtonColor: "#99CC99",
-    icon: 'question',
+    icon: "question",
   });
 
   if (result.isConfirmed) {
@@ -143,44 +147,43 @@ function requestShowDialog() {
   let results;
 
   Swal.fire({
-        input: "text",
-        confirmButtonText: "Next &rarr;",
-        showCancelButton: true,
-        currentProgressStep: 1,
-        title: "Which TV show would you like to request?",
-        input: "text",
-        inputPlaceholder: "Specify the show name here.",
-        showCancelButton: true,
-        inputValidator: (showName) => {
-          if (!showName) {
-            return "You need to write something!";
-          }
-          return;
-        },
-        preConfirm: (searchString) => {
-          const tmdb = new TheMovieDB();
-          const uri = tmdb.getTvSearchUri(searchString);
+    input: "text",
+    confirmButtonText: "Next &rarr;",
+    showCancelButton: true,
+    currentProgressStep: 1,
+    title: "Which TV show would you like to request?",
+    input: "text",
+    inputPlaceholder: "Specify the show name here.",
+    showCancelButton: true,
+    inputValidator: (showName) => {
+      if (!showName) {
+        return "You need to write something!";
+      }
+      return;
+    },
+    preConfirm: (searchString) => {
+      const tmdb = new TheMovieDB();
+      const uri = tmdb.getTvSearchUri(searchString);
 
-          return fetch(uri)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response.json();
-            })
-            .then(async (response) => {
-              results = shortenSearchResults(response);
-              selection = await pickResult(results);
-              which = await chooseEpisodesType();
-            });
-        },
-      },
-    )
+      return fetch(uri)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .then(async (response) => {
+          results = shortenSearchResults(response);
+          selection = await pickResult(results);
+          which = await chooseEpisodesType();
+        });
+    },
+  })
     .then(async () => {
       if (!selection || !which) {
         return;
       }
-      
+
       const request = {
         mediaType: "show",
         which,
@@ -236,39 +239,37 @@ async function requestMovieDialog() {
   let selection;
   let results;
 
-  Swal.fire(
-      {
-        input: "text",
-        confirmButtonText: "Next &rarr;",
-        showCancelButton: true,
-        title: "Which Movie would you like to request?",
-        input: "text",
-        inputPlaceholder: "Specify the show name here.",
-        showCancelButton: true,
-        inputValidator: (movieName) => {
-          if (!movieName) {
-            return "You need to write something!";
-          }
-          return;
-        },
-        preConfirm: (searchString) => {
-          const tmdb = new TheMovieDB();
-          const uri = tmdb.getMovieSearchUri(searchString);
+  Swal.fire({
+    input: "text",
+    confirmButtonText: "Next &rarr;",
+    showCancelButton: true,
+    title: "Which Movie would you like to request?",
+    input: "text",
+    inputPlaceholder: "Specify the show name here.",
+    showCancelButton: true,
+    inputValidator: (movieName) => {
+      if (!movieName) {
+        return "You need to write something!";
+      }
+      return;
+    },
+    preConfirm: (searchString) => {
+      const tmdb = new TheMovieDB();
+      const uri = tmdb.getMovieSearchUri(searchString);
 
-          return fetch(uri)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response.json();
-            })
-            .then(async (response) => {
-              results = shortenSearchResults(response);
-              selection = await pickResult(results);
-            });
-        },
-      },
-    )
+      return fetch(uri)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .then(async (response) => {
+          results = shortenSearchResults(response);
+          selection = await pickResult(results);
+        });
+    },
+  })
     .then(async () => {
       if (!selection || !results) {
         return;
