@@ -224,7 +224,6 @@ async function requestShowDialog() {
   Swal.fire("Requested", "The show has been requested!", "success");
 }
 
-// eslint-disable-next-line no-unused-vars
 async function requestMovieDialog() {
   const searchResults = await Swal.fire({
     input: "text",
@@ -240,7 +239,7 @@ async function requestMovieDialog() {
         return "You need to write something!";
       }
     },
-    // Search the tvdb for results
+    // Search the movie db for results
     preConfirm: (searchString) => {
       const tmdb = new TheMovieDB();
       const uri = tmdb.getMovieSearchUri(searchString);
