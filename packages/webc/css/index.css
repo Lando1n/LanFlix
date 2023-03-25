@@ -19,10 +19,6 @@ h1 {
   text-align: center;
 }
 
-.modal-title {
-  text-align: right;
-}
-
 td {
   padding: 5px;
 }
@@ -36,21 +32,8 @@ select {
   align-self: left;
 }
 
-#modal-error {
-  color: red;
-  text-align: center;
-}
-
-.modal-header {
-  font-weight: bolder;
-}
-
-.main-header {
-  height: 100px;
-}
-
 .error-message {
-  color: red;
+  color: #ff7779;
 }
 
 .bottom-message {

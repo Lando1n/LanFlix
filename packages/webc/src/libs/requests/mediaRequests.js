@@ -276,11 +276,11 @@ async function requestDialog() {
   const result = await Swal.fire({
     title: "What would you like to request?",
     confirmButtonText: "Movie",
-    confirmButtonColor: "#99CC99",
+    confirmButtonColor: "#80bfff",
     focusConfirm: false,
     showCancelButton: true,
     cancelButtonText: "TV Series",
-    cancelButtonColor: "#99CC99",
+    cancelButtonColor: '#80bfff',
     icon: "question",
   });
 
