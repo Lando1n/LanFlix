@@ -7,6 +7,18 @@
   position: relative;
 }
 
+.small-screen-header {
+  text-align: center;
+  background-color: #212529;
+  height: 20%;
+  width: auto;
+  display: none;
+}
+
+.small-screen-logo {
+  width: 30%;
+}
+
 /* Style the tab content */
 .tabcontent {
   padding: 6px 12px;
@@ -119,5 +131,8 @@
 @media (max-width: 450px) {
   .logo {
     display: none;
+  }
+  .small-screen-header {
+    display: block;
   }
 }
