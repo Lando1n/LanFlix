@@ -34,12 +34,14 @@
 .tab button:hover {
   background-color: #cceeff;
   color: #212529;
+  font-weight: bold;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
   background-color: #80bfff;
   color: #212529;
+  font-weight: bold;
 }
 
 .tab .logo {

@@ -7,6 +7,8 @@ const fetch = require("node-fetch");
 
 const TheMovieDB = require("./TheMovieDB");
 
+const buttonColor = "#212529";
+
 async function makeRequest(request) {
   if (!request.mediaType || !["show", "movie"].includes(request.mediaType)) {
     throw new Error("Request needs to be either a movie or a show");
@@ -95,13 +97,13 @@ async function pickResultDialog(options) {
     focusConfirm: false,
     showConfirmButton: true,
     confirmButtonText: "1",
-    confirmButtonColor: "#80bfff",
+    confirmButtonColor: buttonColor,
     showDenyButton: options.length > 1,
     denyButtonText: "2",
-    denyButtonColor: "#80bfff",
+    denyButtonColor: buttonColor,
     showCancelButton: options.length > 2,
     cancelButtonText: "3",
-    cancelButtonColor: "#80bfff",
+    cancelButtonColor: buttonColor,
     inputValidator: (value) => {
       if (!value) {
         return "You need to choose something!";
@@ -141,7 +143,7 @@ async function requestShowDialog() {
   const searchResults = await Swal.fire({
     input: "text",
     confirmButtonText: "Next &rarr;",
-    confirmButtonColor: "#80bfff",
+    confirmButtonColor: buttonColor,
     showCancelButton: true,
     title: "Which TV show would you like to request?",
     input: "text",
@@ -193,7 +195,7 @@ async function requestShowDialog() {
       text:
         "The show already has been registered. Please confirm that you have checked that what you want isn't already available.",
       showCancelButton: true,
-      confirmButtonColor: "#80bfff",
+      confirmButtonColor: buttonColor,
       confirmButtonText: `Confirm and Continue`,
     });
     if (!confirmResult.isConfirmed) {
@@ -201,7 +203,7 @@ async function requestShowDialog() {
       const regretResult = await Swal.fire({
         title: "Show was not requested",
         icon: "info",
-        confirmButtonColor: "#80bfff",
+        confirmButtonColor: buttonColor,
         text:
           "You have regretted your actions and decided not to request anything. Your admin applauds you.",
         confirmButtonText: `I admit, I messed up.`,
@@ -227,7 +229,7 @@ async function requestShowDialog() {
 async function requestMovieDialog() {
   const searchResults = await Swal.fire({
     input: "text",
-    confirmButtonColor: "#80bfff",
+    confirmButtonColor: buttonColor,
     confirmButtonText: "Next &rarr;",
     showCancelButton: true,
     title: "Which movie would you like to request?",
@@ -276,11 +278,11 @@ async function requestDialog() {
   const result = await Swal.fire({
     title: "What would you like to request?",
     confirmButtonText: "Movie",
-    confirmButtonColor: "#80bfff",
+    confirmButtonColor: buttonColor,
     focusConfirm: false,
     showCancelButton: true,
     cancelButtonText: "TV Series",
-    cancelButtonColor: '#80bfff',
+    cancelButtonColor: buttonColor,
     icon: "question",
   });
 

@@ -4,9 +4,12 @@
 }
 
 body {
-  font-family: sans-serif;
   width: 100%;
   background-color: #80bfff;
+}
+
+* {
+  font-family: "Open Sans", sans-serif;
 }
 
 .main {
