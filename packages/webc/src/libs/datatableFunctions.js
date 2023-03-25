@@ -126,7 +126,7 @@ async function toggleSubscription(tableSelector, collection) {
   if (isSubbed) {
     Toast.fire({
       icon: "error",
-      title: `Unsubscribed from ${data.name}`,
+      title: `Unsubscribed from: ${data.name}`,
     });
     await changeSubOnFirebase(false, data.name, collection);
     setSubbed(false, tableSelector);

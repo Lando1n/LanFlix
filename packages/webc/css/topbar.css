@@ -7,6 +7,16 @@
   position: relative;
 }
 
+/* Style the tab content */
+.tabcontent {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-bottom: 5px;
+  border-bottom-color: ff9160;
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
 /* Style the buttons that are used to open the tab content */
 .tab button {
   background-color: inherit;
@@ -20,48 +30,40 @@
   border-top-right-radius: 10px;
 }
 
-.tab .logo {
-  float: left;
-  background-color: inherit;
-  height: 75px;
-}
-
-.tab .left-top-bar {
-  padding-top: 25px;
-  float: left;
-}
-
-.tab .right-top-bar {
-  padding-top: 25px;
-  float: right;
-}
 /* Change background color of buttons on hover */
 .tab button:hover {
   background-color: #cceeff;
   color: #212529;
+  font-weight: bold;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
   background-color: #80bfff;
   color: #212529;
+  font-weight: bold;
 }
 
-/* Style the tab content */
-.tabcontent {
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-  border-bottom: 5px;
-  border-bottom-color: ff9160
+.tab .logo {
+  float: left;
+  background-color: inherit;
+  height: 75px;
 }
 
-.tabcontent {
-  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+/* Left side of Top Bar */
+.tab .left-top-bar {
+  padding-top: 25px;
+  float: left;
+}
+
+/* Right side of Top Bar */
+.tab .right-top-bar {
+  padding-top: 25px;
+  float: right;
 }
 
 .tab .right-top-bar .request-button:hover  {
-  background-color: #99CC99;
+  background-color: #f2ad18;
   color: black;
   border: none;
   outline: none;

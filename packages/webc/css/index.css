@@ -4,9 +4,12 @@
 }
 
 body {
-  font-family: sans-serif;
   width: 100%;
   background-color: #80bfff;
+}
+
+* {
+  font-family: "Open Sans", sans-serif;
 }
 
 .main {
@@ -17,10 +20,6 @@ body {
 #inventory,
 h1 {
   text-align: center;
-}
-
-.modal-title {
-  text-align: right;
 }
 
 td {
@@ -36,21 +35,8 @@ select {
   align-self: left;
 }
 
-#modal-error {
-  color: red;
-  text-align: center;
-}
-
-.modal-header {
-  font-weight: bolder;
-}
-
-.main-header {
-  height: 100px;
-}
-
 .error-message {
-  color: red;
+  color: #ff7779;
 }
 
 .bottom-message {

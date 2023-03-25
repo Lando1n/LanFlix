@@ -29,16 +29,14 @@ const { selectPage } = require("./libs/nav/topbar");
 const { getAllUsers, getSettings } = require("./libs/firebaseFunctions");
 const { setupRequestsListener } = require("./libs/requests/listener");
 
-let settings;
-let unsubscribeRequestsListener;
-
 require("./libs/jquery/loginPage");
 require("./libs/jquery/moviesTab");
-require("./libs/jquery/requests");
+require("./libs/jquery/topbar");
 require("./libs/jquery/showsTab");
-require("./libs/jquery/navigation");
 
 const auth = getAuth();
+
+let unsubscribeRequestsListener;
 
 onAuthStateChanged(auth, async (user) => {
   if (user && user.emailVerified) {
@@ -51,7 +49,7 @@ onAuthStateChanged(auth, async (user) => {
     selectPage(null, "shows-page");
     // Check if the user exists yet, add it to list if not.
     const users = await getAllUsers();
-    settings = await getSettings();
+    const settings = await getSettings();
     console.debug(settings);
 
     if (!users.includes(user.email)) {

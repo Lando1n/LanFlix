@@ -7,6 +7,8 @@ const fetch = require("node-fetch");
 
 const TheMovieDB = require("./TheMovieDB");
 
+const buttonColor = "#212529";
+
 async function makeRequest(request) {
   if (!request.mediaType || !["show", "movie"].includes(request.mediaType)) {
     throw new Error("Request needs to be either a movie or a show");
@@ -27,15 +29,13 @@ async function makeRequest(request) {
 }
 
 function getNameDOM(option) {
-  return `<h6>
+  return `<h6><b>
   ${option.name || option.title}
-  </h6>`;
+  </b></h6>`;
 }
 
 function getInfoDOM(option) {
-  return `<h6>
-  ${option.first_air_date || option.release_date}
-  </h6>`;
+  return `<h6><b>${option.first_air_date || option.release_date}</b></h6>`;
 }
 
 function getImageDOM(option) {
@@ -43,7 +43,16 @@ function getImageDOM(option) {
   const imageUrl = tmdb.getImageUri(option.poster_path);
   return `<img src="${imageUrl}"
   alt="${option.name || option.title}"
-  style="width:80px;height:120px;">`;
+  title="${option.overview}"
+  class="request-image">`;
+}
+
+function getButtonDOM(option) {
+  return `
+  <td style="vertical-align:middle">${getNameDOM(option)}</td>
+  <td>${getImageDOM(option)}</td>
+  <td style="vertical-align:middle">${getInfoDOM(option)}</td>
+  `;
 }
 
 function shortenSearchResults(response, resultsToShow = 3) {
@@ -55,53 +64,25 @@ function shortenSearchResults(response, resultsToShow = 3) {
     : response.results.slice(0, resultsToShow);
 }
 
-function createResultsTable(options) {
-  let body = "";
-
-  // info
-  body += "<tr>";
-  options.forEach((option) => {
-    body += `<td style="vertical-align:middle">${getInfoDOM(option)}</td>`;
-  });
-  body += "</tr>";
-  // images
-  body += "<tr>";
-  options.forEach((option) => {
-    body += `<td style="vertical-align:middle" title='${
-      option.overview
-    }'>${getImageDOM(option)}</td>`;
-  });
-  body += "</tr>";
-  // titles
-  body += "<tr>";
-  options.forEach((option) => {
-    body += `<td style="vertical-align:middle">${getNameDOM(option)}</td>`;
-  });
-  body += "</tr>";
-
-  return `
-      <table id='request-table' class='table'>
-      ${body}
-      </table>`;
-}
-
 async function pickResultDialog(options) {
-  const resultsTable = createResultsTable(options);
+  if (options.length < 1) {
+    await Swal.fire("Search Results", "No results found!", "error");
+    return -1;
+  }
 
   // The user has to choose which search results
   const result = await Swal.fire({
     title: "Search Results",
-    html: resultsTable,
     focusConfirm: false,
-    showConfirmButton: true,
-    confirmButtonText: "1",
-    confirmButtonColor: "#80bfff",
+    showConfirmButton: options.length > 0,
+    confirmButtonText: getButtonDOM(options[0]),
+    confirmButtonColor: buttonColor,
     showDenyButton: options.length > 1,
-    denyButtonText: "2",
-    denyButtonColor: "#80bfff",
+    denyButtonText: options.length > 1 ? getButtonDOM(options[1]) : "",
+    denyButtonColor: buttonColor,
     showCancelButton: options.length > 2,
-    cancelButtonText: "3",
-    cancelButtonColor: "#80bfff",
+    cancelButtonText: options.length > 2 ? getButtonDOM(options[2]) : "",
+    cancelButtonColor: buttonColor,
     inputValidator: (value) => {
       if (!value) {
         return "You need to choose something!";
@@ -141,7 +122,7 @@ async function requestShowDialog() {
   const searchResults = await Swal.fire({
     input: "text",
     confirmButtonText: "Next &rarr;",
-    confirmButtonColor: "#80bfff",
+    confirmButtonColor: buttonColor,
     showCancelButton: true,
     title: "Which TV show would you like to request?",
     input: "text",
@@ -193,7 +174,7 @@ async function requestShowDialog() {
       text:
         "The show already has been registered. Please confirm that you have checked that what you want isn't already available.",
       showCancelButton: true,
-      confirmButtonColor: "#80bfff",
+      confirmButtonColor: buttonColor,
       confirmButtonText: `Confirm and Continue`,
     });
     if (!confirmResult.isConfirmed) {
@@ -201,7 +182,7 @@ async function requestShowDialog() {
       const regretResult = await Swal.fire({
         title: "Show was not requested",
         icon: "info",
-        confirmButtonColor: "#80bfff",
+        confirmButtonColor: buttonColor,
         text:
           "You have regretted your actions and decided not to request anything. Your admin applauds you.",
         confirmButtonText: `I admit, I messed up.`,
@@ -227,7 +208,7 @@ async function requestShowDialog() {
 async function requestMovieDialog() {
   const searchResults = await Swal.fire({
     input: "text",
-    confirmButtonColor: "#80bfff",
+    confirmButtonColor: buttonColor,
     confirmButtonText: "Next &rarr;",
     showCancelButton: true,
     title: "Which movie would you like to request?",
@@ -276,11 +257,11 @@ async function requestDialog() {
   const result = await Swal.fire({
     title: "What would you like to request?",
     confirmButtonText: "Movie",
-    confirmButtonColor: "#99CC99",
+    confirmButtonColor: buttonColor,
     focusConfirm: false,
     showCancelButton: true,
     cancelButtonText: "TV Series",
-    cancelButtonColor: "#99CC99",
+    cancelButtonColor: buttonColor,
     icon: "question",
   });
 
