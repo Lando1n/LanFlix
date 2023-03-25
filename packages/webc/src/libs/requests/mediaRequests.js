@@ -208,10 +208,6 @@ async function requestShowDialog() {
         position: "bottom-end",
         showConfirmButton: false,
         timer: 2000,
-        onOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
         title: regretResult.isConfirmed
           ? "Your honesty is admired."
           : "Alright, you keep thinking that.",
