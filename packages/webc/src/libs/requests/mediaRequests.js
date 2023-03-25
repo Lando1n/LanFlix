@@ -59,23 +59,25 @@ function createResultsTable(options) {
   let body = "";
 
   // info
-  body += '<tr>';
+  body += "<tr>";
   options.forEach((option) => {
-    body += `<td style="vertical-align:middle">${getInfoDOM(option)}</td>`
+    body += `<td style="vertical-align:middle">${getInfoDOM(option)}</td>`;
   });
-  body += '</tr>';
+  body += "</tr>";
   // images
-  body += '<tr>';
+  body += "<tr>";
   options.forEach((option) => {
-    body += `<td style="vertical-align:middle" title='${option.overview}'>${getImageDOM(option)}</td>`
+    body += `<td style="vertical-align:middle" title='${
+      option.overview
+    }'>${getImageDOM(option)}</td>`;
   });
-  body += '</tr>';
+  body += "</tr>";
   // titles
-  body += '<tr>';
+  body += "<tr>";
   options.forEach((option) => {
-    body += `<td style="vertical-align:middle">${getNameDOM(option)}</td>`
+    body += `<td style="vertical-align:middle">${getNameDOM(option)}</td>`;
   });
-  body += '</tr>';
+  body += "</tr>";
 
   return `
       <table id='request-table' class='table'>
@@ -92,14 +94,14 @@ async function pickResultDialog(options) {
     html: resultsTable,
     focusConfirm: false,
     showConfirmButton: true,
-    confirmButtonText: '1',
-    confirmButtonColor: '#80bfff',
+    confirmButtonText: "1",
+    confirmButtonColor: "#80bfff",
     showDenyButton: options.length > 1,
-    denyButtonText: '2',
-    denyButtonColor: '#80bfff',
+    denyButtonText: "2",
+    denyButtonColor: "#80bfff",
     showCancelButton: options.length > 2,
-    cancelButtonText: '3',
-    cancelButtonColor: '#80bfff',
+    cancelButtonText: "3",
+    cancelButtonColor: "#80bfff",
     inputValidator: (value) => {
       if (!value) {
         return "You need to choose something!";
@@ -161,7 +163,7 @@ async function requestShowDialog() {
         return response.json();
       });
     },
-  })
+  });
   if (searchResults.isDismissed) {
     return;
   }
@@ -246,7 +248,7 @@ async function requestMovieDialog() {
         return response.json();
       });
     },
-  })
+  });
   if (searchResults.isDismissed) {
     return;
   }
