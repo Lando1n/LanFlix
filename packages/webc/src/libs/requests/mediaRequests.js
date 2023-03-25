@@ -3,6 +3,7 @@ const { getFirestore, doc, setDoc } = require("firebase/firestore");
 const Swal = require("sweetalert2");
 const { getSettings } = require("../firebaseFunctions");
 const { doesShowExist } = require("../datatableFunctions");
+const fetch = require("node-fetch");
 
 const TheMovieDB = require("./TheMovieDB");
 
@@ -21,7 +22,7 @@ async function makeRequest(request) {
   request.status = "Pending";
 
   const db = getFirestore();
-  console.debug(request);
+
   await setDoc(doc(db, "requests", request.name), request);
 }
 
@@ -54,73 +55,221 @@ function shortenSearchResults(response, resultsToShow = 3) {
     : response.results.slice(0, resultsToShow);
 }
 
-function createResultsTable(searchOptions) {
-  let titleCols = "";
-  let imageCols = "";
-  let infoCols = "";
+function createResultsTable(options) {
+  let body = "";
 
-  searchOptions.forEach((option) => {
-    titleCols += `<th>${getNameDOM(option)}</th>`;
-    imageCols += `<td>${getImageDOM(option)}</td>`;
-    infoCols += `<td>${getInfoDOM(option)}</td>`;
+  // info
+  body += "<tr>";
+  options.forEach((option) => {
+    body += `<td style="vertical-align:middle">${getInfoDOM(option)}</td>`;
   });
+  body += "</tr>";
+  // images
+  body += "<tr>";
+  options.forEach((option) => {
+    body += `<td style="vertical-align:middle" title='${
+      option.overview
+    }'>${getImageDOM(option)}</td>`;
+  });
+  body += "</tr>";
+  // titles
+  body += "<tr>";
+  options.forEach((option) => {
+    body += `<td style="vertical-align:middle">${getNameDOM(option)}</td>`;
+  });
+  body += "</tr>";
 
   return `
-      <table id='request-table' class='table table-dark table-bordered' style='table-layout: fixed;'>
-        <thead class='thead-dark'>
-          <tr>
-            ${titleCols}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            ${imageCols}
-          </tr>
-          <tr>
-            ${infoCols}
-          </tr>
-        </tbody>
+      <table id='request-table' class='table'>
+      ${body}
       </table>`;
 }
 
-async function pickResult(response) {
-  const resultsTable = createResultsTable(response);
+async function pickResultDialog(options) {
+  const resultsTable = createResultsTable(options);
 
   // The user has to choose which search results
-  return (
-    await Swal.fire({
-      title: "Search Results",
-      input: "radio",
-      html: resultsTable,
-      inputOptions: {
-        1: "1",
-        2: "2",
-        3: "3",
-      },
-      inputValidator: (value) => {
-        if (!value) {
-          return "You need to choose something!";
-        }
-      },
-    })
-  ).value;
+  const result = await Swal.fire({
+    title: "Search Results",
+    html: resultsTable,
+    focusConfirm: false,
+    showConfirmButton: true,
+    confirmButtonText: "1",
+    confirmButtonColor: "#80bfff",
+    showDenyButton: options.length > 1,
+    denyButtonText: "2",
+    denyButtonColor: "#80bfff",
+    showCancelButton: options.length > 2,
+    cancelButtonText: "3",
+    cancelButtonColor: "#80bfff",
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to choose something!";
+      }
+    },
+  });
+
+  let selection;
+  if (result.isConfirmed) {
+    selection = 1;
+  } else if (result.isDenied) {
+    selection = 2;
+  } else if (result.isCancelled) {
+    selection = 3;
+  } else if (result.isDismissed) {
+    selection = -1;
+  }
+  return selection;
 }
 
-async function chooseEpisodesType() {
+async function chooseEpisodesTypeDialog() {
   // The user must select the download type
   const settings = await getSettings();
-  return (
-    await Swal.fire({
-      title: "Which Episodes?",
-      input: "select",
-      inputOptions: settings.tv_request_options,
-      inputValidator: (value) => {
-        if (!value) {
-          return "You need to choose something!";
+  return Swal.fire({
+    title: "Which Episodes?",
+    input: "select",
+    inputOptions: settings.tv_request_options,
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to choose something!";
+      }
+    },
+  });
+}
+
+async function requestShowDialog() {
+  const searchResults = await Swal.fire({
+    input: "text",
+    confirmButtonText: "Next &rarr;",
+    confirmButtonColor: "#80bfff",
+    showCancelButton: true,
+    title: "Which TV show would you like to request?",
+    input: "text",
+    inputPlaceholder: "Specify the show name here.",
+    showCancelButton: true,
+    inputValidator: (showName) => {
+      if (!showName) {
+        return "You need to write something!";
+      }
+    },
+    // Search the tvdb for results
+    preConfirm: (searchString) => {
+      const tmdb = new TheMovieDB();
+      const uri = tmdb.getTvSearchUri(searchString);
+
+      return fetch(uri).then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
         }
-      },
-    })
-  ).value;
+        return response.json();
+      });
+    },
+  });
+  if (searchResults.isDismissed) {
+    return;
+  }
+  // limit the results and ask the user to pick one
+  const results = shortenSearchResults(searchResults.value);
+  const selection = await pickResultDialog(results);
+  if (selection === -1) {
+    return;
+  }
+  // Ask which episodes they'd like
+  const which = await chooseEpisodesTypeDialog();
+  if (which.isDismissed) {
+    return;
+  }
+  const request = {
+    mediaType: "show",
+    which: which.value,
+    ...results[selection - 1],
+  };
+
+  // Prevent people from requesting a show that already is registered
+  if (doesShowExist(request.name)) {
+    const confirmResult = await Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      text:
+        "The show already has been registered. Please confirm that you have checked that what you want isn't already available.",
+      showCancelButton: true,
+      confirmButtonColor: "#80bfff",
+      confirmButtonText: `Confirm and Continue`,
+    });
+    if (!confirmResult.isConfirmed) {
+      // witty dialog
+      const regretResult = await Swal.fire({
+        title: "Show was not requested",
+        icon: "info",
+        confirmButtonColor: "#80bfff",
+        text:
+          "You have regretted your actions and decided not to request anything. Your admin applauds you.",
+        confirmButtonText: `I admit, I messed up.`,
+        showCancelButton: true,
+        cancelButtonText: "Pfft, I did nothing wrong.",
+      });
+      Swal.fire({
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 2000,
+        title: regretResult.isConfirmed
+          ? "Your honesty is admired."
+          : "Alright, you keep thinking that.",
+      });
+      return;
+    }
+  }
+  await makeRequest(request);
+  Swal.fire("Requested", "The show has been requested!", "success");
+}
+
+async function requestMovieDialog() {
+  const searchResults = await Swal.fire({
+    input: "text",
+    confirmButtonColor: "#80bfff",
+    confirmButtonText: "Next &rarr;",
+    showCancelButton: true,
+    title: "Which movie would you like to request?",
+    input: "text",
+    inputPlaceholder: "Specify the show name here.",
+    showCancelButton: true,
+    inputValidator: (showName) => {
+      if (!showName) {
+        return "You need to write something!";
+      }
+    },
+    // Search the movie db for results
+    preConfirm: (searchString) => {
+      const tmdb = new TheMovieDB();
+      const uri = tmdb.getMovieSearchUri(searchString);
+
+      return fetch(uri).then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      });
+    },
+  });
+  if (searchResults.isDismissed) {
+    return;
+  }
+  // limit the results and ask the user to pick one
+  const results = shortenSearchResults(searchResults.value);
+  const selection = await pickResultDialog(results);
+  if (selection === -1) {
+    return;
+  }
+
+  const request = {
+    name: results[selection - 1].title,
+    mediaType: "movie",
+    ...results[selection - 1],
+  };
+
+  await makeRequest(request);
+  Swal.fire("Requested", "The movie has been requested!", "success");
 }
 
 async function requestDialog() {
@@ -128,6 +277,7 @@ async function requestDialog() {
     title: "What would you like to request?",
     confirmButtonText: "Movie",
     confirmButtonColor: "#99CC99",
+    focusConfirm: false,
     showCancelButton: true,
     cancelButtonText: "TV Series",
     cancelButtonColor: "#99CC99",
@@ -139,153 +289,6 @@ async function requestDialog() {
   } else if (result.dismiss === Swal.DismissReason.cancel) {
     await requestShowDialog();
   }
-}
-
-function requestShowDialog() {
-  let selection;
-  let which;
-  let results;
-
-  Swal.fire({
-    input: "text",
-    confirmButtonText: "Next &rarr;",
-    showCancelButton: true,
-    currentProgressStep: 1,
-    title: "Which TV show would you like to request?",
-    input: "text",
-    inputPlaceholder: "Specify the show name here.",
-    showCancelButton: true,
-    inputValidator: (showName) => {
-      if (!showName) {
-        return "You need to write something!";
-      }
-      return;
-    },
-    preConfirm: (searchString) => {
-      const tmdb = new TheMovieDB();
-      const uri = tmdb.getTvSearchUri(searchString);
-
-      return fetch(uri)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          return response.json();
-        })
-        .then(async (response) => {
-          results = shortenSearchResults(response);
-          selection = await pickResult(results);
-          which = await chooseEpisodesType();
-        });
-    },
-  })
-    .then(async () => {
-      if (!selection || !which) {
-        return;
-      }
-
-      const request = {
-        mediaType: "show",
-        which,
-        ...results[selection - 1],
-      };
-      // Prevent people from requesting a show that already is registered
-      if (doesShowExist(request.name)) {
-        const confirmResult = await Swal.fire({
-          title: "Are you sure?",
-          icon: "warning",
-          text:
-            "The show already has been registered. Please confirm that you have checked that what you want isn't already available.",
-          showCancelButton: true,
-          confirmButtonText: `Confirm and Continue`,
-        });
-        if (!confirmResult.isConfirmed) {
-          // witty dialog
-          const regretResult = await Swal.fire({
-            title: "Show was not requested",
-            icon: "info",
-            text:
-              "You have regretted your actions and decided not to request anything. Your admin applauds you.",
-            confirmButtonText: `I admit, I messed up.`,
-            showCancelButton: true,
-            cancelButtonText: "Pfft, I did nothing wrong.",
-          });
-          toast.fire({
-            toast: true,
-            position: "bottom-end",
-            showConfirmButton: false,
-            timer: 2000,
-            onOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-            title: regretResult.isConfirmed
-              ? "Your honesty is admired."
-              : "Alright, you keep thinking that.",
-          });
-          return;
-        }
-      }
-      await makeRequest(request);
-      Swal.fire("Requested", "The show has been requested!", "success");
-    })
-    .catch((err) => {
-      Swal.fire("Failed to request", `${err}`, "error");
-    });
-}
-
-// eslint-disable-next-line no-unused-vars
-async function requestMovieDialog() {
-  let selection;
-  let results;
-
-  Swal.fire({
-    input: "text",
-    confirmButtonText: "Next &rarr;",
-    showCancelButton: true,
-    title: "Which Movie would you like to request?",
-    input: "text",
-    inputPlaceholder: "Specify the show name here.",
-    showCancelButton: true,
-    inputValidator: (movieName) => {
-      if (!movieName) {
-        return "You need to write something!";
-      }
-      return;
-    },
-    preConfirm: (searchString) => {
-      const tmdb = new TheMovieDB();
-      const uri = tmdb.getMovieSearchUri(searchString);
-
-      return fetch(uri)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          return response.json();
-        })
-        .then(async (response) => {
-          results = shortenSearchResults(response);
-          selection = await pickResult(results);
-        });
-    },
-  })
-    .then(async () => {
-      if (!selection || !results) {
-        return;
-      }
-
-      const request = {
-        name: results[selection - 1].title,
-        mediaType: "movie",
-        ...results[selection - 1],
-      };
-      await makeRequest(request);
-      Swal.fire("Requested", "The movie has been requested!", "success");
-    })
-    .catch((err) => {
-      Swal.fire("Failed to request", `${err}`, "error");
-    });
 }
 
 module.exports = {

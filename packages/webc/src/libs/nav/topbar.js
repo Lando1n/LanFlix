@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 function selectPage(evt, tabName) {
   console.debug("Selecting page: " + tabName);
   // Declare all variables

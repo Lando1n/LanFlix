@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 class TheMovieDB {
   constructor() {
     this.apiKey = "0a2f7317616d7c1426d3a93c19babc97";
