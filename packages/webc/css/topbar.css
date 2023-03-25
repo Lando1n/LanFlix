@@ -94,7 +94,7 @@
 }
 
 /* Hide stuff when the screen is too small */
-@media (max-width: 800px) {
+@media (max-width: 1080px) {
   .tablinks .fas {
     display: none;
   }
@@ -113,5 +113,11 @@
   }
   .right-top-bar .logout-btn .fas {
     font-size: initial;
+  }
+}
+
+@media (max-width: 450px) {
+  .logo {
+    display: none;
   }
 }
