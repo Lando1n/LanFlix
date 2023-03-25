@@ -95,13 +95,23 @@
 
 /* Hide stuff when the screen is too small */
 @media (max-width: 800px) {
-  .tab .logo {
+  .tablinks .fas {
     display: none;
   }
-}
+  #request-select-btn {
+   display: none;
+  }
 
-@media (max-width: 580px) {
-  .logout-btn {
-    display: none;
+  .right-top-bar .request-button {
+    font-size: 0;
+  }
+  .right-top-bar .request-button .fas {
+    font-size: initial;
+  }
+  .right-top-bar .logout-btn {
+    font-size: 0;
+  }
+  .right-top-bar .logout-btn .fas {
+    font-size: initial;
   }
 }
