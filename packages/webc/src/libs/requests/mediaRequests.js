@@ -29,15 +29,13 @@ async function makeRequest(request) {
 }
 
 function getNameDOM(option) {
-  return `<h6>
+  return `<h6><b>
   ${option.name || option.title}
-  </h6>`;
+  </b></h6>`;
 }
 
 function getInfoDOM(option) {
-  return `<h6>
-  ${option.first_air_date || option.release_date}
-  </h6>`;
+  return `<h6><b>${option.first_air_date || option.release_date}</b></h6>`;
 }
 
 function getImageDOM(option) {
@@ -83,7 +81,7 @@ function createResultsTable(options) {
    body += "</tr>";
 
   return `
-      <table id='request-table' class='table'>
+      <table id='request-table' class='table table-borderless'>
       ${body}
       </table>`;
 }
