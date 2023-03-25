@@ -45,7 +45,8 @@ function getImageDOM(option) {
   const imageUrl = tmdb.getImageUri(option.poster_path);
   return `<img src="${imageUrl}"
   alt="${option.name || option.title}"
-  style="width:80px;height:120px;">`;
+  title="${option.overview}"
+  class="request-image">`;
 }
 
 function shortenSearchResults(response, resultsToShow = 3) {
@@ -60,26 +61,26 @@ function shortenSearchResults(response, resultsToShow = 3) {
 function createResultsTable(options) {
   let body = "";
 
-  // info
-  body += "<tr>";
-  options.forEach((option) => {
-    body += `<td style="vertical-align:middle">${getInfoDOM(option)}</td>`;
-  });
-  body += "</tr>";
-  // images
-  body += "<tr>";
-  options.forEach((option) => {
-    body += `<td style="vertical-align:middle" title='${
-      option.overview
-    }'>${getImageDOM(option)}</td>`;
-  });
-  body += "</tr>";
   // titles
   body += "<tr>";
   options.forEach((option) => {
     body += `<td style="vertical-align:middle">${getNameDOM(option)}</td>`;
   });
   body += "</tr>";
+ 
+  // images
+  body += "<tr>";
+  options.forEach((option) => {
+    body += `<td>${getImageDOM(option)}</td>`;
+  });
+  body += "</tr>";
+
+   // info
+   body += "<tr>";
+   options.forEach((option) => {
+     body += `<td style="vertical-align:middle">${getInfoDOM(option)}</td>`;
+   });
+   body += "</tr>";
 
   return `
       <table id='request-table' class='table'>
@@ -88,6 +89,10 @@ function createResultsTable(options) {
 }
 
 async function pickResultDialog(options) {
+  if (options.length < 1) {
+    await Swal.fire("Search Results", "No results found!", "error");
+    return -1;
+  }
   const resultsTable = createResultsTable(options);
 
   // The user has to choose which search results
@@ -95,7 +100,7 @@ async function pickResultDialog(options) {
     title: "Search Results",
     html: resultsTable,
     focusConfirm: false,
-    showConfirmButton: true,
+    showConfirmButton: options.length > 0,
     confirmButtonText: "1",
     confirmButtonColor: buttonColor,
     showDenyButton: options.length > 1,
