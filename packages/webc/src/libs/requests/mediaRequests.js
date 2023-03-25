@@ -141,6 +141,7 @@ async function requestShowDialog() {
   const searchResults = await Swal.fire({
     input: "text",
     confirmButtonText: "Next &rarr;",
+    confirmButtonColor: "#80bfff",
     showCancelButton: true,
     title: "Which TV show would you like to request?",
     input: "text",
@@ -192,6 +193,7 @@ async function requestShowDialog() {
       text:
         "The show already has been registered. Please confirm that you have checked that what you want isn't already available.",
       showCancelButton: true,
+      confirmButtonColor: "#80bfff",
       confirmButtonText: `Confirm and Continue`,
     });
     if (!confirmResult.isConfirmed) {
@@ -199,6 +201,7 @@ async function requestShowDialog() {
       const regretResult = await Swal.fire({
         title: "Show was not requested",
         icon: "info",
+        confirmButtonColor: "#80bfff",
         text:
           "You have regretted your actions and decided not to request anything. Your admin applauds you.",
         confirmButtonText: `I admit, I messed up.`,
@@ -225,6 +228,7 @@ async function requestShowDialog() {
 async function requestMovieDialog() {
   const searchResults = await Swal.fire({
     input: "text",
+    confirmButtonColor: "#80bfff",
     confirmButtonText: "Next &rarr;",
     showCancelButton: true,
     title: "Which movie would you like to request?",
