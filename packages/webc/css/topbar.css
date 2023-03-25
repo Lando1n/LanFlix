@@ -10,12 +10,13 @@
 .small-screen-header {
   text-align: center;
   background-color: #212529;
-  height: 20%;
-  width: auto;
+  height: auto;
+  width: 20%;
   display: none;
 }
 
 .small-screen-logo {
+  background-color: inherit;
   width: 30%;
 }
 
@@ -24,8 +25,6 @@
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
-  border-bottom: 5px;
-  border-bottom-color: ff9160;
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
