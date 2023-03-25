@@ -47,6 +47,14 @@ function getImageDOM(option) {
   class="request-image">`;
 }
 
+function getButtonDOM(option) {
+  return `
+  <td style="vertical-align:middle">${getNameDOM(option)}</td>
+  <td>${getImageDOM(option)}</td>
+  <td style="vertical-align:middle">${getInfoDOM(option)}</td>
+  `;
+}
+
 function shortenSearchResults(response, resultsToShow = 3) {
   if (response.total_results === 0) {
     Swal.fire("Failed to request", `No results found for search`, "error");
@@ -56,56 +64,24 @@ function shortenSearchResults(response, resultsToShow = 3) {
     : response.results.slice(0, resultsToShow);
 }
 
-function createResultsTable(options) {
-  let body = "";
-
-  // titles
-  body += "<tr>";
-  options.forEach((option) => {
-    body += `<td style="vertical-align:middle">${getNameDOM(option)}</td>`;
-  });
-  body += "</tr>";
- 
-  // images
-  body += "<tr>";
-  options.forEach((option) => {
-    body += `<td>${getImageDOM(option)}</td>`;
-  });
-  body += "</tr>";
-
-   // info
-   body += "<tr>";
-   options.forEach((option) => {
-     body += `<td style="vertical-align:middle">${getInfoDOM(option)}</td>`;
-   });
-   body += "</tr>";
-
-  return `
-      <table id='request-table' class='table table-borderless'>
-      ${body}
-      </table>`;
-}
-
 async function pickResultDialog(options) {
   if (options.length < 1) {
     await Swal.fire("Search Results", "No results found!", "error");
     return -1;
   }
-  const resultsTable = createResultsTable(options);
 
   // The user has to choose which search results
   const result = await Swal.fire({
     title: "Search Results",
-    html: resultsTable,
     focusConfirm: false,
     showConfirmButton: options.length > 0,
-    confirmButtonText: "1",
+    confirmButtonText: getButtonDOM(options[0]),
     confirmButtonColor: buttonColor,
     showDenyButton: options.length > 1,
-    denyButtonText: "2",
+    denyButtonText: options.length > 1 ? getButtonDOM(options[1]) : '',
     denyButtonColor: buttonColor,
     showCancelButton: options.length > 2,
-    cancelButtonText: "3",
+    cancelButtonText: options.length > 2 ? getButtonDOM(options[2]) : '',
     cancelButtonColor: buttonColor,
     inputValidator: (value) => {
       if (!value) {
