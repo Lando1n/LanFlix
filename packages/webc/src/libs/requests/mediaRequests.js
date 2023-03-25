@@ -78,10 +78,10 @@ async function pickResultDialog(options) {
     confirmButtonText: getButtonDOM(options[0]),
     confirmButtonColor: buttonColor,
     showDenyButton: options.length > 1,
-    denyButtonText: options.length > 1 ? getButtonDOM(options[1]) : '',
+    denyButtonText: options.length > 1 ? getButtonDOM(options[1]) : "",
     denyButtonColor: buttonColor,
     showCancelButton: options.length > 2,
-    cancelButtonText: options.length > 2 ? getButtonDOM(options[2]) : '',
+    cancelButtonText: options.length > 2 ? getButtonDOM(options[2]) : "",
     cancelButtonColor: buttonColor,
     inputValidator: (value) => {
       if (!value) {
