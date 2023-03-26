@@ -67,7 +67,7 @@
 }
 
 .tab .right-top-bar {
-  padding-top: 25px;
+  padding-top: 20px;
   float: right;
 }
 
@@ -78,6 +78,7 @@
   outline: none;
   cursor: pointer;
   transition: 0.3s;
+  border-radius: 10px;
 }
 
 .tab .right-top-bar .logout-btn:hover  {
@@ -87,6 +88,7 @@
   outline: none;
   cursor: pointer;
   transition: 0.3s;
+  border-radius: 10px;
 }
 
 
@@ -111,12 +113,14 @@
 
   .right-top-bar .request-button {
     font-size: 0;
+    border-radius: 10px;
   }
   .right-top-bar .request-button .fas {
     font-size: initial;
   }
   .right-top-bar .logout-btn {
     font-size: 0;
+    border-radius: 10px;
   }
   .right-top-bar .logout-btn .fas {
     font-size: initial;
