@@ -29,3 +29,12 @@ input[type="password"] {
   border: 1px solid #ffffff;
   box-sizing: border-box;
 }
+
+@media (max-width: 500px) {
+  .login-modal {
+    width: 100%
+  }
+  .login-button {
+    width: 45%;
+  }
+}
