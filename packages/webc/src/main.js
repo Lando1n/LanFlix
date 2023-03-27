@@ -93,11 +93,11 @@ $("#shows-tbl").DataTable({
       data: "name",
       title: "Show Name",
     },
-    {
-      data: "subscribers",
-      title: "Total Subscribers",
-      searchable: false,
-    },
+    // {
+    //   data: "subscribers",
+    //   title: "Total Subscribers",
+    //   searchable: false,
+    // },
     {
       data: "logo",
       title: "Subbed",
@@ -120,11 +120,11 @@ $("#movies-tbl").DataTable({
       data: "name",
       title: "Type",
     },
-    {
-      data: "subscribers",
-      title: "Total Subscribers",
-      searchable: false,
-    },
+    // {
+    //   data: "subscribers",
+    //   title: "Total Subscribers",
+    //   searchable: false,
+    // },
     {
       data: "logo",
       title: "Subbed",
@@ -134,6 +134,7 @@ $("#movies-tbl").DataTable({
     {
       data: "subbed",
       visible: false,
+      searchable: false,
     },
   ],
   ...defaultOptions,

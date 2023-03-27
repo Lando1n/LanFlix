@@ -26,7 +26,7 @@
 			<div class="left-top-bar">
 				<button class='tablinks' id='show-select-btn'><i class="fas fa-tv fa-sm"></i> Shows	</button>
 				<button class='tablinks' id='movie-select-btn'><i class="fas fa-film fa-sm"></i> Movies</button>
-				<button class='tablinks' id='request-select-btn'><i class="fas fa-ticket-alt"></i> Old Requests</button>
+				<button class='tablinks' id='request-select-btn'><i class="fas fa-ticket-alt"></i> Request History</button>
 			</div>
 			
 			<div class='right-top-bar'>
@@ -39,10 +39,9 @@
 		<div id='main' class='main'>
 			<!-- SHOW PAGE -->
 			<div id='shows-page' class='tab-content'>
-				<table id='shows-tbl' class='table table-dark table-compact table-hover' width="100%">
+				<table id='shows-tbl' class='table table-dark table-compact table-hover unselectable' width="100%">
 					<thead>
 						<tr id='headers'>
-							<th></th>
 							<th></th>
 							<th></th>
 						</tr>
@@ -51,10 +50,9 @@
 				<div class="bottom-message">Hint: Double click a row to subscribe!</div>
 			</div>
 			<div id='movies-page' class='tab-content' style='display:none'>
-				<table id='movies-tbl' class='table table-dark table-striped table-bordered' width="100%">
+				<table id='movies-tbl' class='table table-dark table-striped table-bordered unselectable' width="100%">
 					<thead>
 						<tr id='movie-headers'>
-							<th></th>
 							<th></th>
 							<th></th>
 						</tr>
@@ -63,7 +61,7 @@
 				<div class="bottom-message">Not many options here yet.</div>
 			</div>
 			<div id='requests-page' class='tab-content' style='display:none'>
-				<table id='requests-tbl' class='table table-dark table-striped table-bordered' width="100%">
+				<table id='requests-tbl' class='table table-dark table-striped table-bordered unselectable' width="100%">
 					<thead>
 						<tr id='requests-headers'>
 							<th></th>

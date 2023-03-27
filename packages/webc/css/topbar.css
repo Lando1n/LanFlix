@@ -112,12 +112,9 @@
   }
 
   .right-top-bar .request-button {
-    font-size: 0;
     border-radius: 10px;
   }
-  .right-top-bar .request-button .fas {
-    font-size: initial;
-  }
+
   .right-top-bar .logout-btn {
     font-size: 0;
     border-radius: 10px;
@@ -127,11 +124,20 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
   .logo {
     display: none;
   }
   .small-screen-header {
     display: block;
+  }
+}
+
+@media (max-width: 335px) {
+  .right-top-bar .request-button {
+    font-size: 0;
+  }
+  .right-top-bar .request-button .fas {
+    font-size: initial;
   }
 }

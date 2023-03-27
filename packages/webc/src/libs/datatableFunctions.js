@@ -39,7 +39,7 @@ async function populateSubTable(tableSelector, collectionName) {
     const subbed = entry.data().subs.includes(user);
     const row = {
       name: entry.id,
-      subscribers: entry.data().subs.length,
+      //subscribers: entry.data().subs.length,
       logo: subbed ? subbedLogo : unsubbedLogo,
       subbed: subbed ? "yes" : "no",
     };
@@ -91,7 +91,7 @@ function setSubbed(subscribe, tableSelector) {
   const currentSubscribers = row.data().subscribers;
   const rowData = {
     name: row.data().name,
-    subscribers: subscribe ? currentSubscribers + 1 : currentSubscribers - 1,
+    //subscribers: subscribe ? currentSubscribers + 1 : currentSubscribers - 1,
     logo: subscribe ? subbedLogo : unsubbedLogo,
     subbed: subscribe ? "yes" : "no",
   };
