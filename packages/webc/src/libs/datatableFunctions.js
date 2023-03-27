@@ -88,7 +88,7 @@ function destroyTable(tableSelector) {
  */
 function setSubbed(subscribe, tableSelector) {
   const row = $(tableSelector).DataTable().row(".selected");
-  const currentSubscribers = row.data().subscribers;
+  //const currentSubscribers = row.data().subscribers;
   const rowData = {
     name: row.data().name,
     //subscribers: subscribe ? currentSubscribers + 1 : currentSubscribers - 1,
@@ -117,10 +117,6 @@ async function toggleSubscription(tableSelector, collection) {
     position: "bottom-end",
     showConfirmButton: false,
     timer: 2000,
-    onOpen: (toast) => {
-      toast.addEventListener("mouseenter", Swal.stopTimer);
-      toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
   });
 
   if (isSubbed) {
