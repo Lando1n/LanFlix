@@ -22,8 +22,6 @@ const unsubbedLogo =
  * @param {String} collection - Firebase collection name to grab data from
  */
 async function populateSubTable(tableSelector, collectionName) {
-  console.debug(`Populating table with data: ${collectionName}`);
-
   const db = getFirestore();
   const auth = getAuth();
   const user = auth.currentUser.email;

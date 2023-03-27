@@ -1,5 +1,4 @@
 function selectPage(evt, tabName) {
-  console.debug("Selecting page: " + tabName);
   // Declare all variables
   var i, tabcontent, tablinks;
 

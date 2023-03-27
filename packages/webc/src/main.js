@@ -49,8 +49,7 @@ onAuthStateChanged(auth, async (user) => {
     selectPage(null, "shows-page");
     // Check if the user exists yet, add it to list if not.
     const users = await getAllUsers();
-    const settings = await getSettings();
-    console.debug(settings);
+    // const settings = await getSettings();
 
     if (!users.includes(user.email)) {
       await initializeUser();
