@@ -12,7 +12,7 @@ const Swal = require("sweetalert2");
 
 const { changeSubOnFirebase } = require("./firebaseFunctions");
 
-function drawRows(table, querySnapshot, user) {
+function drawSubscriptionRows(table, querySnapshot, user) {
   const subbedLogo =
     '<i class="fas fa-check-circle fa-lg" style="color:#99CC99"></i>';
   const unsubbedLogo =
@@ -53,7 +53,7 @@ async function populateSubTable(tableSelector, collectionName) {
 
   let querySnapshot = await getDocs(first);
 
-  drawRows(table, querySnapshot, user);
+  drawSubscriptionRows(table, querySnapshot, user);
 
   // paginate to increase load time
   while (querySnapshot.docs.length >= perQuery) {
@@ -65,7 +65,7 @@ async function populateSubTable(tableSelector, collectionName) {
     );
 
     querySnapshot = await getDocs(next);
-    drawRows(table, querySnapshot, user);
+    drawSubscriptionRows(table, querySnapshot, user);
   }
 }
 
