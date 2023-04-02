@@ -4,16 +4,32 @@ const {
   getDocs,
   query,
   where,
+  limit,
+  startAfter,
 } = require("firebase/firestore");
 const { getAuth } = require("firebase/auth");
 const Swal = require("sweetalert2");
 
 const { changeSubOnFirebase } = require("./firebaseFunctions");
 
-const subbedLogo =
-  '<i class="fas fa-check-circle fa-lg" style="color:#99CC99"></i>';
-const unsubbedLogo =
-  '<i class="fas fa-times-circle fa-lg" style="color:#ff7779"></i>';
+function drawRows(table, querySnapshot, user) {
+  const subbedLogo =
+    '<i class="fas fa-check-circle fa-lg" style="color:#99CC99"></i>';
+  const unsubbedLogo =
+    '<i class="fas fa-times-circle fa-lg" style="color:#ff7779"></i>';
+
+  querySnapshot.forEach(function (entry) {
+    const subbed = entry.data().subs.includes(user);
+    const row = {
+      name: entry.id,
+      //subscribers: entry.data().subs.length,
+      logo: subbed ? subbedLogo : unsubbedLogo,
+      subbed: subbed ? "yes" : "no",
+    };
+    table.row.add(row);
+  });
+  table.draw();
+}
 
 /**
  * Populate a DataTable from a given firebase collection.
@@ -27,23 +43,30 @@ async function populateSubTable(tableSelector, collectionName) {
   const user = auth.currentUser.email;
   const table = $(tableSelector).DataTable();
 
-  const q = query(
+  const perQuery = 15;
+
+  const first = query(
     collection(db, collectionName),
-    where("disabled", "!=", true)
+    where("disabled", "!=", true),
+    limit(perQuery)
   );
 
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach(function (entry) {
-    const subbed = entry.data().subs.includes(user);
-    const row = {
-      name: entry.id,
-      //subscribers: entry.data().subs.length,
-      logo: subbed ? subbedLogo : unsubbedLogo,
-      subbed: subbed ? "yes" : "no",
-    };
-    table.row.add(row);
-  });
-  table.draw();
+  let querySnapshot = await getDocs(first);
+
+  drawRows(table, querySnapshot, user);
+
+  // paginate to increase load time
+  while (querySnapshot.docs.length >= perQuery) {
+    next = query(
+      collection(db, collectionName),
+      where("disabled", "!=", true),
+      startAfter(querySnapshot.docs[querySnapshot.docs.length - 1]),
+      limit(perQuery)
+    );
+
+    querySnapshot = await getDocs(next);
+    drawRows(table, querySnapshot, user);
+  }
 }
 
 /**

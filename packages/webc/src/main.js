@@ -109,6 +109,7 @@ $("#shows-tbl").DataTable({
       visible: false,
     },
   ],
+  ordering: false,
   ...defaultOptions,
 });
 
@@ -136,6 +137,7 @@ $("#movies-tbl").DataTable({
       searchable: false,
     },
   ],
+  ordering: false,
   ...defaultOptions,
 });
 
