@@ -55,7 +55,7 @@ async function populateSubTable(tableSelector, collectionName) {
 
   drawSubscriptionRows(table, querySnapshot, user);
 
-  // paginate to increase load time
+  // paginate to decrease page load time
   while (querySnapshot.docs.length >= perQuery) {
     next = query(
       collection(db, collectionName),
