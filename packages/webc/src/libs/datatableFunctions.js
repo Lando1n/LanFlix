@@ -12,12 +12,12 @@ const Swal = require("sweetalert2");
 
 const { changeSubOnFirebase } = require("./firebaseFunctions");
 
-function drawSubscriptionRows(table, querySnapshot, user) {
-  const subbedLogo =
-    '<i class="fas fa-check-circle fa-lg" style="color:#99CC99"></i>';
-  const unsubbedLogo =
-    '<i class="fas fa-times-circle fa-lg" style="color:#ff7779"></i>';
+const subbedLogo =
+  '<i class="fas fa-check-circle fa-lg" style="color:#99CC99"></i>';
+const unsubbedLogo =
+  '<i class="fas fa-times-circle fa-lg" style="color:#ff7779"></i>';
 
+function drawSubscriptionRows(table, querySnapshot, user) {
   querySnapshot.forEach(function (entry) {
     const subbed = entry.data().subs.includes(user);
     const row = {
