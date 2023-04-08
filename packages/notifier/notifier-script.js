@@ -85,7 +85,7 @@ const dryRun =
 
 getEmailContent(media, firebase).then((emailContent) => {
   if (!dryRun) {
-    //firebase.queueEmail(emailContent);
+    firebase.queueEmail(emailContent);
   } else {
     console.log(`Subject: ${emailContent.subject}`);
     console.log(`Recipients: ${emailContent.recipients}`);
