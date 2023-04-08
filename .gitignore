@@ -6,3 +6,4 @@ config/*
 output
 test_users.json
 packages/webc/dist
+debug-logs.txt
