@@ -75,7 +75,7 @@ switch (eventType) {
     break;
   case "Test":
     if (process.env.sonarr_eventtype) {
-      process.env.sonarr_series_tvmazeid = 354905;
+      process.env.sonarr_series_tvmazeid = 45563;
       media = {
         type: 'test-show',
         name: 'Dave',
