@@ -41,6 +41,7 @@ async function getEmailContent(media, firebase) {
       recipients = await firebase.getAdminEmail("Testing");
       subject = "Movie Alert: TEST";
       body = await createMovieEmailBody(media.name);
+      break;
     default:
       throw new Error(`Unrecognized media type '${media.type}'`);
   }
