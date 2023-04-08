@@ -37,10 +37,15 @@ async function getEmailContent(media, firebase) {
         firebase.addShowToList(media.name);
       }
       break;
-    case "test":
+    case "test-movie":
       recipients = await firebase.getAdminEmail("Testing");
-      subject = "Movie Alert: TEST";
+      subject = `Movie Alert: ${media.name}`;
       body = await createMovieEmailBody(media.name);
+      break;
+    case "test-show":
+      recipients = await firebase.getAdminEmail("Testing");
+      subject = `Show Alert: ${media.name}`;
+      body = await createShowEmailBody(media.name);
       break;
     default:
       throw new Error(`Unrecognized media type '${media.type}'`);
@@ -69,10 +74,19 @@ switch (eventType) {
     }
     break;
   case "Test":
-    media = {
-      type: "test",
-      name: "Dave",
-    };
+    if (process.env.sonarr_eventtype) {
+      process.env.sonarr_series_tvmazeid = 354905;
+      media = {
+        type: 'test-show',
+        name: 'Dave',
+      }
+    } else if (process.env.radarr_eventtype) {
+      process.env.radarr_movie_tmdbid = 562;
+      media = {
+        type: "test-movie",
+        name: "Die Hard",
+      };
+    }
     break;
   default:
     throw Error(`No event type handling for ${eventType}`);
