@@ -1,7 +1,7 @@
 const FirebaseHelper = require("./libs/FirebaseHelper");
-const Email = require("./libs/Email");
+const Email = require("./libs/email/Email");
 
-const { createRequestEmailBody } = require("./libs/createEmailBody");
+const { createRequestEmailBody } = require("./libs/email/emailTemplates");
 
 // Get config location
 const sender = require("../../config/sender.json");
@@ -18,9 +18,9 @@ firebase.db.collection("email").onSnapshot((snapshot) => {
       const email = new Email();
       switch (change.type) {
         case "added":
-          email.setRecipients(data.recipients);
-          email.setSubject(data.subject);
-          email.setBody(data.body);
+          email.recipients = data.recipients;
+          email.subject = data.subject;
+          email.body = data.body;
           email.sendEmail(sender.name, "gmail", {
             user: sender.email,
             pass: sender.password,
@@ -42,7 +42,7 @@ firebase.db.collection("email").onSnapshot((snapshot) => {
 
 firebase.getAdminEmail("Requests").then((recipients) => {
   firebase.db.collection("requests").onSnapshot((snapshot) => {
-    snapshot.docChanges().forEach((change) => {
+    snapshot.docChanges().forEach(async (change) => {
       let name;
       try {
         const data = change.doc.data();
@@ -56,7 +56,7 @@ firebase.getAdminEmail("Requests").then((recipients) => {
                 const subject = `${data.mediaType.toUpperCase()} requested by ${
                   data.user
                 }`;
-                const body = createRequestEmailBody(name, data);
+                const body = await createRequestEmailBody(name, data);
                 firebase.queueEmail({ subject, body, recipients });
               } else {
                 console.warn(`Media type not defined, request not made.`);

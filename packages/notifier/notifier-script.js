@@ -1,24 +1,21 @@
 const FirebaseHelper = require("./libs/FirebaseHelper");
-const Media = require("./libs/Media");
 const {
   createShowEmailBody,
   createMovieEmailBody,
   createNewShowEmailBody,
-} = require("./libs/createEmailBody");
+} = require("./libs/email/emailTemplates");
 
 async function getEmailContent(media, firebase) {
   let recipients;
   let subject;
   let body;
 
-  console.log(JSON.stringify(media));
-
   // Determine the recipients
   switch (media.type) {
     case "movie":
       recipients = await firebase.getMovieSubs("all");
       subject = `Movie Alert: ${media.name}`;
-      body = createMovieEmailBody(media.name);
+      body = await createMovieEmailBody(media.name);
       break;
     case "season":
     case "show":
@@ -31,12 +28,12 @@ async function getEmailContent(media, firebase) {
         }
         recipients = await firebase.getShowSubs(media.name);
         subject = `Show Alert: ${media.name}`;
-        body = createShowEmailBody(media.name);
+        body = await createShowEmailBody(media.name);
       } else {
         // Send special email for a new show on the server
         recipients = await firebase.getAllUsers();
         subject = `New Show Alert: ${media.name}`;
-        body = createNewShowEmailBody(media.name);
+        body = await createNewShowEmailBody(media.name);
         firebase.addShowToList(media.name);
       }
       break;
@@ -46,11 +43,35 @@ async function getEmailContent(media, firebase) {
   return { recipients, subject, body };
 }
 
-const media = new Media(process.argv[2]);
+let media;
+const eventType = process.env.sonarr_eventtype || process.env.radarr_eventtype;
+switch (eventType) {
+  case "Download":
+    let type;
+    let name;
+    if (process.env.sonarr_series_title) {
+      type = "show";
+      name = process.env.sonarr_series_title;
+    } else if (process.env.radarr_movie_title) {
+      type = "movie";
+      name = process.env.radarr_movie_title;
+    } else {
+      throw Error(`No Download handling configured for this context.`);
+    }
+    media = {
+      type,
+      name,
+    };
+    break;
+  default:
+    throw Error(`No event type handling for ${eventType}`);
+}
+
 const firebaseCert = require("../../config/lanflix-firebase-cert.json");
 const firebase = new FirebaseHelper(firebaseCert);
 
-const dryRun = process.argv[3];
+const dryRun =
+  process.argv.includes("--dry-run") || process.argv.includes("--dryrun");
 
 getEmailContent(media, firebase).then((emailContent) => {
   if (!dryRun) {
