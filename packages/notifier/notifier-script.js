@@ -77,9 +77,9 @@ switch (eventType) {
     if (process.env.sonarr_eventtype) {
       process.env.sonarr_series_tvmazeid = 45563;
       media = {
-        type: 'test-show',
-        name: 'Dave',
-      }
+        type: "test-show",
+        name: "Dave",
+      };
     } else if (process.env.radarr_eventtype) {
       process.env.radarr_movie_tmdbid = 562;
       media = {
