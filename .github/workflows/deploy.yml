@@ -2,13 +2,16 @@ name: deploy
 
 on:
   push:
-    branches: [develop]
+    paths:
+      - packages/webc/**
+    branches:
+      - develop
 
 jobs:
-  deploy:
+  deploy_site:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install package dependencies
         working-directory: packages/webc
         run: |
