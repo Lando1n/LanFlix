@@ -12,11 +12,11 @@ async function getMoviePosterUri(id) {
 }
 
 function getMovieUri(id) {  
-  return `${baseUri}/movie/${id}`;
+  return `${baseWwwUri}/movie/${id}`;
 }
 
 function getTvUri(id) {
-  return `${baseUri}/tv/${id}`;
+  return `${baseWwwUri}/tv/${id}`;
 }
 
 module.exports = {
