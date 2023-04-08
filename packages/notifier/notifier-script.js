@@ -63,6 +63,9 @@ switch (eventType) {
       name,
     };
     break;
+  case "Test":
+    console.debug('Testing successful!')
+    return
   default:
     throw Error(`No event type handling for ${eventType}`);
 }
@@ -75,7 +78,7 @@ const dryRun =
 
 getEmailContent(media, firebase).then((emailContent) => {
   if (!dryRun) {
-    firebase.queueEmail(emailContent);
+    //firebase.queueEmail(emailContent);
   } else {
     console.log(`Subject: ${emailContent.subject}`);
     console.log(`Recipients: ${emailContent.recipients}`);

@@ -17,7 +17,7 @@ do
     else
         if [[ $email_count -le $max_emails ]]; then
             echo $(date): ERROR: VPN not connected! Sending email warning $email_count/$max_emails
-            node ../packages/notifier/vpn-notify.js
+            node ../vpn-notify.js
             email_count=$(($email_count+1))
         fi
     fi

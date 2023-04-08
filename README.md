@@ -109,8 +109,10 @@ When this process is closed, the monitor will no longer run. If you would prefer
 
 #### Option B: Auto boot on start with systemd
 
+- Got to `./services/` and open `lanflix-monitor.service`
 - Change the user and group from `plexserver` to the username on your machine
-- Copy the files from `/services/` into /etc/systemd/system/
+- Change `WorkingDirectory` to where you have cloned the repo to.
+- Copy `lanflix-monitor.service` into `/etc/systemd/system/`
 - Enable and start the services
 
 ```bash
@@ -131,23 +133,9 @@ which node
 
 ### Client Scripts
 
-In order to be notified that content has been added, the client that grabs the content needs to talk to LanFlix. `scripts/client_scripts` helps with that, but each client needs to be setup individually. Many more clients can be used, the scripts just need to be written.
+In order to be notified that content has been added, the client that grabs the content needs to talk to LanFlix. `packages/notifier/scripts` helps with that, but each client needs to be setup individually. Many more clients can be used, the scripts just need to be written.
 
-### Transmission
-
-WIP
-
-### Deluge
-
-WIP
-
-### Sonarr
-
-WIP
-
-### Radarr
-
-WIP
+Currently only supporting Sonarr and Radarr.
 
 ## Development
 
