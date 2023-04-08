@@ -5,39 +5,29 @@ class Email {
     this.to = "";
     this.from = "";
     this.subject = "Email Notification";
-    this.bodyContent = "";
+    this.body;
   }
 
-  setSubject(subject) {
-    this.subject = subject;
-  }
+  sendEmail(senderName = "LanFlix", emailProvider, auth = {}) {
+    const to = Array.isArray(this.to) ? this.to.join(", ") : this.to;
 
-  setBody(bodyContent) {
-    this.bodyContent = bodyContent;
-  }
-
-  setRecipients(recipients = []) {
-    this.to = recipients.join(", ");
-  }
-
-  sendEmail(senderName, emailProvider, auth = {}) {
-    console.debug(`Sending email to: ${this.to}`);
-    if (!this.to) {
+    if (!to) {
       throw new Error("Recipients not set");
     }
+    console.debug(`Sending email to: ${to}`);
 
-    var transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       debug: true,
       logger: true,
       service: emailProvider,
       auth,
     });
 
-    var mailOptions = {
+    const mailOptions = {
       from: `${senderName} <${auth.user}>`,
-      to: this.to,
+      to,
       subject: this.subject,
-      html: this.bodyContent,
+      html: this.body,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

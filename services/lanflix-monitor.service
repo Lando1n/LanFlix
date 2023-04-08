@@ -11,7 +11,8 @@ Group=plexserver
 #UMask=002
 
 # The -data=/path argument can be used to force the config/db folder
-ExecStart=/usr/bin/node /opt/LanFlix/packages/notifier/lanflix-monitor.js
+WorkingDirectory=/home/plexserver/dev/LanFlix/packages/notifier
+ExecStart=/usr/bin/node lanflix-monitor.js
 
 Restart=always
 RestartSec=10

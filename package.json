@@ -4,7 +4,7 @@
   "description": "Personalized notifications for new shows and movies on your Plex server",
   "main": "",
   "scripts": {
-    "test": "jest --silent",
+    "test": "jest --silent --passWithNoTests",
     "lint": "eslint . --quiet",
     "coverage": "npm run test -- --coverage",
     "notify": "node packages/notifier/notifier-script.js",

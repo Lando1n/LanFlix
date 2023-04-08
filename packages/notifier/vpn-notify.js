@@ -10,9 +10,8 @@ const firebase = new FirebaseHelper(firebaseCert);
 
 async function vpnNotify() {
   const email = new Email();
-  const recipients = await firebase.getAdminEmail("VPN_Monitoring");
-  email.setRecipients(recipients);
-  email.setSubject("VPN Disconnected!");
+  email.to = await firebase.getAdminEmail("VPN_Monitoring");
+  email.subject = "VPN Disconnected!";
   email.sendEmail(sender.name, "gmail", {
     user: sender.email,
     pass: sender.password,
