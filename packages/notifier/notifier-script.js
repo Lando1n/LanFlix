@@ -72,7 +72,6 @@ switch (eventType) {
       type: "test",
       name: "Dave",
     };
-    return;
   default:
     throw Error(`No event type handling for ${eventType}`);
 }
