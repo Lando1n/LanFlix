@@ -37,6 +37,10 @@ async function getEmailContent(media, firebase) {
         firebase.addShowToList(media.name);
       }
       break;
+    case "test":
+      recipients = await firebase.getAdminEmail("Testing");
+      subject = "Movie Alert: TEST";
+      body = await createMovieEmailBody(media.name);
     default:
       throw new Error(`Unrecognized media type '${media.type}'`);
   }
@@ -64,7 +68,10 @@ switch (eventType) {
     };
     break;
   case "Test":
-    console.debug('Testing successful!')
+    media = {
+      type: "test",
+      name: "Dave"
+    };
     return
   default:
     throw Error(`No event type handling for ${eventType}`);
