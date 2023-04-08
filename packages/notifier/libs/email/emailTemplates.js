@@ -62,6 +62,7 @@ async function createRequestEmailBody(
     footer = `Which: ${which}`;
     imageUri = await tmdb.getTvUri(id)
   } else {
+    footer = "";
     imageUri = await tmdb.getMovieUri(id);
   }
 

@@ -54,18 +54,18 @@ switch (eventType) {
     let type;
     let name;
     if (process.env.sonarr_series_title) {
-      type = "show";
-      name = process.env.sonarr_series_title;
+      media = {
+        type: "show",
+        name:  process.env.sonarr_series_title,
+      };
     } else if (process.env.radarr_movie_title) {
-      type = "movie";
-      name = process.env.radarr_movie_title;
+      media = {
+        type: "movie",
+        name: process.env.radarr_movie_title,
+      };
     } else {
       throw Error(`No Download handling configured for this context.`);
     }
-    media = {
-      type,
-      name,
-    };
     break;
   case "Test":
     media = {
