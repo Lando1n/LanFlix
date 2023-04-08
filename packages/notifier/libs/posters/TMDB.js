@@ -11,7 +11,7 @@ async function getMoviePosterUri(id) {
   return `${baseWwwUri}/t/p/original${images.posters[0].file_path}`;
 }
 
-function getMovieUri(id) {  
+function getMovieUri(id) {
   return `${baseWwwUri}/movie/${id}`;
 }
 

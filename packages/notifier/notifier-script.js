@@ -56,7 +56,7 @@ switch (eventType) {
     if (process.env.sonarr_series_title) {
       media = {
         type: "show",
-        name:  process.env.sonarr_series_title,
+        name: process.env.sonarr_series_title,
       };
     } else if (process.env.radarr_movie_title) {
       media = {
@@ -70,9 +70,9 @@ switch (eventType) {
   case "Test":
     media = {
       type: "test",
-      name: "Dave"
+      name: "Dave",
     };
-    return
+    return;
   default:
     throw Error(`No event type handling for ${eventType}`);
 }

@@ -60,7 +60,7 @@ async function createRequestEmailBody(
 
   if (mediaType === "show") {
     footer = `Which: ${which}`;
-    imageUri = await tmdb.getTvUri(id)
+    imageUri = await tmdb.getTvUri(id);
   } else {
     footer = "";
     imageUri = await tmdb.getMovieUri(id);
@@ -68,7 +68,6 @@ async function createRequestEmailBody(
 
   const header = `New Request: <a href='${imageUri}'>${name}</a>`;
   const body = `<img src="https://image.tmdb.org/t/p/original${poster_path}" style='width:200px;height:300px;'/><br>`;
-
 
   return getAlertEmail(header, body, footer);
 }
