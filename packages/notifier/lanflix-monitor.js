@@ -18,7 +18,7 @@ firebase.db.collection("email").onSnapshot((snapshot) => {
       const email = new Email();
       switch (change.type) {
         case "added":
-          email.recipients = data.recipients;
+          email.to = data.recipients;
           email.subject = data.subject;
           email.body = data.body;
           email.sendEmail(sender.name, "gmail", {
