@@ -1,30 +1,21 @@
 const FirebaseHelper = require("./libs/FirebaseHelper");
-const Email = require("./libs/email/Email");
-
 const { createRequestEmailBody } = require("./libs/email/emailTemplates");
-
-// Get config location
-const sender = require("../../config/sender.json");
+const sendEmail = require('./libs/email/sendEmail');
 
 // Get firebase cert location
 const firebaseCert = require("../../config/lanflix-firebase-cert.json");
+
 const firebase = new FirebaseHelper(firebaseCert);
 
 firebase.db.collection("email").onSnapshot((snapshot) => {
-  snapshot.docChanges().forEach((change) => {
+  snapshot.docChanges().forEach(async (change) => {
     try {
       const data = change.doc.data();
       console.log(data);
-      const email = new Email();
       switch (change.type) {
         case "added":
-          email.to = data.recipients;
-          email.subject = data.subject;
-          email.body = data.body;
-          email.sendEmail(sender.name, "gmail", {
-            user: sender.email,
-            pass: sender.password,
-          });
+          const { bcc: recipients, html: body, subject, ...remainingData } = data;
+          await sendEmail({ bcc, html, subject });
           firebase.removeEmailFromQueue(change.doc.id);
           break;
         default:
