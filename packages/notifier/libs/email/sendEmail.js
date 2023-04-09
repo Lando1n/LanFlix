@@ -10,7 +10,7 @@ async function sendEmail(mailOptions) {
   });
 
   const defaultOptions = {
-    from: `LanFlix <${auth.user}>`,
+    from: `${auth.name || 'Lanflix'} <${auth.user}>`,
   };
 
   const options = Object.assign({}, defaultOptions, mailOptions);
