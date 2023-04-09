@@ -15,8 +15,8 @@ firebase.db.collection("email").onSnapshot((snapshot) => {
       switch (change.type) {
         case "added":
           const {
-            bcc: recipients,
-            html: body,
+            recipients: bcc,
+            body: html,
             subject,
             ...remainingData
           } = data;
