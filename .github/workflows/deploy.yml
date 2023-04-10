@@ -2,10 +2,12 @@ name: deploy
 
 on:
   push:
-    paths:
-      - packages/webc/**
-    branches:
-      - develop
+    tags:
+      - webc-**
+
+concurrency:
+  group: deploy-webc
+  cancel-in-progress: true
 
 jobs:
   deploy_site:

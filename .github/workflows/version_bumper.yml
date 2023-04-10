@@ -35,12 +35,16 @@ jobs:
         if: steps.changes.outputs.notifier == 'true'
         working-directory: packages/notifier
         run: |
-          npm version patch
+          npm version patch --no-git-tag-version
+          version=$(cat package.json | jq -r .version)
+          git tag notifier-${version}
       - name: Bump Webc
         if: steps.changes.outputs.webc == 'true'
         working-directory: packages/webc
         run: |
-          npm version patch
+          npm version patch --no-git-tag-version
+          version=$(cat package.json | jq -r .version)
+          git tag webc-${version}
       - name: Checkin
         env:
           PACKAGES: ${{ steps.changes.outputs.changes }}
@@ -50,4 +54,5 @@ jobs:
           git config user.email "<>"
           git add -A
           git commit -m 'Bump version: ${{ env.PACKAGES }}'
+          git push --tags -f
           git push -f
