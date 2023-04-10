@@ -41,5 +41,4 @@ jobs:
           git config user.email "<>"
           git add -A
           git commit -m 'Bump version: ${{ env.PACKAGES }}'
-          git push
-          git push --tags
+          git push -f
