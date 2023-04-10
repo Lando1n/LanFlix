@@ -31,6 +31,7 @@ jobs:
         with:
           bump-policy: ignore
           commit-message: 'CI: bumps version to {{version}} [skip ci]'
+          push: false
       - name: Bump Webc
         if: steps.changes.outputs.webc == 'true'
         uses: phips28/gh-action-bump-version@v9.1.0
@@ -40,3 +41,5 @@ jobs:
         with:
           bump-policy: ignore
           commit-message: 'CI: bumps version to {{version}} [skip ci]'
+          push: false
+      - run: git push -f
