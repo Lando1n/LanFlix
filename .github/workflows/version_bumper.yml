@@ -5,12 +5,21 @@ on:
     branches:
       - develop
 
+env:
+  ACTOR: "GitHub Actions Bot"
+
 jobs: 
   bump:
     runs-on: ubuntu-latest
+    if: github.event.head_commit.committer.name != 'GitHub Actions Bot'
     permissions:
       contents: write
     steps:
+      - name: GitHub Context
+        env:
+          CONTEXT: ${{ toJSON(github)}}
+        run: 
+          echo "${CONTEXT}"
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.PUSH_PAT }}
@@ -19,10 +28,8 @@ jobs:
         with:
           filters: |
             notifier:
-              - .github/workflows/version_bumper.yml
               - packages/notifier/**
             webc:
-              - .github/workflows/version_bumper.yml
               - packages/webc/**
       - name: Bump Notifier
         if: steps.changes.outputs.notifier == 'true'
@@ -39,7 +46,7 @@ jobs:
           PACKAGES: ${{ steps.changes.outputs.changes }}
         run: |
           git --version
-          git config user.name "GitHub Actions Bot"
+          git config user.name "${{ env.ACTOR }}"
           git config user.email "<>"
           git add -A
           git commit -m 'Bump version: ${{ env.PACKAGES }}'
