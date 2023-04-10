@@ -36,6 +36,10 @@ jobs:
         env:
           PACKAGES: ${{ steps.changes.outputs.changes }}
         run: |
+          git --version
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
           git add -A
-          git commit -m "Bump version: ${PACKAGES}"
-          git push && git push --tags
+          git commit -m 'Bump version: ${{ env.PACKAGES }}'
+          git push
+          git push --tags
