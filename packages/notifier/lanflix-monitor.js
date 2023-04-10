@@ -8,7 +8,7 @@ const firebaseCert = require("../../config/lanflix-firebase-cert.json");
 const firebase = new FirebaseHelper(firebaseCert);
 
 async function startMonitors() {
-  const {version} = require('./package.json');
+  const { version } = require("./package.json");
   console.log(`Initializing LanFlix Monitor, version: ${version}`);
   // start monitoring the email queue
   firebase.db.collection("email").onSnapshot((snapshot) => {
@@ -39,7 +39,7 @@ async function startMonitors() {
       }
     });
   });
-  console.log('Email queue monitoring enabled...');
+  console.log("Email queue monitoring enabled...");
 
   // Start monitoring for requests
   const recipients = await firebase.getAdminEmail("Requests");
@@ -81,7 +81,7 @@ async function startMonitors() {
         }
       }
     });
-    console.log('Website request monitoring enabled...');
+    console.log("Website request monitoring enabled...");
   });
 }
 
