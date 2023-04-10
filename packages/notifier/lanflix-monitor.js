@@ -39,6 +39,7 @@ async function startMonitors() {
       }
     });
   });
+  console.log('Email queue monitoring enabled...');
 
   // Start monitoring for requests
   const recipients = await firebase.getAdminEmail("Requests");
@@ -80,6 +81,7 @@ async function startMonitors() {
         }
       }
     });
+    console.log('Website request monitoring enabled...');
   });
 }
 
