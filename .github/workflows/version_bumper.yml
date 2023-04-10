@@ -24,22 +24,12 @@ jobs:
               - packages/webc/**
       - name: Bump Notifier
         if: steps.changes.outputs.notifier == 'true'
-        uses: phips28/gh-action-bump-version@v9.1.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUSH_PAT }}
-          PACKAGEJSON_DIR: './packages/notifier'
-        with:
-          bump-policy: ignore
-          commit-message: 'CI: bumps version to {{version}} [skip ci]'
-          push: false
+        working-directory: packages/notifier
+        run: |
+          npm version patch
       - name: Bump Webc
         if: steps.changes.outputs.webc == 'true'
-        uses: phips28/gh-action-bump-version@v9.1.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUSH_PAT }}
-          PACKAGEJSON_DIR: './packages/webc'
-        with:
-          bump-policy: ignore
-          commit-message: 'CI: bumps version to {{version}} [skip ci]'
-          push: false
-      - run: git push -f
+        working-directory: packages/webc
+        run: |
+          npm version patch
+      - run: git push && git push --tags
