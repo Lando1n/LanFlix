@@ -32,4 +32,10 @@ jobs:
         working-directory: packages/webc
         run: |
           npm version patch
-      - run: git push && git push --tags
+      - name: Checkin
+        env:
+          PACKAGES: ${{ steps.changes.outputs.changes }}
+        run: |
+          git add -A
+          git commit -m "Bump version: ${PACKAGES}"
+          git push && git push --tags
