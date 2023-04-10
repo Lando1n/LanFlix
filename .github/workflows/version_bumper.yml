@@ -1,0 +1,41 @@
+name: Version Bumper
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+
+jobs: 
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            notifier:
+              - packages/notifier/**
+            webc:
+              - packages/webc/**
+      - name: Bump Notifier
+        if: steps.changes.outputs.notifier == 'true'
+        uses: phips28/gh-action-bump-version@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: './packages/notifier'
+        with:
+          bump-policy: ignore
+          commit-message: 'CI: bumps version to {{version}} [skip ci]'
+      - name: Bump Webc
+        if: steps.changes.outputs.webc == 'true'
+        uses: phips28/gh-action-bump-version@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: './packages/webc'
+        with:
+          bump-policy: ignore
+          commit-message: 'CI: bumps version to {{version}} [skip ci]'
