@@ -17,8 +17,10 @@ jobs:
         with:
           filters: |
             notifier:
+              - .github/workflows/version_bumper.yml
               - packages/notifier/**
             webc:
+              - .github/workflows/version_bumper.yml
               - packages/webc/**
       - name: Bump Notifier
         if: steps.changes.outputs.notifier == 'true'
