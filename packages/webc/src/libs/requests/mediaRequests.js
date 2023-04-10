@@ -83,6 +83,7 @@ async function pickResultDialog(options) {
     showCancelButton: options.length > 2,
     cancelButtonText: options.length > 2 ? getButtonDOM(options[2]) : "",
     cancelButtonColor: buttonColor,
+    showCloseButton: true,
     inputValidator: (value) => {
       if (!value) {
         return "You need to choose something!";
