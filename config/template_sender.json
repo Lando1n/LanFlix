@@ -1,5 +1,5 @@
 {
-  "email": "test_user@gmail.com",
+  "user": "test_user@gmail.com",
   "name": "Plex Server",
-  "password":"password"
+  "pass": "*****"
 }
