@@ -24,7 +24,9 @@ async function startMonitors() {
               subject,
               ...remainingData
             } = data;
-            await sendEmail({ bcc, html, subject });
+            if (bcc.length !== 0) {
+              await sendEmail({ bcc, html, subject });
+            }
             firebase.removeEmailFromQueue(change.doc.id);
             break;
           default:
