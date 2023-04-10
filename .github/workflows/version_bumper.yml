@@ -5,12 +5,11 @@ on:
     branches:
       - develop
 
-permissions:
-  contents: write
-
 jobs: 
   bump:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - uses: dorny/paths-filter@v2
@@ -23,7 +22,7 @@ jobs:
               - packages/webc/**
       - name: Bump Notifier
         if: steps.changes.outputs.notifier == 'true'
-        uses: phips28/gh-action-bump-version@master
+        uses: phips28/gh-action-bump-version@v9.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.PUSH_PAT }}
           PACKAGEJSON_DIR: './packages/notifier'
@@ -32,7 +31,7 @@ jobs:
           commit-message: 'CI: bumps version to {{version}} [skip ci]'
       - name: Bump Webc
         if: steps.changes.outputs.webc == 'true'
-        uses: phips28/gh-action-bump-version@master
+        uses: phips28/gh-action-bump-version@v9.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.PUSH_PAT }}
           PACKAGEJSON_DIR: './packages/webc'
