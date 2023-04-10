@@ -25,7 +25,7 @@ jobs:
         if: steps.changes.outputs.notifier == 'true'
         uses: phips28/gh-action-bump-version@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PUSH_PAT }}
           PACKAGEJSON_DIR: './packages/notifier'
         with:
           bump-policy: ignore
@@ -34,7 +34,7 @@ jobs:
         if: steps.changes.outputs.webc == 'true'
         uses: phips28/gh-action-bump-version@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PUSH_PAT }}
           PACKAGEJSON_DIR: './packages/webc'
         with:
           bump-policy: ignore

@@ -109,7 +109,7 @@ When this process is closed, the monitor will no longer run. If you would prefer
 
 #### Option B: Auto boot on start with systemd
 
-- Got to `./services/` and open `lanflix-monitor.service`
+- Got to `./packages/notifier/services/` and open `lanflix-monitor.service`
 - Change the user and group from `plexserver` to the username on your machine
 - Change `WorkingDirectory` to where you have cloned the repo to.
 - Copy `lanflix-monitor.service` into `/etc/systemd/system/`
