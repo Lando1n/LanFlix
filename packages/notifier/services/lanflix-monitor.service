@@ -4,14 +4,11 @@ After=network.target
 
 [Service]
 # Change and/or create the required user and group.
-User=plexserver
-Group=plexserver
-
-# The UMask parameter controls the permissions of folders and files created.
-#UMask=002
+User=${USER}
+Group=${USER}
 
 # The -data=/path argument can be used to force the config/db folder
-WorkingDirectory=/home/plexserver/dev/LanFlix/packages/notifier
+WorkingDirectory=${SCRIPT_DIR}
 ExecStart=/usr/bin/node lanflix-monitor.js
 
 Restart=always

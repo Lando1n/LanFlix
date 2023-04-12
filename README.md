@@ -15,7 +15,7 @@ Best used in tandem with Sonarr, Radarr, and Plex/Emby.
   ```
   sudo apt update
   sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
-  curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+  curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
   sudo apt -y install nodejs
   ```
 - Install all of the npm packages required for the script with:
@@ -109,31 +109,16 @@ When this process is closed, the monitor will no longer run. If you would prefer
 
 #### Option B: Auto boot on start with systemd
 
-- Got to `./packages/notifier/services/` and open `lanflix-monitor.service`
-- Change the user and group from `plexserver` to the username on your machine
-- Change `WorkingDirectory` to where you have cloned the repo to.
-- Copy `lanflix-monitor.service` into `/etc/systemd/system/`
-- Enable and start the services
-
-```bash
-sudo systemctl enable --now lanflix-monitor.service
-```
-
+- Go to `./packages/notifier/`
+- Run `./install.sh`
 - Check the status of the services
-
 ```bash
 sudo systemctl status lanflix-monitor.service
 ```
 
-Note: You may need to adjust the path to node if it is installed in a different location. Find this using:
+### Custom Application Scripts
 
-```bash
-which node
-```
-
-### Client Scripts
-
-In order to be notified that content has been added, the client that grabs the content needs to talk to LanFlix. `packages/notifier/scripts` helps with that, but each client needs to be setup individually. Many more clients can be used, the scripts just need to be written.
+In order to be notified that content has been added, the application that grabs the content needs to talk to LanFlix, `packages/notifier/scripts` helps with that.
 
 Currently only supporting Sonarr and Radarr.
 
