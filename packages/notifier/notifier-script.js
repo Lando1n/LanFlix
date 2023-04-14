@@ -1,4 +1,5 @@
 const getMediaInfo = require("./libs/getMediaInfo");
+const getEmailContent = require("./libs/email/getEmailContent");
 
 const media = getMediaInfo();
 
