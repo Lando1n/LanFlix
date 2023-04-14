@@ -2,7 +2,7 @@
 .firebase
 node_modules
 firebase-debug.log
-config/*
+config
 output
 test_users.json
 packages/webc/dist
