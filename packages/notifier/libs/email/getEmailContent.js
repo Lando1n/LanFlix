@@ -1,19 +1,13 @@
-const FirebaseHelper = require("../FirebaseHelper");
-const firebaseCert = require("../../config/lanflix-firebase-cert.json");
-
 const {
   createShowEmailBody,
   createMovieEmailBody,
   createNewShowEmailBody,
 } = require("./emailTemplates");
 
-module.exports = async function getEmailContent(media) {
+module.exports = async function getEmailContent(media, firebase) {
   let recipients;
   let subject;
   let body;
-
-  const firebase = new FirebaseHelper(firebaseCert);
-
   // Determine the recipients
   switch (media.type) {
     case "movie":
