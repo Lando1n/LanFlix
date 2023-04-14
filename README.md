@@ -37,111 +37,29 @@ Best used in tandem with Sonarr, Radarr, and Plex/Emby.
   | shows       | <show_name> | subs   |
   | users       | <name>      | email  |
 
-### Web Client
-
-#### Setup
-
-- Navigate to the browser client directory
-  ```
-  cd public
-  ```
-- Install the firebase CLI
-  ```
-  sudo npm install -g firebase-tools
-  ```
-- Login into firebase
-  ```
-  firebase login
-  ```
-- Initialize the firebase project
-
-  ```
-  firebase init
-  ```
-
-  - Choose Hosting
-  - Choose an existing project
-  - Choose public directory as `.`
-  - Configure as a single page app
-  - Don't overwrite the index file
-
-- Build it
-  Run this command to create a dist file of the code.
-  ```
-  npm run build
-  ```
-- Test it!  
-  Run this command to host the server locally for testing purposes.
-  ```
-  firebase serve
-  ```
-- Deploy it to the interwebs!
-  Running this command will host the website publicly for access all over the world.
-  ```
-  firebase deploy
-  ```
-  You can control versioning of the deployments on Google Firebase Console.
-
+## Packages
 ### Notifier
+See README at `./packages/notifier/README.md`
 
-#### Place the Firebase Certificate
-
-- Get a certificate from `Firebase Settings > Project Settings > Service Accounts > Firebase Admin SDK`
-- Place cert in `config/lanflix-firebase-cert.json`
-
-#### Add Email Credentials
-
-Using the template under `config/template_sender.json`, create a file in the same directory called `sender.json` swapping the name, email and password to match your desired email account to send notifications from.
-
-### Turn on Email Notifications
-
-To receive emails for requests from the website and emails from download notifications, you need to have the lanflix-monitor running.
-
-#### Option A: Run a script in a terminal
-
-Execute the npm monitor script using:
-
-```
-npm run monitor
-```
-
-When this process is closed, the monitor will no longer run. If you would prefer to have it as a background service, look at the next section.
-
-#### Option B: Auto boot on start with systemd
-
-- Go to `./packages/notifier/`
-- Run `./install.sh`
-- Check the status of the services
-```bash
-sudo systemctl status lanflix-monitor.service
-```
-
-### Custom Application Scripts
-
-In order to be notified that content has been added, the application that grabs the content needs to talk to LanFlix, `packages/notifier/scripts` helps with that.
-
-Currently only supporting Sonarr and Radarr.
+### Web Client
+See README at `./packages/webc/README.md`
 
 ## Development
 
 ### Run linting
-
 ```
 npm install
 npm run lint
 ```
 
 ### Run Unit Tests
-
 ```
 npm install
 npm run test
 ```
 
 ### Watch and build with webpack
-
 When developing, you don't want to have to build the changes after every save. Running the following will watch your code and build whenever there are changes.
-
 ```
 npm run watch
 ```

@@ -2,7 +2,7 @@ const FirebaseHelper = require("./libs/FirebaseHelper");
 const sendEmail = require("./libs/email/sendEmail");
 
 // Get firebase cert location
-const firebaseCert = require("../../config/lanflix-firebase-cert.json");
+const firebaseCert = require("./config/lanflix-firebase-cert.json");
 
 const firebase = new FirebaseHelper(firebaseCert);
 

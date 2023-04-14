@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const auth = require("../../../../config/sender.json");
+const auth = require("../../config/sender.json");
 
 async function sendEmail(mailOptions) {
   const transporter = nodemailer.createTransport({
